@@ -13,11 +13,11 @@ import {
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Home />
+      <div className="Login">
+        <Login />
       </div>
     </Router>
   );
 }
 
-export default App;
+export default App; 

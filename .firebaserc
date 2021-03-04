@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "streampoll-cf56b"
+    "default": "streampoll-cf56b",
+    "uat": "streampoll-uat"
   }
 }

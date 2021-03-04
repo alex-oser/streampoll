@@ -1,7 +1,6 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -119,13 +118,6 @@ const Home = () => {
     }
   };
 
-  const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> =
-    (event) => {
-      dispatch({
-        type: 'setUsername',
-        payload: event.target.value
-      });
-    };
 
   return (
     <form className={classes.container} noValidate autoComplete="off">

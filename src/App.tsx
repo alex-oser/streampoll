@@ -5,6 +5,10 @@ import {
 } from "react-router-dom";
 import { Button } from '@material-ui/core';
 
+const {
+  REACT_APP_BUILD_INFO = "[local] ...",
+} = process.env;
+
 function App() {
   // const [data, setData] = useState({});
 
@@ -26,7 +30,7 @@ function App() {
   return (
     <Router>
       <div className="Login">
-
+          {REACT_APP_BUILD_INFO}
           <Button 
             variant="contained"
             size="large"

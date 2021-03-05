@@ -24,8 +24,8 @@ function(accessToken, refreshToken, profile, done) {
 }
 ));
 
-app.get('/login', passport.authenticate('twitch'));
-app.get('/oauth/callback', passport.authenticate('twitch', { failureRedirect: '/' }), (_req, res) => {
+app.get('/api/login', passport.authenticate('twitch'));
+app.get('/api/oauth/callback', passport.authenticate('twitch', { failureRedirect: '/' }), (_req, res) => {
   // Successful authentication, redirect home.
   res.redirect('/');
 });

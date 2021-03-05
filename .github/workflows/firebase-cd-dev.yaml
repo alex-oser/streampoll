@@ -1,19 +1,20 @@
-name: Firebase Deploy (DEV)
+name: Deploy (DEV)
 
 on:
   push:
     branches:
       - develop
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: CLI Invoke
+      - name: CLI
         uses: w9jds/firebase-action@master
         with:
           args: deploy
         env:
           PROJECT_ID: streampoll-dev-b2f18
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}          
+          REACT_APP_BUILD_INFO: "[${{ github.branch }}] ${{ github.sha }}"
 

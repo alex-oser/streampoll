@@ -23,14 +23,13 @@ function App() {
     // fetch('/api/login')
     // .then(res => res.json())
     // .then(res => setData(res));
-
-    window.open("/api/login", 'popUpWindow', 'height=500,width=400,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+    window.location.href = "/api/login";
   }
 
   return (
     <Router>
       <div className="Login">
-          {REACT_APP_BUILD_INFO}
+          
           <Button 
             variant="contained"
             size="large"
@@ -39,6 +38,8 @@ function App() {
           > 
             Login 
           </Button>
+
+          <h1>{REACT_APP_BUILD_INFO}</h1>
       </div>
     </Router>
   );

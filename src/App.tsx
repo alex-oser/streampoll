@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -8,12 +8,12 @@ import { Button } from '@material-ui/core';
 function App() {
   // const [data, setData] = useState({});
 
-  useEffect(() => {
-    fetch('/api')
-    .then(res => res.json())
-    .then(res => setData(res))
+  // useEffect(() => {
+  //   fetch('/api')
+  //   .then(res => res.json())
+  //   .then(res => setData(res))
 
-  }, []);
+  // }, []);
 
   const handleLogin = () => {
     // fetch('/api/login')

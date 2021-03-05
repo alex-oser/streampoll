@@ -18,3 +18,12 @@ jobs:
           projectId: streampoll-dev-b2f18
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
+      - name: Install Function Dependencies
+        run: cd api && npm install
+      - name: Deploy functions
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+

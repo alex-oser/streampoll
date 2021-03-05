@@ -9,21 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_STREAMPOLL_DEV_B2F18 }}'
-          channelId: live
-          projectId: streampoll-dev-b2f18
-        env:
-          FIREBASE_CLI_PREVIEWS: hostingchannels
       - name: Install Function Dependencies
         run: cd api && npm install
       - name: Deploy functions
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions
+          args: deploy
         env:
+          PROJECT_ID: streampoll-dev-b2f18
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 

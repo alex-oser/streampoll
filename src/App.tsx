@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import Login from './Login'
 import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import { Button } from '@material-ui/core';
 
 function App() {
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
 
   useEffect(() => {
     fetch('/api')
@@ -31,7 +30,7 @@ function App() {
           <Button 
             variant="contained"
             size="large"
-            color="secondary"
+            color="primary"
             onClick={handleLogin}
           > 
             Login 

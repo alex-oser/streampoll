@@ -22,7 +22,7 @@
   "scripts": {
     "start": "concurrently npm:backend npm:frontend",
     "backend": "firebase emulators:start",
-    "frontend": "cross-env HTTPS=true react-scripts start",
+    "frontend": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

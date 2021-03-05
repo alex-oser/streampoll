@@ -16,7 +16,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "firebase-admin": "^9.2.0",
-    "firebase-functions": "^3.11.0"
+    "firebase-functions": "^3.11.0",
+    "passport": "^0.4.1",
+    "passport-twitch": "^1.0.3"
   },
   "devDependencies": {
     "eslint": "^7.6.0",

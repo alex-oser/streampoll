@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Login from './Login'
 import {
@@ -6,10 +6,20 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    fetch('/api')
+    .then(res => res.json())
+    .then(res => setData(res))
+
+  }, []);
+
+
   return (
     <Router>      
       <div className="Login">
-        <h1>DEPLOY TEST!</h1>
+        <pre>{JSON.stringify(data)}</pre>
         <Login />
       </div>
     </Router>

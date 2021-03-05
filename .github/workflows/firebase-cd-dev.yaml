@@ -1,4 +1,4 @@
-name: Firebase Deploy (PROD)
+name: Firebase Deploy (DEV)
 
 on:
   push:

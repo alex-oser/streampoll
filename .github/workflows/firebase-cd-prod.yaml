@@ -1,4 +1,4 @@
-name: Deploy to Live Channel
+name: Firebase Deploy (PROD)
 
 on:
   push:

@@ -9,6 +9,9 @@
     "source": "api"
   },
   "hosting": {
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" npm run build"
+    ],
     "public": "build",
     "ignore": [
       "firebase.json",

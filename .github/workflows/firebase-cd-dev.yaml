@@ -9,9 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Function Dependencies
-        run: cd api && npm install
-      - name: Deploy functions
+      - name: CLI Invoke
         uses: w9jds/firebase-action@master
         with:
           args: deploy

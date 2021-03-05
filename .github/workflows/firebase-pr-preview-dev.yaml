@@ -12,7 +12,7 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_STREAMPOLL_CF56B }}'
-          projectId: streampoll-cf56b
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_STREAMPOLL_DEV_B2F18 }}'
+          projectId: streampoll-dev-b2f18
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels

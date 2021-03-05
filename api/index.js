@@ -15,7 +15,8 @@ const { clientid, clientsecret } = config.twitch;
 passport.use(new TwitchStrategy({
   clientID: clientid,
   clientSecret: clientsecret,
-  callbackURL: 'https://127.0.0.1:3000/api/oauth/callback',
+  // TODO: fix hardcode
+  callbackURL: 'https://dev.streampoll.me/api/oauth/callback',
   scope: 'user_read',
 },
 function(accessToken, refreshToken, profile, done) {
@@ -23,14 +24,10 @@ function(accessToken, refreshToken, profile, done) {
 }
 ));
 
-app.get('/', (req, res) => {
-  res.json({ hello: 'minecraft' });
-});
-
 app.get('/login', passport.authenticate('twitch'));
-
-app.post('/api/oauth/callback', (req, res) => {
-  res.json({ hello: 'minecraft' });
+app.get('/oauth/callback', passport.authenticate('twitch', { failureRedirect: '/' }), (_req, res) => {
+  // Successful authentication, redirect home.
+  res.redirect('/');
 });
 
 exports.api = functions.https.onRequest(app);

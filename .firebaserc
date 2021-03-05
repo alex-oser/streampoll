@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "streampoll-cf56b",
-    "uat": "streampoll-uat"
+    "prod": "streampoll-cf56b",
+    "dev": "streampoll-dev-b2f18"
   }
 }

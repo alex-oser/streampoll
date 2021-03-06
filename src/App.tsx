@@ -1,45 +1,43 @@
-import React from 'react';
+
+import { useEffect, useState } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
 } from "react-router-dom";
-import { Button } from '@material-ui/core';
+
+
+const callbackUrl = window.location.protocol + '//' + window.location.host + '/api/oauth/callback';
 
 const {
   REACT_APP_BUILD_INFO = "[local] ...",
 } = process.env;
 
 function App() {
-  // const [data, setData] = useState({});
+  const [userData, setUserData] = useState(null);
+  const [loginUrl, setLoginUrl] = useState(`https://id.twitch.tv/oauth2/authorize?client_id=8gabwtp7cisw11d1vsjkw90u0y2bw7&redirect_uri=${encodeURIComponent(callbackUrl)}&response_type=code&state=bNTHcbQBRW0qkdZ3Qyu51A%3D%3D`);
 
-  // useEffect(() => {
-  //   fetch('/api')
-  //   .then(res => res.json())
-  //   .then(res => setData(res))
+  useEffect(() => {
+    fetch('/api/me')
+    .then(res => res.json())
+    .then(res => setUserData(res));
+  }, []);
 
-  // }, []);
-
-  const handleLogin = () => {
-    // fetch('/api/login')
-    // .then(res => res.json())
-    // .then(res => setData(res));
-    window.location.href = "/api/login";
-  }
 
   return (
     <Router>
       <div className="Login">
+          <pre>{loginUrl}</pre>
+          <pre>{JSON.stringify(userData)}</pre>
           
-          <Button 
-            variant="contained"
-            size="large"
-            color="primary"
-            onClick={handleLogin}
-          > 
-            Login 
-          </Button>
+          {/* <img alt="test" src={userData.profile_image_url}/> */}
+          { userData
+            ? 
+            <a href="/api/logout">LOG OUT</a>
+            :
+            <a href={loginUrl}>LOGIN</a>
+          }
+          
 
-          <h2>This is a test deploy</h2>
           <h1>{REACT_APP_BUILD_INFO}</h1>
       </div>
     </Router>

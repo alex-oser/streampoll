@@ -1,42 +1,83 @@
-const functions = require('firebase-functions');
-const express = require('express');
-const admin = require('firebase-admin');
-const passport = require('passport');
-const TwitchStrategy = require('passport-twitch-strategy').Strategy;
+const functions = require("firebase-functions");
+const express = require("express");
+const admin = require("firebase-admin");
+const got = require("got");
+const cookieSession = require('cookie-session')
 
 admin.initializeApp();
-
-const database = admin.database();
 const config = functions.config();
 
 const app = express();
 const router = express.Router();
 const { clientid, clientsecret } = config.twitch;
 
-const HOST = process.env.NODE_ENV === 'production' ? 'https://dev.streampoll.me' : 'http://localhost:5000';
+app.use(cookieSession({
+  name: 'session',
+  keys: ["ayysamolamfoaejgirosjghoisrdjhgio"],
 
-// app.use(passport.initialize());
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 
-passport.use(new TwitchStrategy({
-  clientID: clientid,
-  clientSecret: clientsecret,
-  callbackURL: `${HOST}/api/oauth/callback`,
-  scope: 'user:read:email',
-}, (accessToken, refreshToken, profile, done) => {
-  console.log(accessToken, profile);
-  const uid = profile.id;
-  const metadataRef = admin.database().ref('users/' + uid);
-  metadataRef.set(profile);
-  done();
-}));
-
-router.get('/', (req, res) => res.send('hi') );
-router.get('/login', passport.authenticate('twitch', { forceVerify: true }));
-router.get('/oauth/callback', passport.authenticate('twitch', { failureRedirect: '/' }), (_req, res) => {
-  // Successful authentication, redirect home.
-  res.redirect('/');
+router.get("/me", async (req, res) => {
+  res.send(req.session.profile);
 });
 
+// TODO: make post?
+router.get("/logout", async (req, res) => {
+  // call twitch destry session
+  const token = req.session.profile.oauth.access_token;
+  console.log('token', token)
+  await got({
+    url: `https://id.twitch.tv/oauth2/revoke?client_id=${clientid}&token=${token}`,
+    method: 'POST'
+  });
+
+  // req.session.destroy
+  res.send({});
+});
+
+router.get("/oauth/callback", async (req, res) => {
+  const { code } = req.query;
+
+  const response = await got({
+    url: "https://id.twitch.tv/oauth2/token",
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
+    form: {
+      client_id: clientid,
+      client_secret: clientsecret,
+      code,
+      grant_type: "authorization_code",
+      redirect_uri: "http://localhost:3000/api/oauth/callback",
+    },
+    responseType: "json",
+  });
+  
+  const user = await got({
+    url: "https://api.twitch.tv/helix/users",
+    method: "GET",
+    headers: {
+      "Client-ID": clientid,
+      Authorization: "Bearer " + response.body.access_token,
+    },
+    responseType: "json",
+  });
+
+  const profile = user.body.data[0];
+  const uid = profile.id;
+  const metadataRef = admin.database().ref("users/" + uid);
+  metadataRef.set(profile);
+  req.session.profile = { ...profile, oauth: response.body };
+
+  res.redirect("/")
+});
+
+
+
+//pm install @callowcreation/basic-twitch-oauth
 app.use("/api", router);
 
 exports.api = functions.https.onRequest(app);

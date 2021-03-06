@@ -13,12 +13,7 @@ const { REACT_APP_BUILD_INFO, REACT_APP_CLIENT_ID } = process.env;
 
 function App() {
   const [userData, setUserData] = useState(null);
-
-  console.log(process.env);
-  console.log("REACT_APP_CLIENT_ID", REACT_APP_CLIENT_ID);
-
   const state = nanoid(22);
-  console.log(state);
 
   const paramsMap: any = {
     client_id: REACT_APP_CLIENT_ID,

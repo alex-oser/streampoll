@@ -3,11 +3,12 @@ const express = require("express");
 const admin = require("firebase-admin");
 const got = require("got");
 const session = require("express-session");
+const cookieParser = require('cookie-parser')
 const FirebaseStore = require('connect-session-firebase')(session);
 
 admin.initializeApp();
 const config = functions.config();
-
+const database = admin.database();
 const app = express();
 const router = express.Router();
 const { clientid, clientsecret } = config.twitch;
@@ -19,13 +20,15 @@ const HOST =
 
 app.use(session({
   store: new FirebaseStore({
-    database: admin.database()
+    database
   }),
   secret: 'dgdgcat',
   resave: true,
   saveUninitialized: true,
   name: '__session',
 }));
+
+app.use(cookieParser())
 
 router.get("/me", async (req, res) => {
   if (!req.session.auth) {
@@ -37,16 +40,11 @@ router.get("/me", async (req, res) => {
 
 // TODO: make post?
 router.get("/logout", async (req, res) => {
-  // call twitch destry session
-  const token = req.session.profile.oauth.access_token;
-  console.log("token", token);
-  await got({
-    url: `https://id.twitch.tv/oauth2/revoke?client_id=${clientid}&token=${token}`,
-    method: "POST",
-  });
-
-  // req.session.destroy
-  res.send({});
+  const sessionId = req.cookies.__session;
+  
+  // nuke session on logout
+  req.session.destroy();
+  res.redirect("/");
 });
 
 router.get("/oauth/callback", async (req, res) => {

@@ -6,17 +6,16 @@ const TwitchStrategy = require('passport-twitch-strategy').Strategy;
 
 admin.initializeApp();
 
-// const database = admin.database();
+const database = admin.database();
 const config = functions.config();
 
 const app = express();
+const router = express.Router();
 const { clientid, clientsecret } = config.twitch;
 
-const HOST = process.env.NODE_ENV === 'production' ? 'https://dev.streampoll.me' : 'http://localhost:5001/streampoll-dev-b2f18/us-central1';
-console.log('function start', HOST);
-console.log('api', clientid, clientsecret);
+const HOST = process.env.NODE_ENV === 'production' ? 'https://dev.streampoll.me' : 'http://localhost:5000';
 
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 passport.use(new TwitchStrategy({
   clientID: clientid,
@@ -25,14 +24,19 @@ passport.use(new TwitchStrategy({
   scope: 'user:read:email',
 }, (accessToken, refreshToken, profile, done) => {
   console.log(accessToken, profile);
+  const uid = profile.id;
+  const metadataRef = admin.database().ref('users/' + uid);
+  metadataRef.set(profile);
   done();
 }));
 
-app.get('/', (req, res) => res.send('hi') );
-app.get('/login', passport.authenticate('twitch', { forceVerify: true }));
-app.get('/oauth/callback', passport.authenticate('twitch', { failureRedirect: '/' }), (_req, res) => {
+router.get('/', (req, res) => res.send('hi') );
+router.get('/login', passport.authenticate('twitch', { forceVerify: true }));
+router.get('/oauth/callback', passport.authenticate('twitch', { failureRedirect: '/' }), (_req, res) => {
   // Successful authentication, redirect home.
   res.redirect('/');
 });
+
+app.use("/api", router);
 
 exports.api = functions.https.onRequest(app);

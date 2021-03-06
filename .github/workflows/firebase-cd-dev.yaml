@@ -15,6 +15,6 @@ jobs:
           args: deploy
         env:
           PROJECT_ID: streampoll-dev-b2f18
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}          
-          REACT_APP_BUILD_INFO: "[${{ github.branch }}] ${{ github.sha }}"
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          REACT_APP_BUILD_INFO: "[${{ github.ref }}] ${{ github.sha }}"
 

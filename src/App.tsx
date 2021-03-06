@@ -39,6 +39,7 @@ function App() {
             Login 
           </Button>
 
+          <h2>This is a test deploy</h2>
           <h1>{REACT_APP_BUILD_INFO}</h1>
       </div>
     </Router>

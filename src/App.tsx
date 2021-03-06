@@ -14,7 +14,7 @@ const {
 
 function App() {
   const [userData, setUserData] = useState(null);
-  const [loginUrl, setLoginUrl] = useState(`https://id.twitch.tv/oauth2/authorize?client_id=8gabwtp7cisw11d1vsjkw90u0y2bw7&redirect_uri=${encodeURIComponent(callbackUrl)}&response_type=code&state=bNTHcbQBRW0qkdZ3Qyu51A%3D%3D`);
+  const loginUrl = `https://id.twitch.tv/oauth2/authorize?client_id=8gabwtp7cisw11d1vsjkw90u0y2bw7&redirect_uri=${encodeURIComponent(callbackUrl)}&response_type=code&state=bNTHcbQBRW0qkdZ3Qyu51A%3D%3D`;
 
   useEffect(() => {
     fetch('/api/me')
@@ -28,8 +28,7 @@ function App() {
       <div className="Login">
           <pre>{loginUrl}</pre>
           <pre>{JSON.stringify(userData)}</pre>
-          
-          {/* <img alt="test" src={userData.profile_image_url}/> */}
+
           { userData
             ? 
             <a href="/api/logout">LOG OUT</a>

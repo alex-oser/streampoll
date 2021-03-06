@@ -1,6 +1,10 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true
+    ".read": "false",
+    ".write": "false",
+    "sessions": {
+      ".read": "false",
+      ".write": "false"
+    }
   }
 }

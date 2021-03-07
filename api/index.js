@@ -30,7 +30,13 @@ router.get("/me", async (req, res) => {
   if (!req.session.auth) {
     return res.send({ error: "no session" }, 401);
   }
-  res.send(req.session.auth);
+  // get the user profile from the db
+  const ref = admin.database().ref("users/" + req.session.auth.id);
+  ref.on("value", (snapshot) => {
+    res.send(snapshot.val());
+  }, (errorObject) => {
+    console.log("The read failed: " + errorObject.code);
+  });
 });
 
 // TODO: make post, as this can be exploited?
@@ -54,7 +60,10 @@ router.get("/oauth/callback", async (req, res) => {
   metadataRef.set(profile);
 
   // create the session
-  req.session.auth = tokenData;
+  req.session.auth = {
+    ...tokenData,
+    id: profile.id
+  };
 
   // make sure we don't cache on the client
   res.setHeader("Cache-Control", "private");

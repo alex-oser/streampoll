@@ -1,13 +1,207 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+@import url("https://fonts.googleapis.com/css?family=Roboto:700,400");
+
+* {
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.create-poll {
+  align-items: center;
+  background-color: var(--masala);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.create-poll .auto-flex {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5.84px;
+  margin-left: 19px;
+  min-height: 56px;
+  max-width: 522px;
+}
+
+.create-poll .choose-poll-title {
+  height: 46px;
+  letter-spacing: 0px;
+  margin-left: 7px;
+  margin-top: 100px;
+  min-height: 46px;
+  text-align: center;
+  max-width: 327px;
+}
+
+.create-poll .connect {
+  align-items: right;
+  display: flex;
+  height: 44px;
+  margin-left: auto;
+  margin-top: 1px;
+  min-width: 120px;
+}
+
+.create-poll .ellipse- {
+  height: 6px;
+  margin-top: 2px;
+  width: 6px;
+}
+.create-poll .ellipse-3 {
+  height: 6px;
+  width: 6px;
+}
+
+.create-poll .header {
+  align-items: center;
+  background-color: var(--royal-purple);
+  display: flex;
+  height: 67px;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.create-poll .logo {
+  align-items: flex-start;
+  display: flex;
+  height: 47px;
+  justify-content: flex-end;
+  min-width: 239px;
+  padding: 2px 0;
+}
+
+.create-poll .logo-name-i6961069 {
+  height: 42px;
+  letter-spacing: 0px;
+  margin-left: 6px;
+  min-height: 42px;
+  width: 219px;
+}
+
+.create-poll .overlap-group {
+  align-items: flex-start;
+  align-self: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1px;
+  min-height: 28px;
+  padding: 3px;
+  width: 28px;
+}
+
+.create-poll .poll-option-inactive {
+  align-items: center;
+  background-color: var(--abbey);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  display: flex;
+  padding-top: 14px;
+  padding-bottom: 4px;
+  border-left: 10px solid var(--electric-violet);
+
+  margin-left: 5px;
+  margin-top: 21px;
+  max-width: 549px;
+}
+
+.create-poll .poll-option-active {
+  background-color: var(--royal-purple-2);
+}
+
+.create-poll .poll-option-inactive-accent {
+  background-color: var(--storm-dust);
+  height: 72px;
+  width: 9px;
+}
+
+.create-poll .poll-option-active-accent {
+  background-color: var(--electric-violet);
+}
+
+.create-poll .poll-option-text-i12 {
+  height: 20px;
+  letter-spacing: 0px;
+  margin-top: 5px;
+  min-height: 20px;
+  width: 522px;
+}
+
+.create-poll .poll-option-title-i12 {
+  height: 31px;
+  letter-spacing: 0px;
+  min-height: 31px;
+  width: 454px;
+}
+
+.create-poll .text-1 {
+  display: block;
+}
+
+.create-poll .vector {
+  align-self: flex-end;
+  height: 40px;
+  width: 35px;
+}
+
+.roboto-normal-storm-dust-18px {
+  color: var(--storm-dust);
+  font-family: "Roboto", Helvetica;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.roboto-normal-storm-dust-24px {
+  color: var(--storm-dust);
+  font-family: "Roboto", Helvetica;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.roboto-normal-white-18px {
+  color: white;
+  font-family: "Roboto", Helvetica;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.roboto-normal-white-24px {
+  color: white;
+  font-family: "Roboto", Helvetica;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.roboto-normal-white-36px {
+  color: white;
+  font-family: "Roboto", Helvetica;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+:root {
+  --abbey: rgba(79, 79, 79, 1);
+  --electric-violet: rgba(135, 27, 227, 1);
+  --masala: rgba(60, 60, 60, 1);
+  --royal-purple: rgba(103, 64, 151, 1);
+  --royal-purple-2: rgba(103, 65, 152, 1);
+  --storm-dust: rgba(98, 98, 98, 1);
+}
+
+.twitch-login-icon {
+  margin-right: 14px;
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-left: 20px;
+  color: #fff;
 }

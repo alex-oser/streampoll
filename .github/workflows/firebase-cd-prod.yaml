@@ -2,26 +2,19 @@ name: Deploy (PROD)
 
 on:
   push:
-    branches: 
+    branches:
       - master
-
 jobs:
   pipeline:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2      
-      - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_STREAMPOLL_CF56B }}"
-          projectId: streampoll-cf56b
-          channelId: live
-      - name: Install Function Dependencies
-        run: cd api && npm install
-      - name: Deploy functions
+      - uses: actions/checkout@v2
+      - name: CLI
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions
+          args: deploy
         env:
+          PROJECT_ID: streampoll-cf56b
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          REACT_APP_BUILD_INFO: "[${{ github.ref }}] ${{ github.sha }}"
+

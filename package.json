@@ -50,7 +50,8 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.7"
   },
-  "proxy": "http://127.0.0.1:5001/streampoll-dev-b2f18/us-central1"
+  "proxy": "http://127.0.0.1:5000"
 }

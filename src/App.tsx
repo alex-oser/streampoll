@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
@@ -7,37 +8,40 @@ import { useAuth } from "./hooks/useAuth";
 import { Home } from "./views/Home";
 import { Profile } from "./views/Profile";
 import { CreateContest } from "./views/CreateContest";
+import { Context } from "./store";
 
-import { useState } from "react";
+import { UserData } from "./types/UserData";
 
 const App = () => {
-  const userData = useAuth();
-  const [section, setSection] = useState("home");
+  const userData: UserData | null = useAuth();
+  const [state] = useContext(Context);
 
   return (
-    <>
-      <Router>
-        <div className="create-poll">
-          <Header userData={userData} loginUrl={LOGIN_URL} />
+    <Router>
+      <div className="create-poll">
+        <Header
+          userData={userData}
+          loginUrl={LOGIN_URL}
+        />
 
-          {section === "home" && (
-            <>
-              <Route path="/" exact>
-                  <Home />
-              </Route>
-              <Route path="/profile">
-                <Profile userData={userData}/>
-              </Route>
-            </>
-          )}
+        {state.section === "home" && (
+          <>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/profile">
+              <Profile userData={userData} />
+            </Route>
+          </>
+        )}
 
-          <p onClick={() => setSection("create") }>test</p>  
-          {section === "create" && <CreateContest props={setSection}></CreateContest>}
+        {state.section === "contest" && (
+          <CreateContest />
+        )}
 
-          <Footer />
-        </div>
-      </Router>
-    </>
+        <Footer />
+      </div>
+    </Router>
   );
 };
 

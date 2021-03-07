@@ -1,17 +1,47 @@
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { UserData } from "../types/UserData";
+import { Context } from "../store";
 
-export const Header = (props: any) => {
-  const { userData, loginUrl } = props;
+type HeaderProps = {
+  userData: UserData | null;
+  loginUrl: string;
+};
+
+export const Header = ({ userData, loginUrl }: HeaderProps) => {
+  const history = useHistory();
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [state, dispatch] = useContext(Context);
+
+  const handleHome = (e: React.MouseEvent) => {
+    e.preventDefault();
+    dispatch({ type: "SET_SECTION", payload: "home" });
+    history.push("/");
+  };
+
   return (
     <div className="header">
-      <Link to="/">
+      <a onClick={(e) => handleHome(e)} href="/">
         <img alt="streampoll-logo" src="/img/logo.svg" />
-      </Link>
+      </a>
       <div className="connect">
         {userData ? (
           <>
-            <Link className="user-link roboto-normal-white-24px" to="/profile">{userData.display_name}</Link>
-            <a className="user-link roboto-normal-white-24px" href="/api/logout">Log Out</a>
+            <Link
+              // onClick={(e) => handleHome(e)}
+              to="/profile"
+              className="user-link roboto-normal-white-24px"
+            >
+              {userData.display_name}
+            </Link>
+            <a
+              onClick={(e) => handleHome(e)}
+              href="/api/logout"
+              className="user-link roboto-normal-white-24px"
+            >
+              Log Out
+            </a>
           </>
         ) : (
           <a className="user-link roboto-normal-white-24px" href={loginUrl}>

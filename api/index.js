@@ -1,95 +1,65 @@
 const functions = require("firebase-functions");
 const express = require("express");
 const admin = require("firebase-admin");
-const got = require("got");
 const session = require("express-session");
-const FirebaseStore = require('connect-session-firebase')(session);
+const cookieParser = require("cookie-parser");
+const FirebaseStore = require("connect-session-firebase")(session);
 
 admin.initializeApp();
-const config = functions.config();
-
+const database = admin.database();
 const app = express();
 const router = express.Router();
-const { clientid, clientsecret } = config.twitch;
 
-const HOST =
-  process.env.NODE_ENV === "production"
-    ? "https://dev.streampoll.me"
-    : "http://localhost:5000";
+const { getTwitchAuthToken, getTwitchUserdata } = require("./util");
 
-app.use(session({
-  store: new FirebaseStore({
-    database: admin.database()
-  }),
-  secret: 'dgdgcat',
-  resave: true,
-  saveUninitialized: true,
-  name: '__session',
-}));
+app.use(
+  session({
+    store: new FirebaseStore({
+      database,
+    }),
+    secret: "dgdgcat",
+    resave: true,
+    saveUninitialized: true,
+    name: "__session",
+  })
+);
+
+app.use(cookieParser());
 
 router.get("/me", async (req, res) => {
   if (!req.session.auth) {
-    return res.send({ error: 'no session' }, 401);
+    return res.send({ error: "no session" }, 401);
   }
-
   res.send(req.session.auth);
 });
 
-// TODO: make post?
+// TODO: make post, as this can be exploited?
 router.get("/logout", async (req, res) => {
-  // call twitch destry session
-  const token = req.session.profile.oauth.access_token;
-  console.log("token", token);
-  await got({
-    url: `https://id.twitch.tv/oauth2/revoke?client_id=${clientid}&token=${token}`,
-    method: "POST",
-  });
+  // the session id if we ever need it
+  const sessionId = req.cookies.__session;
 
-  // req.session.destroy
-  res.send({});
+  // nuke session on logout
+  req.session.destroy();
+  res.redirect("/");
 });
 
 router.get("/oauth/callback", async (req, res) => {
   const { code } = req.query;
 
-  const response = await got({
-    url: "https://id.twitch.tv/oauth2/token",
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-    },
-    throwHttpErrors: false,
-    form: {
-      client_id: clientid,
-      client_secret: clientsecret,
-      code,
-      grant_type: "authorization_code",
-      redirect_uri: `${HOST}/api/oauth/callback`,
-    },
-    responseType: "json",
-  });
-  console.log('redirect', `${HOST}/api/oauth/callback`)
+  const tokenData = await getTwitchAuthToken(code);
+  const profile = await getTwitchUserdata(tokenData.access_token);
 
-  console.log("raw res", response.body);
-
-  const user = await got({
-    url: "https://api.twitch.tv/helix/users",
-    method: "GET",
-    headers: {
-      "Client-ID": clientid,
-      Authorization: "Bearer " + response.body.access_token,
-    },
-    responseType: "json",
-  });
-
-  const profile = user.body.data[0];
-  const uid = profile.id;
-  const metadataRef = admin.database().ref("users/" + uid);
+  // save the user profile in the db
+  const metadataRef = admin.database().ref("users/" + profile.id);
   metadataRef.set(profile);
 
-  req.session.auth = response.body;
+  // create the session
+  req.session.auth = tokenData;
 
-  res.setHeader('Cache-Control', 'private');
+  // make sure we don't cache on the client
+  res.setHeader("Cache-Control", "private");
+
+  // send them back to the app homepage auth'd
   res.redirect("/");
 });
 

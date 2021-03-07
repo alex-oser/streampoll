@@ -95,7 +95,7 @@ const Header = (props: any) => {
         logonameI6961069={logoProps.logonameI6961069}
       />
       <div className="connect">
-        <img className="vector" src={vector} />
+        <img alt="nopers" className="vector" src={vector} />
         <div className="text-1 valign-text-middle roboto-normal-white-36px">
           { userData ? (
             <a href="/api/logout">hi {userData.display_name}</a>
@@ -115,9 +115,9 @@ const Logo = (props: any) => {
   return (
     <div className="logo">
       <div className="overlap-group">
-        <img className="ellipse-3" src={ellipse3} />
-        <img className="ellipse-" src={ellipse4} />
-        <img className="ellipse-" src={ellipse5} />
+        <img alt="nopers" className="ellipse-3" src={ellipse3} />
+        <img alt="nopers" className="ellipse-" src={ellipse4} />
+        <img alt="nopers" className="ellipse-" src={ellipse5} />
       </div>
       <h1 className="logo-name-i6961069 valign-text-middle roboto-normal-white-36px">{logonameI6961069}</h1>
     </div>
@@ -132,10 +132,10 @@ const PollOption = (props: any) => {
     <div className={"poll-option-inactive " + (isActive === true ? "poll-option-active" : "")}>
       <div className={isActive === true ? "poll-option-active-accent" : "poll-option-inactive-accent"}></div>
       <div className="auto-flex">
-        <div className={"poll-option-title-i12 valign-text-middle " + (isActive == true ? "roboto-normal-white-24px" : "roboto-normal-storm-dust-24px")}>
+        <div className={"poll-option-title-i12 valign-text-middle " + (isActive === true ? "roboto-normal-white-24px" : "roboto-normal-storm-dust-24px")}>
           {title}
         </div>
-        <div className={"poll-option-text-i12 valign-text-middle " + (isActive == true ? "roboto-normal-white-18px" : "roboto-normal-storm-dust-18px")}>
+        <div className={"poll-option-text-i12 valign-text-middle " + (isActive === true ? "roboto-normal-white-18px" : "roboto-normal-storm-dust-18px")}>
           {description}
         </div>
       </div>

@@ -10,33 +10,41 @@ type HeaderProps = {
 
 export const Header = ({ userData, loginUrl }: HeaderProps) => {
   const history = useHistory();
-  
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, dispatch] = useContext(Context);
 
-  const handleHome = (e: React.MouseEvent) => {
+  const handleRoute = (e: React.MouseEvent, path: string) => {
     e.preventDefault();
     dispatch({ type: "SET_SECTION", payload: "home" });
-    history.push("/");
+    history.push(path);
   };
 
   return (
     <div className="header">
-      <a onClick={(e) => handleHome(e)} href="/">
+      <a onClick={(e) => handleRoute(e, "/")} href="/">
         <img alt="streampoll-logo" src="/img/logo.svg" />
       </a>
       <div className="connect">
         {userData ? (
           <>
             <Link
-              // onClick={(e) => handleHome(e)}
+              onClick={(e) => handleRoute(e, "/profile")}
               to="/profile"
               className="user-link roboto-normal-white-24px"
             >
+              <img     
+                alt="user-avatar"
+                style={{ 
+                  width: 32,
+                  height: 32,
+                  marginRight: 12
+                }}
+                src={userData.profile_image_url}
+              />
               {userData.display_name}
             </Link>
             <a
-              onClick={(e) => handleHome(e)}
               href="/api/logout"
               className="user-link roboto-normal-white-24px"
             >

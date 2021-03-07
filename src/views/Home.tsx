@@ -13,19 +13,20 @@ export const Home = () => {
       Choose an option
     </div>
     <PollOption
-      title="POLL (coming soon...)"
+      title="Poll (coming soon...)"
       description="Poll with admin created options of text/images"
       isActive={false}
     />
 
     <PollOption
       onClick={() => dispatch({ type: "SET_SECTION", payload: "contest" })}
-      title="CONTEST"
+      style={{ cursor: "pointer" }}
+      title="Contest"
       description="Contest with user submission and voting periods"
     />
 
     <PollOption
-      title="SURVEY (coming soon...)"
+      title="Survey (coming soon...)"
       description="Create a survey and collect results"
       isActive={false}
     />

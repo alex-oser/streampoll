@@ -1,8 +1,9 @@
 export const PollOption = (props: any) => {
-    const { title, description, isActive = true } = props;
+    const { title, description, isActive = true, style } = props;
   
     return (
       <div
+        style={style}
         onClick={props.onClick}
         className={
           "poll-option-inactive " +

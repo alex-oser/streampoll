@@ -10,6 +10,7 @@ const paramsMap: any = {
   redirect_uri: OAUTH_CALLBACK_URL,
   response_type: "code",
   state: state,
+  force_verify: true,
   scope: "user:read:email",
 };
 

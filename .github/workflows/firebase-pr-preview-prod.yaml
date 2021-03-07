@@ -1,4 +1,4 @@
-name: Firebase Preview (PROD)
+name: Preview (PROD)
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build_and_preview:
+  'Firebase Pipeline':
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

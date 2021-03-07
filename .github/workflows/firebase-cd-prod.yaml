@@ -1,4 +1,4 @@
-name: Firebase Deploy (PROD)
+name: Deploy (PROD)
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  deploy_prod:
+  'Firebase Pipeline':
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2      

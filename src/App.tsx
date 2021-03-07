@@ -29,6 +29,11 @@ const App = () => {
             <Route path="/" exact>
               <Home />
             </Route>
+            
+            <Route path="/create/contest" exact>
+              <CreateContest />
+            </Route>
+
             <Route path="/profile">
               <Profile userData={userData} />
             </Route>

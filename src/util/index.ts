@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 
 const { REACT_APP_CLIENT_ID } = process.env;
 const { protocol, host } = window.location;
-const OAUTH_CALLBACK_URL = `${protocol}//${host}/api/oauth/callback`;
+const OAUTH_CALLBACK_URL = `${protocol}//${host}/api/auth/oauth/callback`;
 
 const state = nanoid(22);
 const paramsMap: any = {

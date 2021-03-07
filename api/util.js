@@ -27,11 +27,11 @@ const getTwitchAuthToken = async (code) => {
       client_secret: clientsecret,
       code: code,
       grant_type: "authorization_code",
-      redirect_uri: `${HOST}/api/oauth/callback`,
+      redirect_uri: `${HOST}/api/auth/oauth/callback`,
     },
     responseType: "json",
   });
-
+  
   return response.body;
 };
 

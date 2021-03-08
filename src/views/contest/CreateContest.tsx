@@ -62,7 +62,7 @@ export const CreateContest = () => {
         <StepTwo />
         <StepThree />
 
-        {/* <ProgressBar numberOfSteps={4} onSubmit={submitForm} /> */}
+        <ProgressBar numberOfSteps={4} onNext={() => {}} onSubmit={submitForm} />
       </Grid>
     </div>
   );

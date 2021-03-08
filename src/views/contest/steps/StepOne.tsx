@@ -1,10 +1,10 @@
 import { TextField, Typography, Grid } from "@material-ui/core";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AppleStyleToggle } from "../../../components/AppleStyleToggle";
 import { Context } from "../../../store";
 import * as yup from "yup";
-import { Formik, useFormik, useFormikContext } from "formik";
-import { ProgressBar } from "../../../components/ProgressBar";
+import { useFormik, useFormikContext } from "formik";
+// import { ProgressBar } from "../../../components/ProgressBar";
 
 const validationSchema = yup.object({
   title: yup.string().required("title is required"),
@@ -24,14 +24,14 @@ export const StepOne = ({ onSubmit }: { onSubmit: Function }) => {
   //   allowImageLinks: true,
   // });
 
-  const { values, submitForm } = useFormikContext();
-
-  console.log(values);
+  // const { values, submitForm } = useFormikContext();
+  // console.log(values);
 
   const formik = useFormik({
     initialValues: {
       title: "",
       description: "",
+      allowImageLinks: true,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {},
@@ -63,12 +63,12 @@ export const StepOne = ({ onSubmit }: { onSubmit: Function }) => {
         />
       </Grid>
 
-      <ProgressBar
+      {/* <ProgressBar
         numberOfSteps={4}
         onNext={formik.handleSubmit}
         onSubmit={onSubmit}
-      />
-      {/* <Grid item xs={12}>
+      /> */}
+      <Grid item xs={12}>
         <TextField
           color="secondary"
           required
@@ -77,21 +77,20 @@ export const StepOne = ({ onSubmit }: { onSubmit: Function }) => {
           id="desc"
           name="desc"
           label="Description"
-          value={contest.description}
+          value={formik.values.description}
           fullWidth
-          onChange={(e) =>
-            setContest({ ...contest, description: e.target.value })
-          }
+          onChange={formik.handleChange}
         />
       </Grid>
 
       <Grid item xs={12}>
         <div style={{ flex: 1 }}>
           <AppleStyleToggle
-            onChange={(e) =>
-              setContest({ ...contest, allowImageLinks: e.target.checked })
-            }
-            checked={contest.allowImageLinks}
+            onChange={formik.handleChange}
+            // onChange={(e) =>
+            //   setContest({ ...contest, allowImageLinks: e.target.checked })
+            // }
+            checked={formik.values.allowImageLinks}
           />
           <Typography color="textPrimary" variant="h6">
             Photo Contest
@@ -101,7 +100,7 @@ export const StepOne = ({ onSubmit }: { onSubmit: Function }) => {
             image.
           </Typography>
         </div>
-      </Grid> */}
+      </Grid>
     </Grid>
   );
 };

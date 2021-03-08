@@ -21,6 +21,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const stepComponents = [
+  <StepOne />,
+  <StepTwo />,
+  <StepThree />,
+]
+
 export const CreateContest = () => {
   const [state, dispatch] = useContext(Context);
   const classes = useStyles();
@@ -42,6 +48,7 @@ export const CreateContest = () => {
     });
   };
 
+
   return (
     <div className={classes.layout}>
       <Grid container>
@@ -49,9 +56,11 @@ export const CreateContest = () => {
           Create a contest
         </Typography>
 
-        <StepOne />
-        <StepTwo />
-        <StepThree />
+        {stepComponents.map((component, index) => (
+          <div key={index} style={{ display: state.stepIndex !== index ? "none" : "block" }}>
+            { component }
+          </div>
+        ))}
 
         <ProgressBar
           numberOfSteps={4}

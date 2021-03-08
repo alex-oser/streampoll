@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+body, html {
+  background-color: var(--masala);
+}
+
 .create-poll {
   align-items: center;
   background-color: var(--masala);

@@ -1,3 +1,4 @@
+import React from "react";
 import { TextField, Typography, Grid } from "@material-ui/core";
 import { useContext, useEffect } from "react";
 import { AppleStyleToggle } from "../../../components/AppleStyleToggle";
@@ -5,27 +6,26 @@ import { Context } from "../../../store";
 import * as yup from "yup";
 import { withFormik } from "formik";
 
-const StepBase = (props: any) => {
+const StepBase = React.memo((props: any) => {
   const [state, dispatch] = useContext(Context);
+  const canProceed = props.isValid && props.dirty;
 
   useEffect(() => {
-    const canProceed = props.isValid && props.dirty;
     dispatch({ type: "SET_CAN_PROCEED", payload: canProceed });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.isValid, props.dirty]);
 
-  useEffect(() => {    
+  useEffect(() => {
     dispatch({ type: "SET_CREATE_SETTINGS", payload: props.values });
 
     // disable button so next step can mutate it
-    dispatch({ type: "SET_CAN_PROCEED", payload: false });
+    dispatch({ type: "SET_CAN_PROCEED", payload: canProceed });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.stepIndex]);
 
   return (
-    <Grid
-      style={{ display: state.stepIndex !== 0 ? "none" : "block" }}
+    <Grid    
       container
     >
       <Grid item xs={12} sm={6}>
@@ -81,7 +81,7 @@ const StepBase = (props: any) => {
 
     </Grid>
   );
-};
+});
 
 export const StepOne = withFormik({
   mapPropsToValues: () => ({ 

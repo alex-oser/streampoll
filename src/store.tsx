@@ -4,6 +4,7 @@ const initialState: any = {
   section: "home",
   stepIndex: 0,
   canProceed: false,
+  isAuthed: false,
   createSettings: {}
 };
 

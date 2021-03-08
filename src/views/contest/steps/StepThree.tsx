@@ -18,8 +18,8 @@ export const StepThree = () => {
   }, [state.stepIndex]);
 
   return (
-    <Grid style={{ display: state.stepIndex !== 2 ? "none" : "block" }} container spacing={3}>
-      <Grid item xs={12} sm={6}>
+    <Grid container >
+      <Grid item xs={12}>
         <Typography color="textPrimary" variant="h5">
           Step three
         </Typography>      

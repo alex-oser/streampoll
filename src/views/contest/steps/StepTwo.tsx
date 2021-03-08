@@ -12,6 +12,8 @@ import { Context } from "../../../store";
 import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import { withFormik } from "formik";
 import * as yup from "yup";
+import { UserData } from "../../../types/UserData";
+import { useAuth } from "../../../hooks/useAuth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const StepBase = (props: any) => {
+  const userData: UserData | null = useAuth();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, dispatch] = useContext(Context);
   // const [contest, setContest] = useState<ContestSettings>({});
@@ -34,18 +38,18 @@ export const StepBase = (props: any) => {
   useEffect(() => {
     const canProceed = props.isValid && props.dirty;
     dispatch({ type: "SET_CAN_PROCEED", payload: canProceed });
-    console.log("PROPS", props);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.isValid, props.dirty]);
 
   useEffect(() => {
-    dispatch({ type: "SET_CREATE_SETTINGS", payload: props.fields });
+    // dispatch({ type: "SET_CREATE_SETTINGS", payload: props.fields });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.stepIndex]);
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid style={{ display: state.stepIndex !== 1 ? "none" : "block" }} item>
+      <Grid item>
         <Typography color="textPrimary" variant="h5" gutterBottom>
           Entry Settings
         </Typography>
@@ -57,7 +61,7 @@ export const StepBase = (props: any) => {
                 fullWidth
                 label="Start time"
                 name="entryStart"
-                defaultValue={null}
+                disablePast
                 inputVariant="filled"
                 value={props.values.entryStart}
                 onBlur={props.handleBlur}
@@ -79,6 +83,7 @@ export const StepBase = (props: any) => {
                 label="End time"
                 inputVariant="filled"
                 name="entryEnd"
+                disablePast
                 value={props.values.entryEnd}
                 onBlur={props.handleBlur}
                 onChange={(value) => {
@@ -114,6 +119,7 @@ export const StepBase = (props: any) => {
                     color="primary"
                     checked={props.values.enterFollowers}
                     onChange={props.handleChange}
+                    disabled={!userData}
                     name="enterFollowers"
                   />
                 }
@@ -125,6 +131,7 @@ export const StepBase = (props: any) => {
                     color="primary"
                     checked={props.values.enterSubscribers}
                     onChange={props.handleChange}
+                    disabled={!userData}
                     name="enterSubscribers"
                   />
                 }
@@ -133,7 +140,58 @@ export const StepBase = (props: any) => {
             </Paper>
           </Grid>
 
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Typography color="textPrimary" variant="h5">
+                Entry format
+              </Typography>
+
+              <FormControlLabel
+                style={{ width: "100%" }}
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={props.values.enterAnybody}
+                    onChange={props.handleChange}
+                    name="enterAnybody"
+                  />
+                }
+                label="Exclude description from submissions"
+              />
+              <FormControlLabel
+                style={{ width: "100%" }}
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={props.values.enterFollowers}
+                    onChange={props.handleChange}
+                    name="enterFollowers"
+                  />
+                }
+                label="Allow images as imgur links"
+              />
+              <FormControlLabel
+                style={{ width: "100%" }}
+                control={
+                  <Checkbox
+                    color="primary"
+                    checked={props.values.enterSubscribers}
+                    onChange={props.handleChange}
+                    name="enterSubscribers"
+                  />
+                }
+                label="All for multple uploads"
+              />
+            </Paper>
+          </Grid>
+
           <Grid container spacing={0}>
+            <Grid item xs={12}>
+              <Typography color="textPrimary" variant="h5" gutterBottom>
+                Entry Settings
+              </Typography>
+            </Grid>
+
             <Grid item xs={6}>
               <Paper className={classes.paper}>
                 <DateTimePicker
@@ -141,6 +199,7 @@ export const StepBase = (props: any) => {
                   label="Start time"
                   inputVariant="filled"
                   name="voteStart"
+                  disablePast
                   value={props.values.voteStart}
                   onBlur={props.handleBlur}
                   onChange={(value) => props.setFieldValue("voteStart", value)}
@@ -159,6 +218,7 @@ export const StepBase = (props: any) => {
                   label="Start time"
                   inputVariant="filled"
                   name="voteEnd"
+                  disablePast
                   value={props.values.voteEnd}
                   onBlur={props.handleBlur}
                   onChange={(value) => props.setFieldValue("voteEnd", value)}
@@ -194,6 +254,7 @@ export const StepBase = (props: any) => {
                       name="voteFollowers"
                     />
                   }
+                  disabled={!userData}
                   label="Followers"
                 />
                 <FormControlLabel
@@ -205,6 +266,7 @@ export const StepBase = (props: any) => {
                       name="voteSubscribers"
                     />
                   }
+                  disabled={!userData}
                   label="Subscribers"
                 />
               </Paper>
@@ -230,7 +292,6 @@ export const StepTwo = withFormik({
     voteFollowers: false,
   }),
   validateOnMount: true,
-  isInitialValid: false,
   validationSchema: yup.object({
     entryStart: yup
       .date()

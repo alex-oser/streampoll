@@ -3,6 +3,7 @@ import React, { createContext, useReducer } from "react";
 const initialState: any = {
   section: "home",
   stepIndex: 0,
+  canProceed: false,
   createSettings: {}
 };
 
@@ -32,6 +33,11 @@ const Reducer = (state: any, action: { type: any; payload: any; }) => {
       return {
         ...state,
         createSettings: { ...state.createSettings, ...action.payload }
+      };
+    case "SET_CAN_PROCEED":
+      return {
+        ...state,
+        canProceed: action.payload
       };
     default:
       return state;

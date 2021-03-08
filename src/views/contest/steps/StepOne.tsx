@@ -2,17 +2,24 @@ import { TextField, Typography, Grid } from "@material-ui/core";
 import { useContext, useEffect } from "react";
 import { AppleStyleToggle } from "../../../components/AppleStyleToggle";
 import { Context } from "../../../store";
+import * as yup from "yup";
+import { withFormik } from "formik";
 
-export const StepOne = (props: any) => {
+const StepBase = (props: any) => {
   const [state, dispatch] = useContext(Context);
 
   useEffect(() => {
-    props.onFormValidate(props);
-    console.log(props);
-  }, [props]);
+    const canProceed = props.isValid && props.dirty;
+    dispatch({ type: "SET_CAN_PROCEED", payload: canProceed });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.isValid, props.dirty]);
 
-  useEffect(() => {
+  useEffect(() => {    
     dispatch({ type: "SET_CREATE_SETTINGS", payload: props.values });
+
+    // disable button so next step can mutate it
+    dispatch({ type: "SET_CAN_PROCEED", payload: false });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.stepIndex]);
 
@@ -20,7 +27,6 @@ export const StepOne = (props: any) => {
     <Grid
       style={{ display: state.stepIndex !== 0 ? "none" : "block" }}
       container
-      spacing={3}
     >
       <Grid item xs={12} sm={6}>
         <TextField
@@ -55,7 +61,7 @@ export const StepOne = (props: any) => {
           helperText={props.touched.description && props.errors.description}
         />
       </Grid>
-
+      
       <Grid item xs={12}>
         <div style={{ flex: 1 }}>
           <AppleStyleToggle
@@ -76,3 +82,28 @@ export const StepOne = (props: any) => {
     </Grid>
   );
 };
+
+export const StepOne = withFormik({
+  mapPropsToValues: () => ({ 
+    title: '',
+    description: '',
+    allowImageLinks: true
+  }),
+  validateOnMount: true,
+  validationSchema: yup.object({
+    title: yup.string()
+    .min(3, "min req")
+    .max(255, "Description should be of max of 255 characters")
+    .required("Title is required"),
+    description: yup
+      .string()
+      .min(5, "Description should be at least 5 characters")
+      .max(1000, "Description should be of max of 1000 characters")
+      .required("Description is required"),
+  }),
+  handleSubmit: (values, { setSubmitting }) => {
+
+  },
+
+  displayName: 'BasicForm',
+})(StepBase);

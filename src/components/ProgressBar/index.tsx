@@ -61,10 +61,7 @@ export const ProgressBar = ({ numberOfSteps, onSubmit, onNext, canProceed }: Pro
     if (isLastStep) {
       return onSubmit();
     }
-
-    const errors = onNext();
-    console.log(errors);
-
+    
     dispatch({ type: "NEXT_STEP" })
   }
 

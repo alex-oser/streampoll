@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: set DEPLOY_START_TIME environment variable
+        run: echo "DEPLOY_START_TIME=$(date +%s)" >> $GITHUB_ENV
       - name: CLI
         uses: w9jds/firebase-action@master
         with:
@@ -16,6 +18,7 @@ jobs:
         env:
           PROJECT_ID: streampoll-dev-b2f18
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          REACT_APP_BRANCH: "${{ github.ref }}"
-          REACT_APP_COMMIT_SHA: ${{ github.sha }}"
+          REACT_APP_BRANCH: ${{ github.ref }}
+          REACT_APP_COMMIT_SHA: ${{ github.sha }}
+          REACT_APP_DEPLOY_TIME: ${{ env.DEPLOY_START_TIME }}
 

@@ -13,15 +13,9 @@ router.post("/create/poll", async (req, res) => {
 
 router.post("/create/contest", async (req, res) => {
   const body = req.body;
-  console.log(body.title);
   const id = uuid.v4();
 
-  console.log(id);
-
-  database.ref(`contests/${id}`).set({
-    title: body.title,
-    description: body.description
-  });
+  database.ref(`contests/${id}`).set(body);
 
   // create contest
   res.send(body);

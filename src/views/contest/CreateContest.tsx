@@ -1,15 +1,12 @@
-import {
-  TextField,
-  Tooltip,
-  Typography,
-  Grid,
-  Button,
-  makeStyles,
-} from "@material-ui/core";
-import { useContext, useState } from "react";
-import { AppleStyleToggle } from "../../components/AppleStyleToggle";
+import React, { useEffect } from "react";
+import { Typography, Grid, makeStyles } from "@material-ui/core";
+import { useContext } from "react";
 import { ProgressBar } from "../../components/ProgressBar";
 import { Context } from "../../store";
+import { StepOne } from "./steps/StepOne";
+import { StepThree } from "./steps/StepThree";
+import { StepTwo } from "./steps/StepTwo";
+import { Formik } from "formik";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -26,14 +23,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const CreateContest = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_state, dispatch] = useContext(Context);
-  const [isPhotoContest, setIsPhotoContest] = useState(true);
-  const [contestTitle, setContestTitle] = useState("");
-  const [contestDescription, setContestDescription] = useState("");
-  
-
+  const [state, dispatch] = useContext(Context);
   const classes = useStyles();
+
+  // reset the step index
+  useEffect(() => {
+    return () => dispatch({ type: "RESET_STEP" });
+  }, [dispatch]);
 
   const submitForm = () => {
     fetch("/api/create/contest", {
@@ -43,10 +39,7 @@ export const CreateContest = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        title: contestTitle,
-        description: contestDescription,
-      }),
+      body: JSON.stringify(state.createSettings),
     });
   };
 
@@ -57,56 +50,20 @@ export const CreateContest = () => {
           Create a contest
         </Typography>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              color="secondary"
-              required
-              id="title"
-              name="title"
-              label="Title"
-              fullWidth
-              onChange={(e) => setContestTitle(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              color="secondary"
-              required
-              multiline
-              rows="6"
-              id="desc"
-              name="desc"
-              label="Description"
-              fullWidth
-              onChange={(e) => setContestDescription(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <AppleStyleToggle
-              onChange={(e) => setIsPhotoContest(e.target.checked)}
-              checked={isPhotoContest}
-            />
-            <Typography color="textPrimary" variant="h5">
-              Photo Contest
-            </Typography>
-            <Typography color="textPrimary" variant="h6">
-              Selecting photo contest will require each submission to have an image.
-            </Typography>
-          </Grid>
-        </Grid>
+        <Formik
+          initialValues={{
+            title: "",
+            description: "",
+          }}   
+          onSubmit={() => {}}
+        >
+          <StepOne onSubmit={submitForm} />
+        </Formik>
+        <StepTwo />
+        <StepThree />
+
+        {/* <ProgressBar numberOfSteps={4} onSubmit={submitForm} /> */}
       </Grid>
-
-      {/* <Button
-        // onClick={() => dispatch({ type: "SET_SECTION", payload: "home" })}
-        onClick={submitForm}
-        variant="contained"
-        color="primary"
-      >
-        CREATE TEST
-      </Button> */}
-
-      <ProgressBar numberOfSteps={3} />
     </div>
   );
 };

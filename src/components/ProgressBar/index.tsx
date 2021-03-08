@@ -1,4 +1,4 @@
-import { Button, makeStyles } from "@material-ui/core";
+import { Button, darken, makeStyles } from "@material-ui/core";
 import { useContext } from "react";
 import { Context } from "../../store";
 import classNames from "classnames";
@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50%",
     width: 12,
     height: 12,
-    background: "#fff",
+    background: darken(theme.palette.secondary.light, 0.6),
   },
   activeDot: {
-    background: theme.palette.primary.main
+    background: theme.palette.secondary.light
   }
 }));
 
@@ -45,11 +45,25 @@ export const ProgressDots = ({ stepIndex, numberOfSteps }: { numberOfSteps: numb
   )
 };
 
-export const ProgressBar = ({ numberOfSteps }: { numberOfSteps: number }) => {
+type ProgressBarProps = {
+  numberOfSteps: number;
+  onSubmit: Function;
+  onNext: Function;
+}
+
+export const ProgressBar = ({ numberOfSteps, onSubmit, onNext }: ProgressBarProps) => {
   const classes = useStyles();
   const [state, dispatch] = useContext(Context);
+  const isLastStep = (state.stepIndex === numberOfSteps - 1);
 
   const handleNext = () => {  
+    if (isLastStep) {
+      return onSubmit();
+    }
+
+    const errors = onNext();
+    console.log(errors);
+
     dispatch({ type: "NEXT_STEP" })
   }
 
@@ -78,7 +92,7 @@ export const ProgressBar = ({ numberOfSteps }: { numberOfSteps: number }) => {
         variant="contained"
         color="primary"
       >
-        Next
+        { isLastStep ? "Submit" : "Next" }
       </Button>
     </div>
   );

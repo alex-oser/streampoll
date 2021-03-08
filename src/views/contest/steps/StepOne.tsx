@@ -8,6 +8,7 @@ export const StepOne = (props: any) => {
 
   useEffect(() => {
     props.onFormValidate(props);
+    console.log(props);
   }, [props]);
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export const StepOne = (props: any) => {
           label="Title"
           value={props.values.title}
           fullWidth
+          onBlur={props.handleBlur}
           onChange={props.handleChange}
           error={props.touched.title && Boolean(props.errors.title)}
           helperText={props.touched.title && props.errors.title}
@@ -47,6 +49,7 @@ export const StepOne = (props: any) => {
           label="Description"
           fullWidth
           value={props.values.description}
+          onBlur={props.handleBlur}
           onChange={props.handleChange}
           error={props.touched.description && Boolean(props.errors.description)}
           helperText={props.touched.description && props.errors.description}

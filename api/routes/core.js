@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const admin = require("firebase-admin");
 const database = admin.database();
+const uuid = require("uuid");
 
 router.post("/create/poll", async (req, res) => {
   const body = req.body;
@@ -10,17 +11,26 @@ router.post("/create/poll", async (req, res) => {
   res.send(body);
 });
 
-router.post("/create/poll", async (req, res) => {
+router.post("/create/contest", async (req, res) => {
   const body = req.body;
+  console.log(body.title);
+  const id = uuid.v4();
 
-  // create poll
+  console.log(id);
+
+  database.ref(`contests/${id}`).set({
+    title: body.title,
+    description: body.description
+  });
+
+  // create contest
   res.send(body);
 });
 
-router.post("/create/poll", async (req, res) => {
+router.post("/create/survey", async (req, res) => {
   const body = req.body;
   
-  // create poll
+  // create survey
   res.send(body);
 });
 

@@ -7,7 +7,7 @@ import { LOGIN_URL } from "./util";
 import { useAuth } from "./hooks/useAuth";
 import { Home } from "./views/Home";
 import { Profile } from "./views/Profile";
-import { CreateContest } from "./views/CreateContest";
+import { CreateContest } from "./views/contest/CreateContest";
 import { Context } from "./store";
 
 import { UserData } from "./types/UserData";

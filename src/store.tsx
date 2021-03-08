@@ -2,6 +2,7 @@ import React, { createContext, useReducer } from "react";
 
 const initialState: any = {
   section: "home",
+  stepIndex: 0,
 };
 
 const Reducer = (state: any, action: { type: any; payload: any; }) => {
@@ -10,6 +11,16 @@ const Reducer = (state: any, action: { type: any; payload: any; }) => {
       return {
         ...state,
         section: action.payload,
+      };
+    case "NEXT_STEP":
+      return {
+        ...state,
+        stepIndex: state.stepIndex + 1,
+      };
+    case "PREV_STEP":
+      return {
+        ...state,
+        stepIndex: state.stepIndex - 1,
       };
     default:
       return state;

@@ -12,6 +12,7 @@
     "@types/node": "^12.20.4",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
+    "classnames": "^2.2.6",
     "concurrently": "^6.0.0",
     "http-proxy-middleware": "^1.0.6",
     "nanoid": "^3.1.20",
@@ -28,6 +29,7 @@
     "frontend": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "postinstall": "cd api && npm install",
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.tsx'",
     "dev": "nodemon -e css,tsx --watch ./src --exec \"npm run build\""
@@ -51,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.11",
     "@types/react-router-dom": "^5.1.7",
     "cross-env": "^7.0.3",
     "nodemon": "^2.0.7"

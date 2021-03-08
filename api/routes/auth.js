@@ -2,7 +2,7 @@ const express = require("express");
 const admin = require("firebase-admin");
 const router = express.Router();
 const database = admin.database();
-const { getTwitchAuthToken, getTwitchUserdata } = require("./util");
+const { getTwitchAuthToken, getTwitchUserdata } = require("../util");
 
 // TODO: make post, as this can be exploited?
 router.get("/logout", async (req, res) => {
@@ -16,9 +16,7 @@ router.get("/logout", async (req, res) => {
 
 router.get("/oauth/callback", async (req, res) => {
   const { code } = req.query;
-  console.log('in oaiuth callback')
   const tokenData = await getTwitchAuthToken(code);
-  console.log('tokenData', tokenData)
   const profile = await getTwitchUserdata(tokenData.access_token);
 
   // save the user profile in the db

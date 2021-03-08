@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { AppleStyleToggle } from "../../../components/AppleStyleToggle";
 import { Context } from "../../../store";
 import * as yup from "yup";
-import { useFormik, useFormikContext } from "formik";
+import { useFormik } from "formik";
 // import { ProgressBar } from "../../../components/ProgressBar";
 
 const validationSchema = yup.object({

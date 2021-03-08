@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Grid, makeStyles } from "@material-ui/core";
 import { useContext } from "react";
 import { ProgressBar } from "../../components/ProgressBar";
@@ -7,6 +7,7 @@ import { StepOne } from "./steps/StepOne";
 import { StepThree } from "./steps/StepThree";
 import { StepTwo } from "./steps/StepTwo";
 import { Formik } from "formik";
+import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -24,12 +25,17 @@ const useStyles = makeStyles((theme) => ({
 
 export const CreateContest = () => {
   const [state, dispatch] = useContext(Context);
+  const [canProceed, setCanProceed] = useState(false);
   const classes = useStyles();
 
   // reset the step index
   useEffect(() => {
     return () => dispatch({ type: "RESET_STEP" });
   }, [dispatch]);
+
+  const onFormValidate = (form: any) => {
+    setCanProceed(form.isValid && form.dirty);
+  };
 
   const submitForm = () => {
     fetch("/api/create/contest", {
@@ -54,15 +60,34 @@ export const CreateContest = () => {
           initialValues={{
             title: "",
             description: "",
-          }}   
+            allowImageLinks: true,
+          }}
+          validateOnMount
+          validateOnChange
           onSubmit={() => {}}
+          validationSchema={yup.object({
+            title: yup.string()
+            .min(3, "min req")
+            .max(255, "Description should be of max of 255 characters")
+            .required("Title is required"),
+            description: yup
+              .string()
+              .min(5, "Description should be at least 5 characters")
+              .max(1000, "Description should be of max of 1000 characters")
+              .required("Description is required"),
+          })}
         >
-          <StepOne onSubmit={submitForm} />
+          {(props) => <StepOne onFormValidate={onFormValidate} {...props} />}
         </Formik>
         <StepTwo />
         <StepThree />
 
-        <ProgressBar numberOfSteps={4} onNext={() => {}} onSubmit={submitForm} />
+        <ProgressBar
+          numberOfSteps={4}
+          canProceed={canProceed}
+          onNext={() => {}}
+          onSubmit={submitForm}
+        />
       </Grid>
     </div>
   );

@@ -49,9 +49,10 @@ type ProgressBarProps = {
   numberOfSteps: number;
   onSubmit: Function;
   onNext: Function;
+  canProceed: boolean;
 }
 
-export const ProgressBar = ({ numberOfSteps, onSubmit, onNext }: ProgressBarProps) => {
+export const ProgressBar = ({ numberOfSteps, onSubmit, onNext, canProceed }: ProgressBarProps) => {
   const classes = useStyles();
   const [state, dispatch] = useContext(Context);
   const isLastStep = (state.stepIndex === numberOfSteps - 1);
@@ -91,6 +92,7 @@ export const ProgressBar = ({ numberOfSteps, onSubmit, onNext }: ProgressBarProp
         onClick={handleNext}
         variant="contained"
         color="primary"
+        disabled={!canProceed}
       >
         { isLastStep ? "Submit" : "Next" }
       </Button>

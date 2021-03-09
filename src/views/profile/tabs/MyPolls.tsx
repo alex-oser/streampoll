@@ -1,4 +1,4 @@
-import {  makeStyles, Paper } from "@material-ui/core";
+import { makeStyles, Paper } from "@material-ui/core";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@material-ui/core";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -15,11 +15,11 @@ const useStyles = makeStyles({
 
 const columns = [
   { id: 'title', label: 'Title', minWidth: 170 },
-  { 
-    id: 'createdAt', 
-    label: 'Created At', 
+  {
+    id: 'createdAt',
+    label: 'Created At',
     minWidth: 100,
-    align: 'right', 
+    align: 'right',
     format: (value: any) => (new Date(value * 1000)).toString()
   },
   { id: 'description', label: 'Description', minWidth: 170 },
@@ -29,7 +29,7 @@ export const MyPolls = (props: any) => {
   const classes = useStyles();
   const { value, index } = props;
   // const [ contests, setContests ] = useState([])
-  const [ rows, setRows ] = useState<any>([])
+  const [rows, setRows] = useState<any>([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -43,20 +43,26 @@ export const MyPolls = (props: any) => {
   };
 
   const getContestData = (contests: any) => {
-    var newRows:Array<any> = []
+    var newRows: Array<any> = []
+    var fetches: Array<any> = []
     contests.forEach((contest: any) => {
-      fetch(`/api/contest/${contest.contestid}`, {
-        credentials: "include",
+      fetches.push(
+        fetch(`/api/contest/${contest.contestid}`, {
+          credentials: "include",
         })
-        .then((res) => res.json())
-        .then((res) => {
-          if (!res.error) {
-            console.log("contest is: " + JSON.stringify(res))
-            newRows.push(res)
-          }
-        });
+          .then((res) => res.json())
+          .then((res) => {
+            if (!res.error) {
+              console.log("contest is: " + JSON.stringify(res))
+              newRows.push(res)
+            }
+          })
+      )
     })
-    return newRows
+    Promise.all(fetches).then(() => {
+      setRows(newRows)
+    })
+
   }
 
   useEffect(() => {
@@ -66,59 +72,59 @@ export const MyPolls = (props: any) => {
       .then((res) => res.json())
       .then((res) => {
         if (!res.error) {
-          const newRows = getContestData(Object.values(res))
-          setRows(newRows)
+          getContestData(Object.values(res))
         }
-      });
+      }
+      );
   }, []);
 
   return (
     <>
       <TabPanel style={{ overflow: "auto", display: "flex", flexDirection: "column" }} value={value} index={index}>
-      <Paper className={classes.root}>
-        <TableContainer className={classes.container}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column: any) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column: any) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number' ? column.format(value) : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
+        <Paper className={classes.root}>
+          <TableContainer className={classes.container}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column: any) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                      {columns.map((column: any) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
       </TabPanel>
     </>
   );

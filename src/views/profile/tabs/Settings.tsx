@@ -1,20 +1,5 @@
-import { AppBar, Checkbox, Button, FormControlLabel, Hidden, makeStyles, Tab, Tabs, Typography } from "@material-ui/core";
-import { useEffect } from "react";
-import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Checkbox, FormControlLabel, Typography } from "@material-ui/core";
 import { TabPanel } from "./TabPanel";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    background: "none",
-    border: "none",
-    boxShadow: "none",
-  },
-}));
 
 export const Settings = (props: any) => {
   const { value, index } = props;

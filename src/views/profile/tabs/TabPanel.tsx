@@ -1,4 +1,4 @@
-import { Box, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 export function TabPanel(props: any) {
   const { children, value, index, ...other } = props;

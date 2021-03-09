@@ -1,7 +1,5 @@
-import { AppBar, Box, Button, Grid, Hidden, makeStyles, Tab, Tabs, Typography } from "@material-ui/core";
-import { useEffect } from "react";
+import { AppBar, makeStyles, Tab, Tabs, Typography } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
 import { UserData } from "../../types/UserData";
 import { TabPanel } from "./tabs/TabPanel"
 import { Settings } from "./tabs/Settings"

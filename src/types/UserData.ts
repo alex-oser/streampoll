@@ -1,4 +1,10 @@
-interface UserData {
+export interface UserSettings {
+  requireTwitchAuth: boolean;
+  allowEmailNotifications: boolean;
+  allowTwitchNotifications: boolean;
+}
+
+export interface UserData {
   broadcaster_type: string;
   created_at: string;
   description: string;
@@ -10,6 +16,7 @@ interface UserData {
   profile_image_url: string;
   type: string;
   view_count: number;
+  settings: {
+    [key: string]: UserSettings
+  }
 }
-
-export type { UserData };

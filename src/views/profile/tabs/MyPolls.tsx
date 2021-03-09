@@ -14,15 +14,15 @@ const useStyles = makeStyles({
 });
 
 const columns = [
-  { id: 'title', label: 'Title', minWidth: 170 },
+  { id: 'title', label: 'Title', minWidth: 100 },
+  { id: 'description', label: 'Description', minWidth: 170 },
   {
     id: 'createdAt',
     label: 'Created At',
     minWidth: 100,
     align: 'right',
-    format: (value: any) => (new Date(value * 1000)).toString()
+    format: (value: any) => (new Date(value)).toLocaleDateString("en-US")
   },
-  { id: 'description', label: 'Description', minWidth: 170 },
 ];
 
 export const MyPolls = (props: any) => {
@@ -42,29 +42,23 @@ export const MyPolls = (props: any) => {
     setPage(0);
   };
 
-  const getContestData = (contests: any) => {
-    var newRows: Array<any> = []
-    var fetches: Array<any> = []
-    contests.forEach((contest: any) => {
-      fetches.push(
-        fetch(`/api/contest/${contest.contestid}`, {
-          credentials: "include",
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            if (!res.error) {
-              console.log("contest is: " + JSON.stringify(res))
-              newRows.push(res)
-            }
-          })
-      )
+  const getContestsData = (contests: any) => {
+    fetch("/api/contests", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contests),
     })
-    Promise.all(fetches).then(() => {
-      setRows(newRows)
-    })
+    .then((res) => res.json())
+    .then((res) => {
+      setRows(res)
+    });
+  };
 
-  }
-
+  // On page load fetch contests the authenticated user has created
   useEffect(() => {
     fetch("/api/me/contests", {
       credentials: "include",
@@ -72,7 +66,8 @@ export const MyPolls = (props: any) => {
       .then((res) => res.json())
       .then((res) => {
         if (!res.error) {
-          getContestData(Object.values(res))
+          const contests = res
+          getContestsData(contests)
         }
       }
       );
@@ -98,13 +93,13 @@ export const MyPolls = (props: any) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any) => {
+                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, index: number) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={"row" + index}>
                       {columns.map((column: any) => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.id} align={column.align}>
+                          <TableCell key={column.id + "-" + index} align={column.align}>
                             {column.format && typeof value === 'number' ? column.format(value) : value}
                           </TableCell>
                         );

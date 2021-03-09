@@ -53,20 +53,18 @@ export const Profile = ({ userData }: { userData: UserData | null }) => {
           // indicatorColor="primary" 
           aria-label="simple tabs example"
         >
-          <Tab label="My Activity" {...a11yProps(0)} />
-          <Tab label="Settings" {...a11yProps(1)} />
-          <Tab label="My Polls" {...a11yProps(2)} />
+          <Tab label="My Polls" {...a11yProps(0)} />
+          <Tab label="My Activity" {...a11yProps(1)} />
+          <Tab label="General Settings" {...a11yProps(2)} />
           <Tab label="Test Info" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       <MyPolls value={value} index={0}></MyPolls>
-      <Settings value={value} index={1}></Settings>
-      <TabPanel style={{ overflow: "auto" }} value={value} index={2}>
+      <TabPanel style={{ overflow: "auto" }} value={value} index={1}>TODO</TabPanel>
+      <Settings value={value} index={2}></Settings>
       <TabPanel style={{ overflow: "auto" }} value={value} index={3}>
         <div style={{ color: "#fff" }}>Temporary tab for validation</div>
         <pre style={{ color: "#fff" }}>{JSON.stringify(userData, null, 2)}</pre>
-      </TabPanel>
-      TODO:
       </TabPanel>
     </div>
   );

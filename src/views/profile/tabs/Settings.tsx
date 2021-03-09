@@ -1,8 +1,50 @@
 import { Checkbox, FormControlLabel, Typography } from "@material-ui/core";
+import { UserSettings } from "../../../types/UserData";
+import { useState, useEffect } from "react";
 import { TabPanel } from "./TabPanel";
 
 export const Settings = (props: any) => {
   const { value, index } = props;
+  const initialSettings = {
+    requireTwitchAuth: false,
+    allowEmailNotifications: false,
+    allowTwitchNotifications: false,
+  }
+  const [ settings, setSettings ] = useState<UserSettings>(initialSettings);
+  const [ dbSettings, setDbSettings ] = useState<any | null>(null)
+
+  // On page load fetch user settings
+  useEffect(() => {
+    fetch("/api/me/settings", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!res.error) {
+          setDbSettings(res)
+          setSettings(res)
+        }
+      }
+      );
+  }, []);
+
+  useEffect(() => {
+    const _ = require("lodash")
+    if (dbSettings !== null && ! _.isEqual(settings, dbSettings)) {
+      fetch("/api/me/settings", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(settings)
+      }).then(() => {
+        setDbSettings(settings)
+      })
+    }
+  }, [ dbSettings, settings]);
+
   return (
     <>
       <TabPanel style={{ overflow: "auto", display: "flex", flexDirection: "column", marginLeft: "auto", marginRight: "auto" }} value={value} index={index}>
@@ -13,8 +55,8 @@ export const Settings = (props: any) => {
           control={
             <Checkbox
               color="primary"
-              // checked={props.values.enterAnybody}
-              // onChange={props.handleChange}
+              checked={settings.requireTwitchAuth}
+              onChange={() => setSettings({...settings, requireTwitchAuth: ! settings.requireTwitchAuth})}
               name="enterAnybody"
             />
           }
@@ -24,8 +66,8 @@ export const Settings = (props: any) => {
           control={
             <Checkbox
               color="primary"
-              // checked={props.values.enterAnybody}
-              // onChange={props.handleChange}
+              checked={settings.allowEmailNotifications}
+              onChange={() => setSettings({...settings, allowEmailNotifications: ! settings.allowEmailNotifications})}
               name="enterAnybody"
             />
           }
@@ -35,8 +77,8 @@ export const Settings = (props: any) => {
           control={
             <Checkbox
               color="primary"
-              // checked={props.values.enterAnybody}
-              // onChange={props.handleChange}
+              checked={settings.allowTwitchNotifications}
+              onChange={() => setSettings({...settings, allowTwitchNotifications: ! settings.allowTwitchNotifications})}
               name="enterAnybody"
             />
           }

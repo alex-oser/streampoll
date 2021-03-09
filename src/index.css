@@ -104,7 +104,6 @@ body, html {
   padding-top: 14px;
   padding-bottom: 4px;
   border-left: 8px solid #b214f3;
-
   margin-left: 5px;
   margin-top: 21px;
   max-width: 549px;
@@ -116,7 +115,6 @@ body, html {
 
 .create-poll .poll-option-inactive-accent {
   background-color: var(--storm-dust);
-  height: 72px;
   width: 9px;
 }
 

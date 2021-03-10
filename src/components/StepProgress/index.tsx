@@ -23,26 +23,34 @@ const useStyles = makeStyles((theme) => ({
     background: darken(theme.palette.secondary.light, 0.6),
   },
   activeDot: {
-    background: theme.palette.secondary.light
-  }
+    background: theme.palette.secondary.light,
+  },
 }));
 
-export const ProgressDots = ({ stepIndex, numberOfSteps }: { numberOfSteps: number, stepIndex: number }) => {
+export const ProgressDots = ({
+  stepIndex,
+  numberOfSteps,
+}: {
+  numberOfSteps: number;
+  stepIndex: number;
+}) => {
   const classes = useStyles();
   const progresItems = [...Array(numberOfSteps)];
 
-
   const addActiveClass = (index: number) => {
-    return (index === stepIndex ? classes.activeDot : "");
-  }
-  
+    return index === stepIndex ? classes.activeDot : "";
+  };
+
   return (
-    <>      
-      {progresItems.map((value, index) => 
-        <div key={index} className={classNames(classes.dot, addActiveClass(index))} />)
-      }
+    <>
+      {progresItems.map((value, index) => (
+        <div
+          key={index}
+          className={classNames(classes.dot, addActiveClass(index))}
+        />
+      ))}
     </>
-  )
+  );
 };
 
 type ProgressBarProps = {
@@ -50,35 +58,44 @@ type ProgressBarProps = {
   onSubmit: Function;
   onNext: Function;
   canProceed: boolean;
-}
+};
 
-export const ProgressBar = ({ numberOfSteps, onSubmit, onNext, canProceed }: ProgressBarProps) => {
+export const ProgressBar = ({
+  numberOfSteps,
+  onSubmit,
+  onNext,
+  canProceed,
+}: ProgressBarProps) => {
   const classes = useStyles();
   const [state, dispatch] = useContext(Context);
-  const isLastStep = (state.stepIndex === numberOfSteps - 1);
+  const isLastStep = state.stepIndex === numberOfSteps - 1;
 
-  const handleNext = () => {  
+  const handleNext = () => {
     if (isLastStep) {
       return onSubmit();
     }
-    
-    dispatch({ type: "NEXT_STEP" })
-  }
+
+    onNext();
+
+    dispatch({ type: "NEXT_STEP" });
+  };
 
   const handlePrev = () => {
-    dispatch({ type: "PREV_STEP" })
-  }
+    dispatch({ type: "PREV_STEP" });
+  };
 
   return (
     <div className={classes.container}>
-      <Button
-        onClick={handlePrev}
-        variant="contained"
-        color="primary"
-        disabled={state.stepIndex === 0}
-      >
-        Back
-      </Button>
+      {state.stepIndex !== 0 && (
+        <Button
+          onClick={handlePrev}
+          variant="contained"
+          color="primary"
+          disabled={state.stepIndex === 0}
+        >
+          Back
+        </Button>
+      )}
       <div className={classes.dotGroup}>
         <ProgressDots
           numberOfSteps={numberOfSteps}
@@ -91,7 +108,7 @@ export const ProgressBar = ({ numberOfSteps, onSubmit, onNext, canProceed }: Pro
         color="primary"
         disabled={!canProceed}
       >
-        { isLastStep ? "Submit" : "Next" }
+        {isLastStep ? "Submit" : "Next"}
       </Button>
     </div>
   );

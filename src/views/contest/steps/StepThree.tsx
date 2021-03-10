@@ -1,31 +1,68 @@
-import {
-  Typography,
-  Grid,
-} from "@material-ui/core";
-import { useContext, useState, useEffect } from "react";
-import { Context } from "../../../store";
-import { ContestSettings } from "../../../types/ContestSettings";
+import React from "react";
+import { TextField, Grid } from "@material-ui/core";
+import { useContext } from "react";
 
-export const StepThree = () => {
+import { Context } from "../../../store";
+import * as yup from "yup";
+import { withFormik } from "formik";
+import { ProgressBar } from "../../../components/StepProgress";
+
+const StepBase = React.memo((props: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, dispatch] = useContext(Context);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [contest, setContest] = useState<ContestSettings | null>(null);
-  
-  useEffect(() => {
-    dispatch({ type: "SET_CREATE_SETTINGS", payload: contest});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.stepIndex]);
+  const canProceed = props.isValid && props.dirty;
 
   return (
-    <Grid container >
-      <Grid item xs={12}>
-        <Typography color="textPrimary" variant="h5">
-          Step three
-        </Typography>      
-
+    <form onSubmit={props.handleSubmit}>
+      <Grid container>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            color="secondary"
+            required
+            id="host"
+            name="host"
+            label="Host"
+            value={props.values.host}
+            fullWidth
+            onBlur={props.handleBlur}
+            onChange={props.handleChange}
+            error={props.touched.host && Boolean(props.errors.host)}
+            helperText={props.touched.host && props.errors.host}
+          />
+        </Grid>
+     
+        <ProgressBar
+          numberOfSteps={4}
+          canProceed={canProceed}
+          onNext={() => {
+            dispatch({ type: "SET_CREATE_SETTINGS", payload: props.values })
+          }}
+          onSubmit={props.handleSubmit}
+        />
       </Grid>
-
-    </Grid>
+    </form>
   );
-};
+});
+
+export const StepThree = withFormik({
+  mapPropsToValues: () => ({
+    title: "",
+    description: "",
+    allowImageLinks: true,
+  }),
+  validateOnChange: true,
+  validateOnMount: false,
+  validateOnBlur: false,
+  validationSchema: yup.object({
+    host: yup
+      .string()
+      .min(3, "min req")
+      .max(255, "Host should be of max of 255 characters")
+      .required("Host is required"),
+  }),
+  handleSubmit: (values, { setSubmitting }) => {
+    console.log("form submitted");
+  },
+
+  displayName: "BasicForm",
+})(StepBase);

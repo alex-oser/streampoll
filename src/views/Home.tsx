@@ -1,9 +1,10 @@
+import React from "react";
 import { PollOption } from "../components/PollOption";
 import { Context } from "../store";
 import { useContext } from "react";
 
 
-export const Home = () => {
+export const Home = React.memo(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_state, dispatch] = useContext(Context);
 
@@ -31,4 +32,4 @@ export const Home = () => {
       isActive={false}
     />
   </div>
-)};
+)});

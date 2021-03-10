@@ -18,7 +18,9 @@ router.post("/create/contest", async (req, res) => {
   database.ref(`contests/${id}`).set(body);
 
   // create contest
-  res.send(body);
+  res.send({
+    message: "success"
+  });
 });
 
 router.post("/create/survey", async (req, res) => {

@@ -1,11 +1,12 @@
-import { useEffect } from "react";
+import React from "react";
 import { Typography, Grid, makeStyles } from "@material-ui/core";
 import { useContext } from "react";
-import { ProgressBar } from "../../components/ProgressBar";
 import { Context } from "../../store";
 import { StepOne } from "./steps/StepOne";
-import { StepThree } from "./steps/StepThree";
 import { StepTwo } from "./steps/StepTwo";
+import { StepThree } from "./steps/StepThree";
+import { StepFour } from "./steps/StepFour";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     marginTop: 50,
+    paddingBottom: 100,
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: "auto",
@@ -21,22 +23,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const stepComponents = [
-  <StepOne />,
-  <StepTwo />,
-  <StepThree />,
-]
+const stepComponents = [StepOne, StepTwo, StepThree, StepFour];
 
-export const CreateContest = () => {
+export const CreateContest = React.memo(() => {
   const [state, dispatch] = useContext(Context);
   const classes = useStyles();
+  const history = useHistory();
 
-  // reset the step index
-  useEffect(() => {
-    return () => dispatch({ type: "RESET_STEP" });
-  }, [dispatch]);
+  const onValidationUpdate = (form: any) => {
+    console.log("getting form updates");
+    const canProceed = form.isValid && form.dirty;
+    dispatch({ type: "SET_CAN_PROCEED", payload: canProceed });
+  };
 
-  const submitForm = () => {
+  const handleSubmitForm = () => {
     fetch("/api/create/contest", {
       method: "POST",
       credentials: "include",
@@ -45,9 +45,14 @@ export const CreateContest = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(state.createSettings),
-    });
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(console.log(res));
+        history.push("/contest/123123");
+        dispatch({ type: "SET_SECTION", payload: "home" });
+      });
   };
-
 
   return (
     <div className={classes.layout}>
@@ -56,19 +61,22 @@ export const CreateContest = () => {
           Create a contest
         </Typography>
 
-        {stepComponents.map((component, index) => (
-          <div key={index} style={{ display: state.stepIndex !== index ? "none" : "block" }}>
-            { component }
-          </div>
-        ))}
-
-        <ProgressBar
-          numberOfSteps={4}
-          canProceed={state.canProceed}
-          onNext={() => {}}
-          onSubmit={submitForm}
-        />
+        {stepComponents.map((component, index) => {
+          const StepCompnent: any = component;
+          return (
+            <Grid
+              container
+              key={index}
+              style={{ display: state.stepIndex !== index ? "none" : "block" }}
+            >
+              <StepCompnent
+                onSubmitForm={handleSubmitForm}
+                onValidationUpdate={onValidationUpdate}
+              />
+            </Grid>
+          );
+        })}
       </Grid>
     </div>
   );
-};
+});

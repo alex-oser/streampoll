@@ -11,6 +11,7 @@ import { CreateContest } from "./views/contest/CreateContest";
 import { Context } from "./store";
 
 import { UserData } from "./types/UserData";
+import { ViewContest } from "./views/contest/ViewContest";
 
 const App = () => {
   const userData: UserData | null = useAuth();
@@ -30,8 +31,12 @@ const App = () => {
               <Home />
             </Route>
             
-            <Route path="/create/contest" exact>
+            <Route path="/create/contest">
               <CreateContest />
+            </Route>
+            
+            <Route path="/contest/:id" >
+              <ViewContest />
             </Route>
 
             <Route path="/profile">

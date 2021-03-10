@@ -7,13 +7,14 @@ import {
   Checkbox,
 } from "@material-ui/core";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Context } from "../../../store";
 import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import { withFormik } from "formik";
 import * as yup from "yup";
 import { UserData } from "../../../types/UserData";
 import { useAuth } from "../../../hooks/useAuth";
+import { ProgressBar } from "../../../components/StepProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,31 +30,16 @@ const useStyles = makeStyles((theme) => ({
 
 export const StepBase = (props: any) => {
   const userData: UserData | null = useAuth();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [state, dispatch] = useContext(Context);
-  // const [contest, setContest] = useState<ContestSettings>({});
   const classes = useStyles();
 
-  useEffect(() => {
-    const canProceed = props.isValid && props.dirty;
-    dispatch({ type: "SET_CAN_PROCEED", payload: canProceed });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.isValid, props.dirty]);
-
-  useEffect(() => {
-    // dispatch({ type: "SET_CREATE_SETTINGS", payload: props.fields });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.stepIndex]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [state, dispatch] = useContext(Context);  
+  const canProceed = props.isValid && props.dirty;
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid item>
-        <Typography color="textPrimary" variant="h5" gutterBottom>
-          Entry Settings
-        </Typography>
-
+ 
         <Grid container spacing={0}>
           <Grid item xs={6}>
             <Paper className={classes.paper}>
@@ -188,7 +174,7 @@ export const StepBase = (props: any) => {
           <Grid container spacing={0}>
             <Grid item xs={12}>
               <Typography color="textPrimary" variant="h5" gutterBottom>
-                Entry Settings
+                Voting Settings
               </Typography>
             </Grid>
 
@@ -273,6 +259,15 @@ export const StepBase = (props: any) => {
             </Grid>
           </Grid>
         </Grid>
+
+        <ProgressBar
+          numberOfSteps={4}
+          canProceed={canProceed}
+          onNext={() => {
+            dispatch({ type: "SET_CREATE_SETTINGS", payload: props.values })
+          }}
+          onSubmit={props.handleSubmit}
+        />
       </Grid>
     </MuiPickersUtilsProvider>
   );

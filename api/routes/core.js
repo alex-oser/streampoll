@@ -126,7 +126,7 @@ router.post("/contests", async (req, res) => {
     refs.push(
       ref.once("value")
       .then((snapshot) => {
-        contests.push(snapshot.val());
+        contests.push({id, ...snapshot.val()});
         }, (errorObject) => {
           console.log("The read failed: " + errorObject.code);
         }

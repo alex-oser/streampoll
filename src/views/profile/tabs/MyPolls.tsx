@@ -1,9 +1,10 @@
-import { makeStyles, Paper } from "@material-ui/core";
+import { IconButton, makeStyles, Paper } from "@material-ui/core";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@material-ui/core";
 import EditIcon from '@material-ui/icons/Edit';
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   root: {
@@ -14,39 +15,44 @@ const useStyles = makeStyles({
   },
 });
 
-const columns = [
-  {
-    id: 'title',
-    label: 'Title',
-    style: { minWidth: 100, verticalAlign: "top" },
-    format: (value: any) => (
-      <>
-        <EditIcon /> {value}
-      </>
-    )
-  },
-  {
-    id: 'description',
-    label: 'Description',
-    style: { minWidth: 170, wordBreak: "break-word", verticalAlign: "top" },
-    format: (value: any) => value.substr(0, 255)
-  },
-  {
-    id: 'createdAt',
-    label: 'Created At',
-    style: { minWidth: 100, verticalAlign: "top" },
-    align: 'right',
-    format: (value: any) => (new Date(value)).toLocaleDateString("en-US")
-  },
-];
-
 export const MyPolls = (props: any) => {
   const classes = useStyles();
   const { value, index } = props;
-  // const [ contests, setContests ] = useState([])
   const [rows, setRows] = useState<any>([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const history = useHistory()
+
+  const handleEdit = (id: any) => {
+    history.push(`contest/${id}`); 
+  }
+  
+  const columns = [
+    {
+      id: 'title',
+      label: 'Title',
+      style: { minWidth: 100, verticalAlign: "top" },
+      format: (value: any, row: any) => (
+        <>
+          <IconButton onClick={() => {handleEdit(row.id)}}><EditIcon /></IconButton>{value}
+        </>
+      )
+    },
+    {
+      id: 'description',
+      label: 'Description',
+      style: { minWidth: 170, wordBreak: "break-word", verticalAlign: "top" },
+      format: (value: any) => value.substr(0, 255)
+    },
+    {
+      id: 'createdAt',
+      label: 'Created At',
+      style: { minWidth: 100, verticalAlign: "top" },
+      align: 'right',
+      format: (value: any) => (new Date(value)).toLocaleDateString("en-US")
+    },
+  ];
+  
 
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
@@ -81,8 +87,8 @@ export const MyPolls = (props: any) => {
       .then((res) => res.json())
       .then((res) => {
         if (!res.error) {
-          const contests = res
-          getContestsData(contests)
+          const contestIds = res
+          getContestsData(contestIds)
         }
       }
       );
@@ -115,7 +121,7 @@ export const MyPolls = (props: any) => {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id + "-" + index} align={column.align} style={column.style}>
-                            {column.format ? column.format(value) : value}
+                            {column.format ? column.format(value, row) : value}
                           </TableCell>
                         );
                       })}

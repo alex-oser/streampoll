@@ -1,5 +1,6 @@
 import { makeStyles, Paper } from "@material-ui/core";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@material-ui/core";
+import EditIcon from '@material-ui/icons/Edit';
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
@@ -14,12 +15,26 @@ const useStyles = makeStyles({
 });
 
 const columns = [
-  { id: 'title', label: 'Title', minWidth: 100 },
-  { id: 'description', label: 'Description', minWidth: 170 },
+  {
+    id: 'title',
+    label: 'Title',
+    style: { minWidth: 100, verticalAlign: "top" },
+    format: (value: any) => (
+      <>
+        <EditIcon /> {value}
+      </>
+    )
+  },
+  {
+    id: 'description',
+    label: 'Description',
+    style: { minWidth: 170, wordBreak: "break-word", verticalAlign: "top" },
+    format: (value: any) => value.substr(0, 255)
+  },
   {
     id: 'createdAt',
     label: 'Created At',
-    minWidth: 100,
+    style: { minWidth: 100, verticalAlign: "top" },
     align: 'right',
     format: (value: any) => (new Date(value)).toLocaleDateString("en-US")
   },
@@ -52,10 +67,10 @@ export const MyPolls = (props: any) => {
       },
       body: JSON.stringify(contests),
     })
-    .then((res) => res.json())
-    .then((res) => {
-      setRows(res)
-    });
+      .then((res) => res.json())
+      .then((res) => {
+        setRows(res)
+      });
   };
 
   // On page load fetch contests the authenticated user has created
@@ -85,7 +100,7 @@ export const MyPolls = (props: any) => {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={column.style}
                     >
                       {column.label}
                     </TableCell>
@@ -99,8 +114,8 @@ export const MyPolls = (props: any) => {
                       {columns.map((column: any) => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.id + "-" + index} align={column.align}>
-                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                          <TableCell key={column.id + "-" + index} align={column.align} style={column.style}>
+                            {column.format ? column.format(value) : value}
                           </TableCell>
                         );
                       })}

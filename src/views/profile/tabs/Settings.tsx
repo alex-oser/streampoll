@@ -10,8 +10,8 @@ export const Settings = (props: any) => {
     allowEmailNotifications: false,
     allowTwitchNotifications: false,
   }
-  const [ settings, setSettings ] = useState<UserSettings>(initialSettings);
-  const [ dbSettings, setDbSettings ] = useState<any | null>(null);
+  const [settings, setSettings] = useState<UserSettings>(initialSettings);
+  const [dbSettings, setDbSettings] = useState<any | null>(null);
 
   // On page load fetch user settings
   useEffect(() => {
@@ -30,7 +30,7 @@ export const Settings = (props: any) => {
 
   useEffect(() => {
     const _ = require("lodash")
-    if (dbSettings !== null && ! _.isEqual(settings, dbSettings)) {
+    if (dbSettings !== null && !_.isEqual(settings, dbSettings)) {
       fetch("/api/me/settings", {
         method: "POST",
         credentials: "include",
@@ -43,8 +43,8 @@ export const Settings = (props: any) => {
         setDbSettings(settings)
       })
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ settings ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settings]);
 
   return (
     <>
@@ -53,45 +53,36 @@ export const Settings = (props: any) => {
           General Settings
         </Typography>
         <FormControlLabel
+          style={{ color: "#fff" }}
           control={
             <Checkbox
               color="primary"
               checked={settings.requireTwitchAuth}
-              onChange={() => {
-                const newSettings = Object.assign({}, settings)
-                newSettings.requireTwitchAuth = ! settings.requireTwitchAuth
-                setSettings(newSettings)
-              }}
+              onChange={() => setSettings({ ...settings, requireTwitchAuth: !settings.requireTwitchAuth })}
               name="enterAnybody"
             />
           }
           label="Require Twitch authentication after each login"
         />
         <FormControlLabel
+          style={{ color: "#fff" }}
           control={
             <Checkbox
               color="primary"
               checked={settings.allowEmailNotifications}
-              onChange={() => {
-                const newSettings = Object.assign({}, settings)
-                newSettings.allowEmailNotifications = ! settings.allowEmailNotifications
-                setSettings(newSettings)
-              }}
+              onChange={() => setSettings({ ...settings, allowEmailNotifications: !settings.allowEmailNotifications })}
               name="enterAnybody"
             />
           }
           label="Receive email notifications"
         />
         <FormControlLabel
+          style={{ color: "#fff" }}
           control={
             <Checkbox
               color="primary"
               checked={settings.allowTwitchNotifications}
-              onChange={() => {
-                const newSettings = Object.assign({}, settings)
-                newSettings.allowTwitchNotifications = ! settings.allowTwitchNotifications
-                setSettings(newSettings)
-              }}
+              onChange={() => setSettings({ ...settings, allowTwitchNotifications: !settings.allowTwitchNotifications })}
               name="enterAnybody"
             />
           }

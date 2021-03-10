@@ -24,14 +24,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function a11yProps(index: number) {
+const a11yProps = (index: number) => {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
-
 
 export const Profile = ({ userData }: { userData: UserData | null }) => {
   const [value, setValue] = useState<number>(0);
@@ -39,6 +37,29 @@ export const Profile = ({ userData }: { userData: UserData | null }) => {
   const handleChange = (event: ChangeEvent<any>, index: number) => {
     setValue(index);
   };
+
+  const tabMap = [
+    {
+      title: "My Polls",
+      component: MyPolls,
+      children: null
+    },
+    {
+      title: "My Activity",
+      component: TabPanel,
+      children: null
+    },
+    {
+      title: "General Settings",
+      component: Settings,
+      children: null
+    },
+    {
+      title: "Test data",
+      component: TabPanel,
+      children: <pre style={{ color: "#fff" }}>{JSON.stringify(userData, null, 2)}</pre>
+    },
+  ]
 
   return (
     <div className={classes.layout}>
@@ -53,19 +74,17 @@ export const Profile = ({ userData }: { userData: UserData | null }) => {
           // indicatorColor="primary" 
           aria-label="simple tabs example"
         >
-          <Tab label="My Polls" {...a11yProps(0)} />
-          <Tab label="My Activity" {...a11yProps(1)} />
-          <Tab label="General Settings" {...a11yProps(2)} />
-          <Tab label="Test Info" {...a11yProps(3)} />
+          {tabMap.map((tab, index) => (
+            <Tab key={tab.title} label={tab.title} {...a11yProps(index)} />
+          ))}
         </Tabs>
       </AppBar>
-      <MyPolls value={value} index={0}></MyPolls>
-      <TabPanel style={{ overflow: "auto" }} value={value} index={1}>TODO</TabPanel>
-      <Settings value={value} index={2}></Settings>
-      <TabPanel style={{ overflow: "auto" }} value={value} index={3}>
-        <div style={{ color: "#fff" }}>Temporary tab for validation</div>
-        <pre style={{ color: "#fff" }}>{JSON.stringify(userData, null, 2)}</pre>
-      </TabPanel>
+      {tabMap.map((tab, index) => {
+        const Component: any = tab.component
+        return (
+          <Component key={tab.title} value={value} index={index}>{tab.children}</Component>
+        )
+      })}
     </div>
   );
 };

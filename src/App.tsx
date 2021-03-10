@@ -6,7 +6,7 @@ import { Footer } from "./components/Footer";
 import { LOGIN_URL } from "./util";
 import { useAuth } from "./hooks/useAuth";
 import { Home } from "./views/Home";
-import { Profile } from "./views/Profile";
+import { Profile } from "./views/profile/Profile";
 import { CreateContest } from "./views/contest/CreateContest";
 import { Context } from "./store";
 

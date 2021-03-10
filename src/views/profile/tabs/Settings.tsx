@@ -11,7 +11,7 @@ export const Settings = (props: any) => {
     allowTwitchNotifications: false,
   }
   const [ settings, setSettings ] = useState<UserSettings>(initialSettings);
-  const [ dbSettings, setDbSettings ] = useState<any | null>(null)
+  const [ dbSettings, setDbSettings ] = useState<any | null>(null);
 
   // On page load fetch user settings
   useEffect(() => {
@@ -43,7 +43,8 @@ export const Settings = (props: any) => {
         setDbSettings(settings)
       })
     }
-  }, [ dbSettings, settings]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ settings ]);
 
   return (
     <>
@@ -56,7 +57,11 @@ export const Settings = (props: any) => {
             <Checkbox
               color="primary"
               checked={settings.requireTwitchAuth}
-              onChange={() => setSettings({...settings, requireTwitchAuth: ! settings.requireTwitchAuth})}
+              onChange={() => {
+                const newSettings = Object.assign({}, settings)
+                newSettings.requireTwitchAuth = ! settings.requireTwitchAuth
+                setSettings(newSettings)
+              }}
               name="enterAnybody"
             />
           }
@@ -67,7 +72,11 @@ export const Settings = (props: any) => {
             <Checkbox
               color="primary"
               checked={settings.allowEmailNotifications}
-              onChange={() => setSettings({...settings, allowEmailNotifications: ! settings.allowEmailNotifications})}
+              onChange={() => {
+                const newSettings = Object.assign({}, settings)
+                newSettings.allowEmailNotifications = ! settings.allowEmailNotifications
+                setSettings(newSettings)
+              }}
               name="enterAnybody"
             />
           }
@@ -78,7 +87,11 @@ export const Settings = (props: any) => {
             <Checkbox
               color="primary"
               checked={settings.allowTwitchNotifications}
-              onChange={() => setSettings({...settings, allowTwitchNotifications: ! settings.allowTwitchNotifications})}
+              onChange={() => {
+                const newSettings = Object.assign({}, settings)
+                newSettings.allowTwitchNotifications = ! settings.allowTwitchNotifications
+                setSettings(newSettings)
+              }}
               name="enterAnybody"
             />
           }

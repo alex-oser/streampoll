@@ -46,9 +46,7 @@ const StepBase = React.memo((props: any) => {
 
 export const StepThree = withFormik({
   mapPropsToValues: () => ({
-    title: "",
-    description: "",
-    allowImageLinks: true,
+    host: "",
   }),
   validateOnChange: true,
   validateOnMount: false,
@@ -56,8 +54,8 @@ export const StepThree = withFormik({
   validationSchema: yup.object({
     host: yup
       .string()
-      .min(3, "min req")
-      .max(255, "Host should be of max of 255 characters")
+      .min(3, "Min length 3")
+      .max(25, "Host should be of max of 255 characters")
       .required("Host is required"),
   }),
   handleSubmit: (values, { setSubmitting }) => {

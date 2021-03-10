@@ -48,9 +48,10 @@ export const CreateContest = React.memo(() => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(console.log(res));
-        history.push("/contest/123123");
+        const id = res.id;
         dispatch({ type: "SET_SECTION", payload: "home" });
+        dispatch({ type: "RESET_STEP" });
+        history.push(`contest/${id}`);        
       });
   };
 

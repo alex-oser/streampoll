@@ -30,7 +30,8 @@ router.post("/create/contest", async (req, res) => {
 
   // create contest
   res.send({
-    message: "success"
+    message: "success",
+    id: contestid
   });
 });
 

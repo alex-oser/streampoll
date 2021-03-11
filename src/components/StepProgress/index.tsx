@@ -5,12 +5,17 @@ import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    position: "fixed",
+    //fucky
     display: "flex",
-    bottom: 60,
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "100%",
+    /// these are normal
+    bottom: 40,
+    position: "fixed",
   },
   dotGroup: {
-    width: 500,
+    width: "100%",
     display: "flex",
     justifyContent: "center",
   },

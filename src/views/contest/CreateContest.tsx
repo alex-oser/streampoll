@@ -7,6 +7,7 @@ import { StepTwo } from "./steps/StepTwo";
 import { StepThree } from "./steps/StepThree";
 import { StepFour } from "./steps/StepFour";
 import { useHistory } from "react-router";
+import { useBaseStyles } from "../../style";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -29,6 +30,7 @@ export const CreateContest = React.memo(() => {
   const [state, dispatch] = useContext(Context);
   const classes = useStyles();
   const history = useHistory();
+  const baseClasses = useBaseStyles();
 
   const onValidationUpdate = (form: any) => {
     console.log("getting form updates");
@@ -51,33 +53,38 @@ export const CreateContest = React.memo(() => {
         const id = res.id;
         dispatch({ type: "SET_SECTION", payload: "home" });
         dispatch({ type: "RESET_STEP" });
-        history.push(`contest/${id}`);        
+        history.push(`contest/${id}`);
       });
   };
 
   return (
-    <div className={classes.layout}>
-      <Grid container>
-        <Typography color="textPrimary" variant="h4">
-          Create a contest
-        </Typography>
+    <Grid
+      container
+      className={baseClasses.layout}
+      direction="column"
+      justify="center"
+    >
+      {/* <Typography color="textPrimary" variant="h4">
+        Create a contest
+      </Typography> */}
 
-        {stepComponents.map((component, index) => {
-          const StepCompnent: any = component;
-          return (
-            <Grid
-              container
-              key={index}
-              style={{ display: state.stepIndex !== index ? "none" : "block" }}
-            >
-              <StepCompnent
-                onSubmitForm={handleSubmitForm}
-                onValidationUpdate={onValidationUpdate}
-              />
-            </Grid>
-          );
-        })}
-      </Grid>
-    </div>
+      {stepComponents.map((component, index) => {
+        const StepCompnent: any = component;
+        return (
+          <div
+            key={index}
+            style={{
+              height: "100%",
+              display: state.stepIndex !== index ? "none" : "block",
+            }}
+          >
+            <StepCompnent
+              onSubmitForm={handleSubmitForm}
+              onValidationUpdate={onValidationUpdate}
+            />
+          </div>
+        );
+      })}
+    </Grid>
   );
 });

@@ -1,5 +1,11 @@
-import React from "react";
-import { Button, makeStyles, Paper, TextField, Typography, Grid } from "@material-ui/core";
+import {
+  Button,
+  makeStyles,
+  Paper,
+  TextField,
+  Typography,
+  Grid,
+} from "@material-ui/core";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useParams, useHistory } from "react-router";
@@ -15,13 +21,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "start",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       width: "80%",
     },
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       width: "60%",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       width: "40%",
     },
   },
@@ -30,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     background: "none",
     border: "none",
     boxShadow: "none",
-  }
+  },
 }));
 
 const validationSchema = yup.object({
@@ -44,7 +50,7 @@ const validationSchema = yup.object({
     .min(5, "Description should be at least 5 characters")
     .max(1000, "Description should be of max of 1000 characters")
     .required("Description is required"),
-})
+});
 
 export const EnterContest = (props: any) => {
   const params: any = useParams();
@@ -52,7 +58,7 @@ export const EnterContest = (props: any) => {
   const history = useHistory();
 
   const handleSubmit = (values: any) => {
-    console.log(`values are ${values}`)
+    console.log(`values are ${values}`);
     fetch("/api/enter/contest", {
       method: "POST",
       credentials: "include",
@@ -63,27 +69,35 @@ export const EnterContest = (props: any) => {
       body: JSON.stringify({
         contestid: params.id,
         title: values.title,
-        description: values.description
+        description: values.description,
       }),
-    })
-      .then(() => history.push(`/contest/${params.id}`));
-  }
+    }).then(() => history.push(`/contest/${params.id}`));
+  };
 
   const formik = useFormik({
     initialValues: {
-      title: '',
-      description: '',
+      title: "",
+      description: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      handleSubmit(values)
+      handleSubmit(values);
     },
   });
 
   return (
-    <Grid container className={classes.layout} direction="column" justify="center">
+    <Grid
+      container
+      className={classes.layout}
+      direction="column"
+      justify="center"
+    >
       <form onSubmit={formik.handleSubmit}>
-        <Typography style={{ alignSelf: "center", paddingBottom: 20 }} color="textPrimary" variant="h4">
+        <Typography
+          style={{ alignSelf: "center", paddingBottom: 20 }}
+          color="textPrimary"
+          variant="h4"
+        >
           Enter the contest
         </Typography>
         <Grid container>
@@ -98,7 +112,9 @@ export const EnterContest = (props: any) => {
               fullWidth
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              error={formik.touched.title && Boolean(formik.errors.title)}
+              error={
+                formik.touched.title && Boolean(formik.errors.title)
+              }
               helperText={formik.touched.title && formik.errors.title}
             />
           </Grid>
@@ -117,12 +133,19 @@ export const EnterContest = (props: any) => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               error={
-                formik.touched.description && Boolean(formik.errors.description)
+                formik.touched.description &&
+                Boolean(formik.errors.description)
               }
-              helperText={formik.touched.description && formik.errors.description}
+              helperText={
+                formik.touched.description &&
+                formik.errors.description
+              }
             />
           </Grid>
-          <Paper className={classes.paper} style={{ marginTop: "auto" }}>
+          <Paper
+            className={classes.paper}
+            style={{ marginTop: "auto" }}
+          >
             <Button
               // disabled={isSubmitting}
               type="submit"

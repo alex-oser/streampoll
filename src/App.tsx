@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 
@@ -35,14 +35,14 @@ const App = () => {
             <Route path="/create/contest">
               <CreateContest />
             </Route>
-            <Switch>
-              <Route exact path="/contest/:id" >
-                <ViewContest />
-              </Route>
-              <Route path="/contest/:id/enter" >
-                <EnterContest />
-              </Route>
-            </Switch>
+    
+            <Route exact path="/contest/:id">
+              <ViewContest />
+            </Route>
+            <Route exact path="/contest/:id/enter">
+              <EnterContest />
+            </Route>
+   
             <Route path="/profile">
               <Profile userData={userData} />
             </Route>

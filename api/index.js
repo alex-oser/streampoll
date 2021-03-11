@@ -11,6 +11,7 @@ const database = admin.database();
 const auth = require("./routes/auth");
 const core = require("./routes/core");
 const useless = require("./routes/useless");
+const twitch = require("./routes/twitch");
 const app = express();
 
 app.use(
@@ -27,8 +28,9 @@ app.use(
 
 app.use(cookieParser());
 
-app.use("/api/auth", auth.route);
 app.use("/api", core.route);
+app.use("/api/auth", auth.route);
 app.use("/api/build", useless.route);
+app.use("/api/twitch", twitch.route);
 
 exports.api = functions.https.onRequest(app);

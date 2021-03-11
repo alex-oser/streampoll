@@ -53,7 +53,7 @@ export const Header = ({ userData, loginUrl }: HeaderProps ) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Photos
+            Streamp
           </Typography>
           {auth && (
             <div>

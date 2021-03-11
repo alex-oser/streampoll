@@ -87,7 +87,8 @@ export const StepTwo = (props: any) => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container spacing={0}>
+      <Grid container spacing={0} style={props.style}>
+      <div>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <Typography color="textPrimary" variant="h6">
@@ -360,56 +361,20 @@ export const StepTwo = (props: any) => {
               </Paper>
             </Grid>
           </Grid>
-          <ProgressBar
-          numberOfSteps={4}
-          canProceed={canProceed}
-          onNext={() => {
-            dispatch({
-              type: "SET_CREATE_SETTINGS",
-              payload: formik.values,
-            });
-          }}
-          onSubmit={formik.handleSubmit}
-        />
         </Grid>
-  
+        </div>
+          <ProgressBar
+            numberOfSteps={4}
+            canProceed={canProceed}
+            onNext={() => {
+              dispatch({
+                type: "SET_CREATE_SETTINGS",
+                payload: formik.values,
+              });
+            }}
+            onSubmit={formik.handleSubmit}
+          />
       </Grid>
     </MuiPickersUtilsProvider>
   );
 };
-
-// export const StepTwo = withFormik({
-//   mapPropsToValues: () => ({
-//     entryStart: new Date(),
-//     entryEnd: new Date(),
-//     voteStart: new Date(),
-//     voteEnd: new Date(),
-//     enterAnybody: true,
-//     enterSubcribers: false,
-//     enterFollowers: false,
-//     voteAnybody: true,
-//     voteSubcribers: false,
-//     voteFollowers: false,
-//     allowImageLinks: false,
-//     multipleUploads: false,
-//     excludeDescription: false,
-//     voteType: "upvote",
-//   }),
-//   validateOnMount: true,
-//   validationSchema: yup.object({
-//     entryStart: yup
-//       .date()
-//       .nullable()
-//       .required("Entry Start Date/Time is required"),
-//     entryEnd: yup.date().nullable().required("Entry End Date/Time is required"),
-//     voteStart: yup
-//       .date()
-//       .nullable()
-//       .required("Vote Start Date/Time is required"),
-//     voteEnd: yup.date().nullable().required("Vote End Date/Time is required"),
-//     voteType: yup.string().required("Vote Type is required"),
-//   }),
-//   handleSubmit: (values, { setSubmitting }) => {},
-
-//   displayName: "BasicForm",
-// })(StepBase);

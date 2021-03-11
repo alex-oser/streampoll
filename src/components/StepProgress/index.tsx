@@ -5,14 +5,9 @@ import classNames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    //fucky
     display: "flex",
-    left: "50%",
-    transform: "translateX(-50%)",
+    marginTop: "auto",
     width: "100%",
-    /// these are normal
-    bottom: 40,
-    position: "fixed",
   },
   dotGroup: {
     width: "100%",
@@ -91,16 +86,18 @@ export const ProgressBar = ({
 
   return (
     <div className={classes.container}>
-      {state.stepIndex !== 0 && (
-        <Button
-          onClick={handlePrev}
-          variant="contained"
-          color="primary"
-          disabled={state.stepIndex === 0}
-        >
-          Back
-        </Button>
-      )}
+      <Button
+        style={{
+          visibility: state.stepIndex !== 0 ? "visible" :  "hidden",
+        }}
+        onClick={handlePrev}
+        variant="contained"
+        color="primary"
+        disabled={state.stepIndex === 0}
+      >
+        Back
+      </Button>
+
       <div className={classes.dotGroup}>
         <ProgressDots
           numberOfSteps={numberOfSteps}

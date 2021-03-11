@@ -36,7 +36,7 @@ export const StepOne = React.memo((props: any) => {
   const canProceed = formik.isValid && formik.dirty;
 
   return (
-    <form style={{ height: "100%" }} onSubmit={formik.handleSubmit}>
+    <form style={{ height: "100%", display: "flex", flexDirection: "column", ...props.style }} onSubmit={formik.handleSubmit}>
       <TextField
         color="secondary"
         required

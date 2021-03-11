@@ -3,13 +3,34 @@ import { Typography, Grid } from "@material-ui/core";
 import { useContext } from "react";
 import { Context } from "../../../store";
 import { ProgressBar } from "../../../components/StepProgress";
+import { useHistory } from "react-router";
 
 export const StepFour = React.memo((props: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, dispatch] = useContext(Context);
+  const history = useHistory();
 
+  const handleSubmitForm = () => {
+    fetch("/api/create/contest", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(state.createSettings),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const id = res.id;
+        dispatch({ type: "SET_SECTION", payload: "home" });
+        dispatch({ type: "RESET_STEP" });
+        history.push(`contest/${id}`);
+      });
+  };
+  
   return (
-    <Grid container>
+    <Grid container style={props.style}>
       <Grid item xs={12} sm={6}>
         <Typography color="textPrimary" variant="h6">CONFIRM SCREEN</Typography>
       </Grid>
@@ -19,7 +40,7 @@ export const StepFour = React.memo((props: any) => {
         onNext={() => {
           dispatch({ type: "SET_CREATE_SETTINGS", payload: props.values });
         }}
-        onSubmit={props.onSubmitForm}
+        onSubmit={handleSubmitForm}
       />
     </Grid>
   );

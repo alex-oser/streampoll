@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 
@@ -12,6 +12,7 @@ import { Context } from "./store";
 
 import { UserData } from "./types/UserData";
 import { ViewContest } from "./views/contest/ViewContest";
+import { EnterContest } from "./views/contest/EnterContest";
 
 const App = () => {
   const userData: UserData | null = useAuth();
@@ -34,11 +35,14 @@ const App = () => {
             <Route path="/create/contest">
               <CreateContest />
             </Route>
-            
-            <Route path="/contest/:id" >
-              <ViewContest />
-            </Route>
-
+            <Switch>
+              <Route exact path="/contest/:id" >
+                <ViewContest />
+              </Route>
+              <Route path="/contest/:id/enter" >
+                <EnterContest />
+              </Route>
+            </Switch>
             <Route path="/profile">
               <Profile userData={userData} />
             </Route>

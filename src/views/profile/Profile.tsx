@@ -4,6 +4,7 @@ import { UserData } from "../../types/UserData";
 import { TabPanel } from "./tabs/TabPanel"
 import { Settings } from "./tabs/Settings"
 import { MyPolls } from "./tabs/MyPolls"
+import { MyActivity } from "./tabs/MyActivity";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -46,7 +47,7 @@ export const Profile = ({ userData }: { userData: UserData | null }) => {
     },
     {
       title: "My Activity",
-      component: TabPanel,
+      component: MyActivity,
       children: null
     },
     {

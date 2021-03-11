@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   root: {
@@ -15,44 +15,51 @@ const useStyles = makeStyles({
   },
 });
 
-export const MyPolls = (props: any) => {
+export const MyActivity = (props: any) => {
   const classes = useStyles();
   const { value, index } = props;
   const [rows, setRows] = useState<any>([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const history = useHistory()
+  // const history = useHistory()
 
   const handleEdit = (id: any) => {
-    history.push(`contest/${id}`); 
+    // history.push(`contest/${id}`); 
+    console.log("take me to edit my entry")
   }
-  
+
   const columns = [
     {
-      id: 'title',
-      label: 'Title',
+      id: 'contestTitle',
+      label: 'Contest',
       style: { minWidth: 100, verticalAlign: "top" },
       format: (value: any, row: any) => (
         <>
-          <IconButton onClick={() => {handleEdit(row.id)}}><EditIcon /></IconButton>{value}
+          <IconButton onClick={() => { handleEdit(row.id) }}><EditIcon /></IconButton>{value}
         </>
       )
     },
     {
-      id: 'description',
+      id: 'entryTitle',
+      label: 'Title',
+      style: { minWidth: 100, wordBreak: "break-word", verticalAlign: "top" },
+      format: (value: any) => value.substr(0, 255)
+    },
+    {
+      id: 'entryDescription',
       label: 'Description',
       style: { minWidth: 170, wordBreak: "break-word", verticalAlign: "top" },
       format: (value: any) => value.substr(0, 255)
     },
     {
-      id: 'createdAt',
+      id: 'entryCreatedAt',
       label: 'Created At',
       style: { minWidth: 100, verticalAlign: "top" },
       align: 'right',
       format: (value: any) => (new Date(value)).toLocaleDateString("en-US")
     },
   ];
-  
+
 
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
@@ -63,15 +70,15 @@ export const MyPolls = (props: any) => {
     setPage(0);
   };
 
-  const getContestsData = (contests: any) => {
-    fetch("/api/contests", {
+  const getContestsData = (entries: any) => {
+    fetch("/api/entries", {
       method: "POST",
       credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(contests),
+      body: JSON.stringify(entries),
     })
       .then((res) => res.json())
       .then((res) => {
@@ -81,14 +88,14 @@ export const MyPolls = (props: any) => {
 
   // On page load fetch contests the authenticated user has created
   useEffect(() => {
-    fetch("/api/me/contests", {
+    fetch("/api/me/entries", {
       credentials: "include",
     })
       .then((res) => res.json())
       .then((res) => {
         if (!res.error) {
-          const contestIds = res
-          getContestsData(contestIds)
+          const entries = res
+          getContestsData(entries)
         }
       }
       );

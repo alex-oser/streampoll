@@ -9,6 +9,7 @@ admin.initializeApp();
 const database = admin.database();
 
 const auth = require("./routes/auth");
+const me = require("./routes/me");
 const core = require("./routes/core");
 const useless = require("./routes/useless");
 const twitch = require("./routes/twitch");
@@ -29,6 +30,7 @@ app.use(
 app.use(cookieParser());
 
 app.use("/api", core.route);
+app.use("/api/me", me.route);
 app.use("/api/auth", auth.route);
 app.use("/api/build", useless.route);
 app.use("/api/twitch", twitch.route);

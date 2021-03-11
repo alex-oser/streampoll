@@ -26,7 +26,8 @@ router.get("/oauth/callback", async (req, res) => {
     allowTwitchNotifications: false,
   }
 
-  userRef.on("value", (snapshot) => {
+  userRef.once("value")
+  .then((snapshot) => {
     // if user already has an account
     if (snapshot.exists()) {
       userRef.update({ ...snapshot.val(), lastLogin: new Date()})

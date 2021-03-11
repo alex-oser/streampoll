@@ -18,7 +18,7 @@ router.get("/status", async (req, res) => {
   // create poll
   res.send({
     status: data.status,
-    conclusion: data.conclusion,
+    conclusion: data.conclusion
   });
 });
 

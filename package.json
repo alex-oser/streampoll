@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "concurrently npm:backend npm:frontend",
-    "backend": "firebase emulators:start",
+    "backend": "firebase emulators:start --import=seed",
     "frontend": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

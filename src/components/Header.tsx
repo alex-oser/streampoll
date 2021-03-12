@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: "normal",
     fontWeight: 400,
   },
+  dangerButton: {
+    background: theme.palette.error.main,
+    color: theme.palette.primary.contrastText
+  }
 }));
 
 type HeaderProps = {
@@ -209,14 +213,15 @@ export const Header = ({ userData, loginUrl }: HeaderProps) => {
             onClick={() => setLogoutDialog(false)}
             variant="contained"
             color="primary"
+            autoFocus
           >
             Cancel
           </Button>
           <Button
             onClick={confirmLogout}
             variant="contained"
-            color="secondary"
-            autoFocus
+            className={classes.dangerButton}
+
           >
             Log Out
           </Button>

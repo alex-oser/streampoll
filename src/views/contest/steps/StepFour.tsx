@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useContext } from "react";
 import { Context } from "../../../store";
 import { ProgressBar } from "../../../components/StepProgress";

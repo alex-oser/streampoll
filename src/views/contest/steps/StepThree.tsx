@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Grid, CircularProgress } from "@material-ui/core";
+import { TextField, CircularProgress } from "@material-ui/core";
 import { useContext } from "react";
 
 import { Context } from "../../../store";
@@ -9,7 +9,6 @@ import { ProgressBar } from "../../../components/StepProgress";
 
 import IconCheck from "@material-ui/icons/CheckRounded";
 import IconCross from "@material-ui/icons/Clear";
-import { useBaseStyles } from "../../../style";
 
 const validationSchema = yup.object({
   host: yup
@@ -21,9 +20,6 @@ const validationSchema = yup.object({
 
 export const StepThree = React.memo((props: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-  const baseClasses = useBaseStyles();
-
   const [state, dispatch] = useContext(Context);
   const [isFetching, setIsFetching] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);

@@ -13,6 +13,7 @@ const me = require("./routes/me");
 const core = require("./routes/core");
 const useless = require("./routes/useless");
 const twitch = require("./routes/twitch");
+const contest = require("./routes/contest");
 const app = express();
 
 app.use(
@@ -33,6 +34,7 @@ app.use("/api", core.route);
 app.use("/api/me", me.route);
 app.use("/api/auth", auth.route);
 app.use("/api/build", useless.route);
+app.use("/api/contest", contest.route);
 app.use("/api/twitch", twitch.route);
 
 exports.api = functions.https.onRequest(app);

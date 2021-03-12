@@ -129,7 +129,7 @@
       "broadcaster_type": "",
       "contests": {
         "-MVXSbI8dXpuygEa677f": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore"
         }
       },
       "created_at": "2010-09-21T00:04:53.311779Z",
@@ -138,16 +138,16 @@
       "email": "hacksore@mcskinsearch.com",
       "entries": {
         "-MVXSkQZlnPANuyR2Ka2": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryid": "-MVXSkQWH5VJzk4FLdS8"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
+          "entryId": "-MVXSkQWH5VJzk4FLdS8"
         },
         "-MVXSkQZlnPANuyR2Ka3": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryid": "-MVXSkQWH5VJzk4FLdS7"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
+          "entryId": "-MVXSkQWH5VJzk4FLdS7"
         },
         "-MVXSkQZlnPANuyR2Ka4": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryid": "-MVXSkQWH5VJzk4FLdS6"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
+          "entryId": "-MVXSkQWH5VJzk4FLdS6"
         }
       },
       "id": "15848764",
@@ -167,7 +167,7 @@
       "broadcaster_type": "",
       "contests": {
         "-MVXSbI8dXpuygEa677f": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Apex"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Apex"
         }
       },
       "created_at": "2014-10-30T17:13:39.500273Z",
@@ -176,16 +176,16 @@
       "email": "seanboult@gmail.com",
       "entries": {
         "-MVXSkQZlnPANuyR2Ka2": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryid": "-MVXSkQWH5VJzk4FLdS8"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Apex",
+          "entryId": "-MVXSkQWH5VJzk4FLdS8"
         },
         "-MVXSkQZlnPANuyR2Ka3": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryid": "-MVXSkQWH5VJzk4FLdS7"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Apex",
+          "entryId": "-MVXSkQWH5VJzk4FLdS7"
         },
         "-MVXSkQZlnPANuyR2Ka4": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryid": "-MVXSkQWH5VJzk4FLdS6"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Apex",
+          "entryId": "-MVXSkQWH5VJzk4FLdS6"
         }
       },
       "id": "74066664",
@@ -205,7 +205,7 @@
       "broadcaster_type": "",
       "contests": {
         "-MVXSbI8dXpuygEa677f": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150d"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d"
         }
       },
       "created_at": "2017-11-07T07:08:00.735781Z",
@@ -214,16 +214,16 @@
       "email": "aoser9552@gmail.com",
       "entries": {
         "-MVXSkQZlnPANuyR2Ka2": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryid": "-MVXSkQWH5VJzk4FLdS8"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d",
+          "entryId": "-MVXSkQWH5VJzk4FLdS8"
         },
         "-MVXSkQZlnPANuyR2Ka3": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryid": "-MVXSkQWH5VJzk4FLdS7"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d",
+          "entryId": "-MVXSkQWH5VJzk4FLdS7"
         },
         "-MVXSkQZlnPANuyR2Ka4": {
-          "contestid": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryid": "-MVXSkQWH5VJzk4FLdS6"
+          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d",
+          "entryId": "-MVXSkQWH5VJzk4FLdS6"
         }
       },
       "id": "180790944",

@@ -31,9 +31,9 @@ router.get("/contests", async (req, res) => {
     (snapshot) => {
       var contests = [];
       if (snapshot.exists()) {
-        // extract contestids from nested storage data structure
+        // extract contestIds from nested storage data structure
         Object.values(snapshot.val()).forEach((contest) => {
-          contests.push(contest.contestid);
+          contests.push(contest.contestId);
         });
       }
       // returns a list of strings with contest ids or an empty list
@@ -56,7 +56,7 @@ router.get("/entries", async (req, res) => {
     (snapshot) => {
       var entries = [];
       if (snapshot.exists()) {
-        // extract contestids from nested storage data structure
+        // extract contestIds from nested storage data structure
         Object.values(snapshot.val()).forEach((entry) => {
           entries.push(entry);
         });

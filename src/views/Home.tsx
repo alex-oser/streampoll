@@ -11,31 +11,31 @@ export const Home = React.memo(() => {
   const baseClasses = useBaseStyles();
 
   return (
-  <div className={baseClasses.layout}>
-    <Typography 
-      color="textPrimary"
-      variant="h3"
-    >
-      Choose an option
-    </Typography>
-    
-    <PollOption
-      title="Poll (coming soon...)"
-      description="Poll with admin created options of text/images"
-      isActive={false}
-    />
+    <div className={baseClasses.layout}>
+      <Typography color="textPrimary" variant="h3">
+        Choose an option
+      </Typography>
+      
+      <PollOption
+        title="Poll (coming soon...)"
+        description="Poll with admin created options of text/images"
+        isActive={false}
+      />
 
-    <PollOption
-      onClick={() => dispatch({ type: "SET_SECTION", payload: "contest" })}
-      style={{ cursor: "pointer" }}
-      title="Contest"
-      description="Contest with user submission and voting periods"
-    />
+      <PollOption
+        onClick={() =>
+          dispatch({ type: "SET_SECTION", payload: "contest" })
+        }
+        style={{ cursor: "pointer" }}
+        title="Contest"
+        description="Contest with user submission and voting periods"
+      />
 
-    <PollOption
-      title="Survey (coming soon...)"
-      description="Create a survey and collect results"
-      isActive={false}
-    />
-  </div>
-)});
+      <PollOption
+        title="Survey (coming soon...)"
+        description="Create a survey and collect results"
+        isActive={false}
+      />
+    </div>
+  );
+});

@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
-// import { useHistory } from "react-router";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   root: {
@@ -15,16 +15,16 @@ const useStyles = makeStyles({
   },
 });
 
-export const MyActivity = (props: any) => {
+export const Activity = (props: any) => {
   const classes = useStyles();
   const { value, index } = props;
   const [rows, setRows] = useState<any>([])
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  // const history = useHistory()
+  const history = useHistory()
 
-  const handleEdit = (id: any) => {
-    // history.push(`contest/${id}`); 
+  const handleEdit = (contestId: string, entryId: string) => {
+    history.push(`/contest/${contestId}/entry/${entryId}/edit`); 
   }
 
   const columns = [
@@ -34,7 +34,7 @@ export const MyActivity = (props: any) => {
       style: { minWidth: 100, verticalAlign: "top" },
       format: (value: any, row: any) => (
         <>
-          <IconButton onClick={() => { handleEdit(row.id) }}><EditIcon /></IconButton>{value}
+          <IconButton onClick={() => { handleEdit(row.contestId, row.entryId) }}><EditIcon /></IconButton>{value}
         </>
       )
     },
@@ -69,8 +69,8 @@ export const MyActivity = (props: any) => {
     setPage(0);
   };
 
-  const getContestsData = (entries: any) => {
-    fetch("/api/entries", {
+  const getEntriesData = (entries: any) => {
+    fetch("/api/entry/list", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -94,7 +94,7 @@ export const MyActivity = (props: any) => {
       .then((res) => {
         if (!res.error) {
           const entries = res
-          getContestsData(entries)
+          getEntriesData(entries)
         }
       }
       );

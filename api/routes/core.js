@@ -11,60 +11,6 @@ router.post("/create/poll", async (req, res) => {
   res.send(body);
 });
 
-router.post("/create/contest", async (req, res) => {
-  if (!req.session.auth) {
-    return res.send({ error: "no session" }, 401);
-  }
-
-  const body = {
-    ...req.body,
-    createdBy: req.session.auth.id,
-    createdAt: admin.database.ServerValue.TIMESTAMP,
-    entries: []
-  };
-  const contestid = uuid.v4();
-
-  database.ref(`contests/${contestid}`).set(body);
-  database.ref(`users/${req.session.auth.id}/contests`).push({
-    contestid,
-  });
-
-  // create contest
-  res.send({
-    message: "success",
-    id: contestid,
-  });
-});
-
-router.post("/enter/contest", async (req, res) => {
-  if (!req.session.auth) {
-    return res.send({ error: "no session" }, 401);
-  }
-  const contestid = req.body.contestid
-  const title = req.body.title
-  const description = req.body.description
-
-  const entryBody = {
-    title: title,
-    description: description,
-    createdBy: req.session.auth.id,
-    createdAt: admin.database.ServerValue.TIMESTAMP,
-  };
-  // push entry data to contest and get unique key generated for entry
-  const entryRef = database.ref(`contests/${contestid}/entries`).push(entryBody);
-  // push contestid and entryid to user
-  database.ref(`users/${req.session.auth.id}/entries`).push({
-    contestid,
-    entryid: entryRef.key
-  });
-
-  // create contest
-  res.send({
-    message: "success",
-    id: contestid,
-  });
-});
-
 router.post("/create/survey", async (req, res) => {
   const body = req.body;
 
@@ -72,61 +18,48 @@ router.post("/create/survey", async (req, res) => {
   res.send(body);
 });
 
-// Get details for a specific contest id
-router.get("/contest/:id", async (req, res) => {
-  const id = req.params.id;
-  const ref = database.ref(`contests/${id}`);
-  ref.once("value")
-    .then((snapshot) => {
-      // returns an object that contains the contest details
-      res.send(snapshot.val());
-    },
-      (errorObject) => {
-        console.log("The read failed: " + errorObject.code);
-      }
-    );
-});
-
-// Get details for a list of contests
-router.post("/contests", async (req, res) => {
-  const ids = req.body;
-  var contests = [];
-  var refs = [];
-  ids.forEach((id) => {
-    const ref = database.ref(`contests/${id}`);
-    refs.push(
-      ref.once("value")
-        .then((snapshot) => {
-          contests.push({ id, ...snapshot.val() });
-        }, (errorObject) => {
-          console.log("The read failed: " + errorObject.code);
-        }
-        )
-    );
-  });
-  Promise.all(refs).then(() => {
-    // returns a list of objects that contain the contest details
-    res.send(JSON.stringify(contests));
-  });
-});
+// // Get details for a specific entry id
+// router.get("/edit/entry", async (req, res) => {
+//   if (!req.session.auth) {
+//     return res.send({ error: "no session" }, 401);
+//   }
+//   const params 
+//   const id = req.params.id;
+//   const ref = database.ref(`contests/${id}`);
+//   ref.once("value")
+//     .then((snapshot) => {
+//       // returns an object that contains the contest details
+//       res.send(snapshot.val());
+//     },
+//       (errorObject) => {
+//         console.log("The read failed: " + errorObject.code);
+//       }
+//     );
+// });
 
 // Get details for a list of entries
-// entries object type is [{contestid, entryid}, ]
-router.post("/entries", async (req, res) => {
+/**
+ * POST - 
+ *  req.body = 
+ *  res.body =
+ */
+router.post("/entry/list", async (req, res) => {
   const entries = req.body;
-  var results = [];
-  var refs = [];
+  const results = [];
+  const refs = [];
   entries.forEach((entry) => {
     const result = {}
-    const contestRef = database.ref(`contests/${entry.contestid}`);
-    const entryRef = database.ref(`contests/${entry.contestid}/entries/${entry.entryid}`);
+    const contestRef = database.ref(`contests/${entry.contestId}`);
+    const entryRef = database.ref(`contests/${entry.contestId}/entries/${entry.entryId}`);
     // get title of the contest
     refs.push(
       contestRef.once("value")
         .then((snapshot) => {
           contestData = snapshot.val()
           result.contestTitle = contestData.title;
-          const entryData = contestData.entries[entry.entryid]
+          result.contestId = entry.contestId;
+          const entryData = contestData.entries[entry.entryId];
+          result.entryId = entry.entryId;
           result.entryTitle = entryData.title;
           result.entryDescription = entryData.description
           result.entryCreatedAt = entryData.createdAt

@@ -11,7 +11,7 @@ export const StepFour = React.memo((props: any) => {
   const history = useHistory();
 
   const handleSubmitForm = () => {
-    fetch("/api/create/contest", {
+    fetch("/api/contest/create", {
       method: "POST",
       credentials: "include",
       headers: {

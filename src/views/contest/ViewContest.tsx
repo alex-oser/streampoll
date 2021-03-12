@@ -58,7 +58,7 @@ export const ViewContest = (props: any) => {
       .then(res => {
         setHasEntered(
           res.some((entry: any) =>
-            entry.contestid === params.id
+            entry.contestId === params.id
           )
         )
       })

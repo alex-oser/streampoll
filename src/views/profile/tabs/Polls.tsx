@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const MyPolls = (props: any) => {
+export const Polls = (props: any) => {
   const classes = useStyles();
   const { value, index } = props;
   const [page, setPage] = useState(0);
@@ -48,6 +48,36 @@ export const MyPolls = (props: any) => {
       createdAt: <Skeleton height={height} />,
     },
   ]);
+
+  const getContestsData = (contests: any) => {
+    fetch("/api/contest/list", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contests),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setRows(res);
+      });
+  };
+
+  // On page load fetch contests the authenticated user has created
+  useEffect(() => {
+    fetch("/api/me/contests", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!res.error) {
+          const contestIds = res;
+          getContestsData(contestIds);
+        }
+      });
+  }, []);
 
   const handleEdit = (id: any) => {
     history.push(`contest/${id}`);
@@ -100,36 +130,6 @@ export const MyPolls = (props: any) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  const getContestsData = (contests: any) => {
-    fetch("/api/contests", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(contests),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setRows(res);
-      });
-  };
-
-  // On page load fetch contests the authenticated user has created
-  useEffect(() => {
-    fetch("/api/me/contests", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.error) {
-          const contestIds = res;
-          getContestsData(contestIds);
-        }
-      });
-  }, []);
 
   return (
     <>

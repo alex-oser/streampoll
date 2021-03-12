@@ -12,7 +12,8 @@ import { Context } from "./store";
 
 import { UserData } from "./types/UserData";
 import { ViewContest } from "./views/contest/ViewContest";
-import { EnterContest } from "./views/contest/EnterContest";
+import { NewContestEntry } from "./views/contest/NewContestEntry";
+import { EditContestEntry } from "./views/contest/EditContestEntry";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +55,10 @@ const App = () => {
               <ViewContest />
             </Route>
             <Route exact path="/contest/:id/enter">
-              <EnterContest />
+              <NewContestEntry />
+            </Route>
+            <Route exact path="/contest/:contestId/entry/:entryId/edit">
+              <EditContestEntry />
             </Route>
 
             <Route path="/profile">

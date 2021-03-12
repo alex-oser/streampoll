@@ -25,7 +25,6 @@ export const MyActivity = (props: any) => {
 
   const handleEdit = (id: any) => {
     // history.push(`contest/${id}`); 
-    console.log("take me to edit my entry")
   }
 
   const columns = [

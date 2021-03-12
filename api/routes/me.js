@@ -88,7 +88,11 @@ router.get("/settings", async (req, res) => {
   settingsRef = database.ref(`users/${req.session.auth.id}/settings`);
   settingsRef.once("value").then(
     (snapshot) => {
-      res.send(snapshot.val());
+      if (snapshot.exists()) {
+        res.send(snapshot.val());
+      } else {
+        res.send([]);
+      }
     },
     (errorObject) => {
       console.log("The read failed: " + errorObject.code);

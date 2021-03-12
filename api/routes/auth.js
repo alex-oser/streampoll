@@ -14,14 +14,34 @@ router.get("/logout", async (req, res) => {
   res.redirect("/");
 });
 
+// log user in via twitch authentication
 router.get("/oauth/callback", async (req, res) => {
   const { code } = req.query;
   const tokenData = await getTwitchAuthToken(code);
   const profile = await getTwitchUserdata(tokenData.access_token);
+  const userRef = database.ref("users/" + profile.id)
+  const defaultSettings = {
+    requireTwitchAuth: false,
+    allowEmailNotifications: false,
+    allowTwitchNotifications: false,
+  }
 
-  // save the user profile in the db
-  const metadataRef = database.ref("users/" + profile.id);
-  metadataRef.set(profile);
+  userRef.once("value")
+  .then((snapshot) => {
+    // if user already has an account
+    if (snapshot.exists()) {
+      userRef.update({ ...snapshot.val(), lastLogin: new Date()})
+    // user is logging in for the first time
+    } else {
+      userRef.set({ 
+        ...profile, 
+        lastLogin: new Date(),
+        settings: defaultSettings,
+      });
+    }
+  }, (errorObject) => {
+    console.log("The read failed: " + errorObject.code);
+  });
 
   // create the session
   req.session.auth = {

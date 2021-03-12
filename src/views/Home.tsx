@@ -1,17 +1,24 @@
+import React from "react";
 import { PollOption } from "../components/PollOption";
 import { Context } from "../store";
 import { useContext } from "react";
+import { useBaseStyles } from "../style";
+import { Typography } from "@material-ui/core";
 
-
-export const Home = () => {
+export const Home = React.memo(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_state, dispatch] = useContext(Context);
+  const baseClasses = useBaseStyles();
 
   return (
-  <div>
-    <div className="choose-poll-title valign-text-middle roboto-normal-white-36px">
+  <div className={baseClasses.layout}>
+    <Typography 
+      color="textPrimary"
+      variant="h3"
+    >
       Choose an option
-    </div>
+    </Typography>
+    
     <PollOption
       title="Poll (coming soon...)"
       description="Poll with admin created options of text/images"
@@ -31,4 +38,4 @@ export const Home = () => {
       isActive={false}
     />
   </div>
-)};
+)});

@@ -10,7 +10,6 @@ export const useAuth = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log("response is " + JSON.stringify(res));
         if (!res.error) {
           setUserData(res);
         }

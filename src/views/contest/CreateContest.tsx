@@ -1,112 +1,49 @@
-import {
-  TextField,
-  Tooltip,
-  Typography,
-  Grid,
-  Button,
-  makeStyles,
-} from "@material-ui/core";
-import { useContext, useState } from "react";
-import { AppleStyleToggle } from "../../components/AppleStyleToggle";
-import { ProgressBar } from "../../components/ProgressBar";
+import React from "react";
+import { Typography } from "@material-ui/core";
+import { useContext } from "react";
 import { Context } from "../../store";
+import { StepOne } from "./steps/StepOne";
+import { StepTwo } from "./steps/StepTwo";
+import { StepThree } from "./steps/StepThree";
+import { StepFour } from "./steps/StepFour";
+import { useBaseStyles } from "../../style";
 
-const useStyles = makeStyles((theme) => ({
-  layout: {
-    width: "auto",
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    marginTop: 50,
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-  },
-}));
+const stepComponents = [StepOne, StepTwo, StepThree, StepFour];
 
-export const CreateContest = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_state, dispatch] = useContext(Context);
-  const [isPhotoContest, setIsPhotoContest] = useState(true);
-  const [contestTitle, setContestTitle] = useState("");
-  const [contestDescription, setContestDescription] = useState("");
-  
+const getStyle = ((isActive: Boolean) => {
+  if (isActive) {
+    return {
+      display: "flex",
+      flexDirection: "column",
+      height: "100%"
+    }
+  } else {
+    return { display: "none" }
+  }
+})
 
-  const classes = useStyles();
-
-  const submitForm = () => {
-    fetch("/api/create/contest", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: contestTitle,
-        description: contestDescription,
-      }),
-    });
-  };
+export const CreateContest = React.memo(() => {
+  const [state] = useContext(Context);
+  const baseClasses = useBaseStyles();
 
   return (
-    <div className={classes.layout}>
-      <Grid container spacing={3}>
-        <Typography color="textPrimary" variant="h4">
-          Create a contest
-        </Typography>
+    <div
+      className={baseClasses.layout}
+      style={{ display: "flex", flexDirection: "column" }}
+    >
+      <Typography color="textPrimary" variant="h4" style={{ paddingBottom: 20 }}>
+        Create a contest
+      </Typography>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              color="secondary"
-              required
-              id="title"
-              name="title"
-              label="Title"
-              fullWidth
-              onChange={(e) => setContestTitle(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              color="secondary"
-              required
-              multiline
-              rows="6"
-              id="desc"
-              name="desc"
-              label="Description"
-              fullWidth
-              onChange={(e) => setContestDescription(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <AppleStyleToggle
-              onChange={(e) => setIsPhotoContest(e.target.checked)}
-              checked={isPhotoContest}
-            />
-            <Typography color="textPrimary" variant="h5">
-              Photo Contest
-            </Typography>
-            <Typography color="textPrimary" variant="h6">
-              Selecting photo contest will require each submission to have an image.
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-      {/* <Button
-        // onClick={() => dispatch({ type: "SET_SECTION", payload: "home" })}
-        onClick={submitForm}
-        variant="contained"
-        color="primary"
-      >
-        CREATE TEST
-      </Button> */}
-
-      <ProgressBar numberOfSteps={3} />
+      {stepComponents.map((component, index) => {
+        const StepComponent: any = component;
+        return (
+          <StepComponent
+            key={index}
+            style={getStyle(state.stepIndex === index)}
+          />
+        );
+      })}
     </div>
   );
-};
+});

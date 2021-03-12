@@ -3,6 +3,9 @@ import React, { createContext, useReducer } from "react";
 const initialState: any = {
   section: "home",
   stepIndex: 0,
+  canProceed: false,
+  isAuthed: false,
+  createSettings: {}
 };
 
 const Reducer = (state: any, action: { type: any; payload: any; }) => {
@@ -11,6 +14,11 @@ const Reducer = (state: any, action: { type: any; payload: any; }) => {
       return {
         ...state,
         section: action.payload,
+      };
+    case "RESET_STEP":
+      return {
+        ...state,
+        stepIndex: 0,
       };
     case "NEXT_STEP":
       return {
@@ -21,6 +29,16 @@ const Reducer = (state: any, action: { type: any; payload: any; }) => {
       return {
         ...state,
         stepIndex: state.stepIndex - 1,
+      };
+    case "SET_CREATE_SETTINGS":
+      return {
+        ...state,
+        createSettings: { ...state.createSettings, ...action.payload }
+      };
+    case "SET_CAN_PROCEED":
+      return {
+        ...state,
+        canProceed: action.payload
       };
     default:
       return state;

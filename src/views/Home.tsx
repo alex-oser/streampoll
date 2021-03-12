@@ -5,15 +5,15 @@ import { useContext } from "react";
 import { useBaseStyles } from "../style";
 import { makeStyles, Typography } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  main: {
-    alignItems: "right",
-    display: "flex",
-    height: "44px",
-    marginLeft: "auto",
-    marginTop: "1px"
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   main: {
+//     alignItems: "right",
+//     display: "flex",
+//     height: "44px",
+//     marginLeft: "auto",
+//     marginTop: "1px"
+//   },
+// }));
 
 export const Home = React.memo(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

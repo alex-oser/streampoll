@@ -1,4 +1,9 @@
-import { darken, makeStyles, Typography } from "@material-ui/core";
+import {
+  darken,
+  lighten,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: `8px solid ${theme.palette.primary.main}`,
     marginTop: 21,
     width: "100%",
+    "&:hover": {
+      backgroundColor: lighten(theme.palette.secondary.main, 0.05),
+    },
+  },
+  disabled: {
+    color: darken(theme.palette.secondary.contrastText, 0.45),
+    opacity: "0.5"
   },
 }));
 
@@ -34,33 +46,23 @@ export const PollOption = (props: any) => {
       style={style}
       onClick={props.onClick}
       className={clsx(classes.base, {
-        "poll-option-active": isActive,
+        [classes.disabled]: !isActive 
       })}
     >
       <div className={classes.autoFlex}>
-        <div
-          className={clsx(
-            "poll-option-title-i12 valign-text-middle",
-            {
-              "roboto-normal-white-24px": isActive,
-              "roboto-normal-storm-dust-24px": !isActive,
-            }
-          )}
-        >
-          <Typography color="textPrimary" variant="h5">
+        <div>
+          <Typography
+            style={{ fontWeight: "bold" }}
+            color="textPrimary"
+            variant="h5"
+          >
             {title}
           </Typography>
         </div>
         <div
-          className={clsx(
-            "poll-option-title-i12 valign-text-middle",
-            {
-              "roboto-normal-white-18px": isActive,
-              "roboto-normal-storm-dust-18px": !isActive,
-            }
-          )}
+          className={clsx()}
         >
-          <Typography color="textPrimary" variant="body2">
+          <Typography color="textPrimary" variant="body1">
             {description}
           </Typography>
         </div>

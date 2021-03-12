@@ -4,6 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Context } from "../store";
 import IconLogout from "@material-ui/icons/ExitToApp";
+import IconUser from "@material-ui/icons/AccountBox";
 
 import { UserData } from "../types/UserData";
 import {
@@ -29,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     height: "44px",
     marginLeft: "auto",
-    marginTop: "1px"
+    marginTop: "1px",
+    cursor: "pointer",
   },
   root: {
     flexGrow: 1,
@@ -52,8 +54,11 @@ const useStyles = makeStyles((theme) => ({
   },
   dangerButton: {
     background: theme.palette.error.main,
-    color: theme.palette.primary.contrastText
-  }
+    color: theme.palette.primary.contrastText,
+  },
+  menuItem: {
+    paddingLeft: 6,
+  },
 }));
 
 type HeaderProps = {
@@ -106,7 +111,13 @@ export const Header = ({ userData, loginUrl }: HeaderProps) => {
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleRoute = (path: string) => {    
+  const handleRoute = (
+    event:
+      | React.MouseEvent<HTMLAnchorElement, MouseEvent>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>,
+    path: string
+  ) => {
+    event.preventDefault();
     dispatch({ type: "SET_SECTION", payload: "home" });
     history.push(path);
   };
@@ -132,7 +143,7 @@ export const Header = ({ userData, loginUrl }: HeaderProps) => {
         <Toolbar>
           <a
             className={classes.title}
-            onClick={(e) => handleRoute("/")}
+            onClick={(e) => handleRoute(e, "/")}
             href="/"
           >
             {matches ? (
@@ -180,23 +191,27 @@ export const Header = ({ userData, loginUrl }: HeaderProps) => {
               vertical: "top",
               horizontal: "center",
             }}
-            keepMounted
             open={isMenuOpen}
+            disableAutoFocusItem
             onClose={handleClose}
           >
             <MenuItem
-              onClick={() => {
-                handleRoute("/profile")
-                handleClose();  
+              onClick={(e) => {
+                handleRoute(e, "/profile");
+                handleClose();
               }}
             >
-              Profile
+              <IconUser />
+              <span className={classes.menuItem}>Profile</span>
             </MenuItem>
-            <MenuItem onClick={() => {
-              setLogoutDialog(true);
-              handleClose();
-            }}>
-              Logout <IconLogout />
+            <MenuItem
+              onClick={() => {
+                setLogoutDialog(true);
+                handleClose();
+              }}
+            >
+              <IconLogout />
+              <span className={classes.menuItem}>Logout</span>
             </MenuItem>
           </Menu>
         </Toolbar>
@@ -228,7 +243,6 @@ export const Header = ({ userData, loginUrl }: HeaderProps) => {
             onClick={confirmLogout}
             variant="contained"
             className={classes.dangerButton}
-
           >
             Log Out
           </Button>

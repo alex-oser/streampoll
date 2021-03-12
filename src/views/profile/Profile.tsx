@@ -41,22 +41,22 @@ export const Profile = ({ userData }: { userData: UserData | null }) => {
 
   const tabMap = [
     {
-      title: "My Polls",
+      title: "Polls",
       component: MyPolls,
       children: null
     },
     {
-      title: "My Activity",
+      title: "Activity",
       component: MyActivity,
       children: null
     },
     {
-      title: "General Settings",
+      title: "Settings",
       component: Settings,
       children: null
     },
     {
-      title: "Test data",
+      title: "Test",
       component: TabPanel,
       children: <pre style={{ color: "#fff" }}>{JSON.stringify(userData, null, 2)}</pre>
     },

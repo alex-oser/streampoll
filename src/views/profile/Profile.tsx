@@ -3,8 +3,8 @@ import { ChangeEvent, useState } from "react";
 import { UserData } from "../../types/UserData";
 import { TabPanel } from "./tabs/TabPanel"
 import { Settings } from "./tabs/Settings"
-import { MyPolls } from "./tabs/MyPolls"
-import { MyActivity } from "./tabs/MyActivity";
+import { MyPolls } from "./tabs/Polls"
+import { MyActivity } from "./tabs/Activity";
 
 const useStyles = makeStyles((theme) => ({
   layout: {

@@ -31,7 +31,7 @@ export const CreateContest = React.memo(() => {
       className={baseClasses.layout}
       style={{ display: "flex", flexDirection: "column" }}
     >
-      <Typography color="textPrimary" variant="h4">
+      <Typography color="textPrimary" variant="h4" style={{ paddingBottom: 20 }}>
         Create a contest
       </Typography>
 

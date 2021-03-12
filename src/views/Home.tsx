@@ -3,17 +3,7 @@ import { PollOption } from "../components/PollOption";
 import { Context } from "../store";
 import { useContext } from "react";
 import { useBaseStyles } from "../style";
-import { makeStyles, Typography } from "@material-ui/core";
-
-// const useStyles = makeStyles((theme) => ({
-//   main: {
-//     alignItems: "right",
-//     display: "flex",
-//     height: "44px",
-//     marginLeft: "auto",
-//     marginTop: "1px"
-//   },
-// }));
+import { Typography } from "@material-ui/core";
 
 export const Home = React.memo(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { InputAdornment, TextField, CircularProgress, InputLabel } from "@material-ui/core";
+import { useState } from "react";
+import {
+  InputAdornment,
+  CircularProgress,
+  InputLabel,
+} from "@material-ui/core";
 import { useContext } from "react";
 
 import { Context } from "../../../store";
@@ -8,7 +12,11 @@ import { useFormik } from "formik";
 import { ProgressBar } from "../../../components/StepProgress";
 import IconCheck from "@material-ui/icons/CheckRounded";
 import IconCross from "@material-ui/icons/Clear";
-import { FormControl, FormHelperText, OutlinedInput } from "@material-ui/core";
+import {
+  FormControl,
+  FormHelperText,
+  OutlinedInput,
+} from "@material-ui/core";
 
 const validationSchema = yup.object({
   host: yup
@@ -29,7 +37,7 @@ export const StepThree = (props: any) => {
     },
     validateOnChange: true,
     validationSchema: validationSchema,
-    onSubmit: (values) => { },
+    onSubmit: (values) => {},
   });
 
   const canProceed = formik.isValid && formik.dirty;
@@ -38,7 +46,7 @@ export const StepThree = (props: any) => {
   const validateUsername = () => {
     // if errors make sure we fetch again next time
     if (!formik.isValid || !formik.values.host) {
-      return
+      return;
     }
     setIsFetching(true);
     fetch(`/api/twitch/user/${formik.values.host}`)
@@ -84,15 +92,21 @@ export const StepThree = (props: any) => {
             }
           }}
           onChange={formik.handleChange}
-          endAdornment={<InputAdornment position="end"><>{getSpinner()}</></InputAdornment>}
+          endAdornment={
+            <InputAdornment position="end">
+              <>{getSpinner()}</>
+            </InputAdornment>
+          }
           aria-describedby="outlined-host-helper-text"
           inputProps={{
-            'aria-label': 'host',
+            "aria-label": "host",
           }}
           labelWidth={0}
           error={formik.touched.host && Boolean(formik.errors.host)}
         />
-        <FormHelperText id="outlined-host-helper-text">{formik.touched.host && formik.errors.host}</FormHelperText>
+        <FormHelperText id="outlined-host-helper-text">
+          {formik.touched.host && formik.errors.host}
+        </FormHelperText>
       </FormControl>
 
       <ProgressBar

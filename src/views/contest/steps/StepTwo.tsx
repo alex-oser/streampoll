@@ -87,294 +87,265 @@ export const StepTwo = (props: any) => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container spacing={0} style={props.style}>
-      <div>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary" variant="h6">
-              Entry Settings
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <DateTimePicker
-              fullWidth
-              label="Start time"
-              name="entryStart"
-              disablePast
-              inputVariant="filled"
-              value={formik.values.entryStart}
-              onBlur={formik.handleBlur}
-              onChange={(value) => {
-                formik.setFieldValue("entryStart", value);
-              }}
-              error={
-                formik.touched.entryStart &&
-                Boolean(formik.errors.entryStart)
-              }
-              helperText={
-                formik.touched.entryStart && formik.errors.entryStart
-              }
-            />
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <DateTimePicker
-              fullWidth
-              label="End time"
-              inputVariant="filled"
-              name="entryEnd"
-              disablePast
-              value={formik.values.entryEnd}
-              onBlur={formik.handleBlur}
-              onChange={(value) => {
-                formik.setFieldValue("entryEnd", value);
-                formik.setFieldValue("voteStart", value);
-              }}
-              error={
-                formik.touched.entryEnd &&
-                Boolean(formik.errors.entryEnd)
-              }
-              helperText={
-                formik.touched.entryEnd && formik.errors.entryEnd
-              }
-            />
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary" variant="h6">
-              Who can enter?
-            </Typography>
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={formik.values.enterAnybody}
-                  onChange={formik.handleChange}
-                  name="enterAnybody"
-                />
-              }
-              label="Anybody"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={formik.values.enterFollowers}
-                  onChange={formik.handleChange}
-                  disabled={!userData}
-                  name="enterFollowers"
-                />
-              }
-              label="Followers"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={formik.values.enterSubscribers}
-                  onChange={formik.handleChange}
-                  disabled={!userData}
-                  name="enterSubscribers"
-                />
-              }
-              label="Subscribers"
-            />
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary" variant="h6">
-              Entry format
-            </Typography>
-
-            <FormControlLabel
-              style={{ width: "100%" }}
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={formik.values.excludeDescription}
-                  onChange={formik.handleChange}
-                  name="excludeDescription"
-                />
-              }
-              label="Exclude description from submissions"
-            />
-            <FormControlLabel
-              style={{ width: "100%" }}
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={formik.values.allowImageLinks}
-                  onChange={formik.handleChange}
-                  name="allowImageLinks"
-                />
-              }
-              label="Allow images as imgur links"
-            />
-            <FormControlLabel
-              style={{ width: "100%" }}
-              control={
-                <Checkbox
-                  color="primary"
-                  checked={formik.values.multipleUploads}
-                  onChange={formik.handleChange}
-                  name="multipleUploads"
-                />
-              }
-              label="All for multple uploads"
-            />
-          </Paper>
-        </Grid>
-
-        <Grid container spacing={0}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <Typography color="textPrimary" variant="h6">
-                Voting Settings
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <DateTimePicker
-                fullWidth
-                label="Start time"
-                inputVariant="filled"
-                name="voteStart"
-                disablePast
-                value={formik.values.voteStart}
-                onBlur={formik.handleBlur}
-                onChange={(value) =>
-                  formik.setFieldValue("voteStart", value)
-                }
-                error={
-                  formik.touched.voteStart &&
-                  Boolean(formik.errors.voteStart)
-                }
-                helperText={
-                  formik.touched.voteStart && formik.errors.voteStart
-                }
-              />
-            </Paper>
-          </Grid>
-
-          <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <DateTimePicker
-                fullWidth
-                label="End time"
-                inputVariant="filled"
-                name="voteEnd"
-                disablePast
-                value={formik.values.voteEnd}
-                onBlur={formik.handleBlur}
-                onChange={(value) =>
-                  formik.setFieldValue("voteEnd", value)
-                }
-                error={
-                  formik.touched.voteEnd &&
-                  Boolean(formik.errors.voteEnd)
-                }
-                helperText={
-                  formik.touched.voteEnd && formik.errors.voteEnd
-                }
-              />
-            </Paper>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <Typography color="textPrimary" variant="h6">
-                Who can vote?
-              </Typography>
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={formik.values.voteAnybody}
-                    onChange={formik.handleChange}
-                    name="voteAnybody"
-                  />
-                }
-                label="Anybody"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={formik.values.voteFollowers}
-                    onChange={formik.handleChange}
-                    name="voteFollowers"
-                  />
-                }
-                disabled={!userData}
-                label="Followers"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={formik.values.voteSubscribers}
-                    onChange={formik.handleChange}
-                    name="voteSubscribers"
-                  />
-                }
-                disabled={!userData}
-                label="Subscribers"
-              />
-            </Paper>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <FormControl>
-                  <InputLabel htmlFor="voting-type">
-                    Voting Type
-                  </InputLabel>
-                  <Select
-                    style={{ width: 160 }}
-                    value={formik.values.voteType}
-                    fullWidth
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={
-                      formik.touched.voteType &&
-                      Boolean(formik.errors.voteType)
-                    }
-                    inputProps={{
-                      name: "voteType",
-                      id: "voting-type",
-                    }}
-                  >
-                    <MenuItem value="upvoteDownvote">
-                      Upvote/Downvote
-                    </MenuItem>
-                    <MenuItem value="upvote">Upvote</MenuItem>
-                  </Select>
-                </FormControl>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Grid>
-        </div>
-          <ProgressBar
-            numberOfSteps={4}
-            canProceed={canProceed}
-            onNext={() => {
-              dispatch({
-                type: "SET_CREATE_SETTINGS",
-                payload: formik.values,
-              });
+      <form style={ props.style }>
+        <Paper className={classes.paper}>
+          <Typography color="textPrimary" variant="h6">
+            Entry Settings
+          </Typography>
+        </Paper>
+        <div style={{display: "flex"}}>
+          <DateTimePicker
+            label="Start time"
+            name="entryStart"
+            style={{ paddingRight: 20 }}
+            disablePast
+            inputVariant="filled"
+            value={formik.values.entryStart}
+            onBlur={formik.handleBlur}
+            onChange={(value) => {
+              formik.setFieldValue("entryStart", value);
             }}
-            onSubmit={formik.handleSubmit}
+            error={
+              formik.touched.entryStart &&
+              Boolean(formik.errors.entryStart)
+            }
+            helperText={
+              formik.touched.entryStart && formik.errors.entryStart
+            }
           />
-      </Grid>
+          <DateTimePicker
+            label="End time"
+            inputVariant="filled"
+            name="entryEnd"
+            disablePast
+            value={formik.values.entryEnd}
+            onBlur={formik.handleBlur}
+            onChange={(value) => {
+              formik.setFieldValue("entryEnd", value);
+              formik.setFieldValue("voteStart", value);
+            }}
+            error={
+              formik.touched.entryEnd &&
+              Boolean(formik.errors.entryEnd)
+            }
+            helperText={
+              formik.touched.entryEnd && formik.errors.entryEnd
+            }
+          />
+        </div>
+
+        <Paper className={classes.paper}>
+          <Typography color="textPrimary" variant="h6">
+            Who can enter?
+          </Typography>
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                checked={formik.values.enterAnybody}
+                onChange={formik.handleChange}
+                name="enterAnybody"
+              />
+            }
+            label="Anybody"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                checked={formik.values.enterFollowers}
+                onChange={formik.handleChange}
+                disabled={!userData}
+                name="enterFollowers"
+              />
+            }
+            label="Followers"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                checked={formik.values.enterSubscribers}
+                onChange={formik.handleChange}
+                disabled={!userData}
+                name="enterSubscribers"
+              />
+            }
+            label="Subscribers"
+          />
+        </Paper>
+
+        <Paper className={classes.paper}>
+          <Typography color="textPrimary" variant="h6">
+            Entry format
+          </Typography>
+
+          <FormControlLabel
+            style={{ width: "100%" }}
+            control={
+              <Checkbox
+                color="primary"
+                checked={formik.values.excludeDescription}
+                onChange={formik.handleChange}
+                name="excludeDescription"
+              />
+            }
+            label="Exclude description from submissions"
+          />
+          <FormControlLabel
+            style={{ width: "100%" }}
+            control={
+              <Checkbox
+                color="primary"
+                checked={formik.values.allowImageLinks}
+                onChange={formik.handleChange}
+                name="allowImageLinks"
+              />
+            }
+            label="Allow images as imgur links"
+          />
+          <FormControlLabel
+            style={{ width: "100%" }}
+            control={
+              <Checkbox
+                color="primary"
+                checked={formik.values.multipleUploads}
+                onChange={formik.handleChange}
+                name="multipleUploads"
+              />
+            }
+            label="Allow for multple entries"
+          />
+        </Paper>
+
+        <Paper className={classes.paper}>
+          <Typography color="textPrimary" variant="h6">
+            Voting Settings
+          </Typography>
+        </Paper>
+        <div style={{display: "flex"}}>
+          <DateTimePicker
+            label="Start time"
+            name="voteStart"
+            style={{ paddingRight: 20 }}
+            disablePast
+            inputVariant="filled"
+            value={formik.values.voteStart}
+            onBlur={formik.handleBlur}
+            onChange={(value) => {
+              formik.setFieldValue("voteStart", value);
+            }}
+            error={
+              formik.touched.voteStart &&
+              Boolean(formik.errors.voteStart)
+            }
+            helperText={
+              formik.touched.voteStart && formik.errors.voteStart
+            }
+          />
+          <DateTimePicker
+            label="End time"
+            inputVariant="filled"
+            name="voteEnd"
+            disablePast
+            value={formik.values.voteEnd}
+            onBlur={formik.handleBlur}
+            onChange={(value) => {
+              formik.setFieldValue("voteEnd", value);
+            }}
+            error={
+              formik.touched.voteEnd &&
+              Boolean(formik.errors.voteEnd)
+            }
+            helperText={
+              formik.touched.voteEnd && formik.errors.voteEnd
+            }
+          />
+        </div>
+
+        <Paper className={classes.paper}>
+          <Typography color="textPrimary" variant="h6">
+            Who can vote?
+          </Typography>
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                checked={formik.values.voteAnybody}
+                onChange={formik.handleChange}
+                name="voteAnybody"
+              />
+            }
+            label="Anybody"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                checked={formik.values.voteFollowers}
+                onChange={formik.handleChange}
+                name="voteFollowers"
+              />
+            }
+            disabled={!userData}
+            label="Followers"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                color="primary"
+                checked={formik.values.voteSubscribers}
+                onChange={formik.handleChange}
+                name="voteSubscribers"
+              />
+            }
+            disabled={!userData}
+            label="Subscribers"
+          />
+        </Paper>
+        <div>
+          <Paper className={classes.paper}>
+            <FormControl>
+              <InputLabel htmlFor="voting-type">
+                Voting Type
+              </InputLabel>
+              <Select
+                style={{ width: 160 }}
+                value={formik.values.voteType}
+                fullWidth
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.voteType &&
+                  Boolean(formik.errors.voteType)
+                }
+                inputProps={{
+                  name: "voteType",
+                  id: "voting-type",
+                }}
+              >
+                <MenuItem value="upvoteDownvote">
+                  Upvote/Downvote
+                </MenuItem>
+                <MenuItem value="upvote">Upvote</MenuItem>
+              </Select>
+            </FormControl>
+          </Paper>
+        </div>
+        <ProgressBar
+          numberOfSteps={4}
+          canProceed={canProceed}
+          onNext={() => {
+            dispatch({
+              type: "SET_CREATE_SETTINGS",
+              payload: formik.values,
+            });
+          }}
+          onSubmit={formik.handleSubmit}
+        />
+      </form>
     </MuiPickersUtilsProvider>
   );
 };

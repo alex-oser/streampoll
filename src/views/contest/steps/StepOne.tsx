@@ -36,7 +36,7 @@ export const StepOne = React.memo((props: any) => {
   const canProceed = formik.isValid && formik.dirty;
 
   return (
-    <form style={{ height: "100%", display: "flex", flexDirection: "column", ...props.style }} onSubmit={formik.handleSubmit}>
+    <form style={ props.style } onSubmit={formik.handleSubmit}>
       <TextField
         color="secondary"
         required
@@ -84,7 +84,6 @@ export const StepOne = React.memo((props: any) => {
         Selecting photo contest will require each submission to have
         an image.
       </Typography>
-
       <ProgressBar
         numberOfSteps={4}
         canProceed={canProceed}

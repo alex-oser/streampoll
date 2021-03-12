@@ -10,6 +10,18 @@ import { useBaseStyles } from "../../style";
 
 const stepComponents = [StepOne, StepTwo, StepThree, StepFour];
 
+const getStyle = ((isActive: Boolean) => {
+  if (isActive) {
+    return {
+      display: "flex",
+      flexDirection: "column",
+      height: "100%"
+    }
+  } else {
+    return { display: "none" }
+  }
+})
+
 export const CreateContest = React.memo(() => {
   const [state] = useContext(Context);
   const baseClasses = useBaseStyles();
@@ -28,9 +40,7 @@ export const CreateContest = React.memo(() => {
         return (
           <StepComponent
             key={index}
-            style={{
-              display: state.stepIndex !== index ? "none" : "block",
-            }}
+            style={getStyle(state.stepIndex === index)}
           />
         );
       })}

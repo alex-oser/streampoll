@@ -163,19 +163,3 @@ export const EnterContest = (props: any) => {
     </Grid>
   );
 };
-
-// export const EnterContest = withFormik({
-//   mapPropsToValues: () => ({
-//     title: "",
-//     description: "",
-//   }),
-//   validateOnChange: true,
-//   validateOnMount: false,
-//   validateOnBlur: false,
-
-//   handleSubmit: (values, { setSubmitting }) => {
-//     console.log("form submitted");
-//   },
-
-//   displayName: "BasicForm",
-// })(StepBase);

@@ -70,7 +70,7 @@ export const StepThree = React.memo((props: any) => {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit} style={props.style}>
+    <form onSubmit={formik.handleSubmit} style={ props.style }>
       <TextField
         color="secondary"
         required

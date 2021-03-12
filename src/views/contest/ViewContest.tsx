@@ -75,7 +75,9 @@ export const ViewContest = (props: any) => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container className={classes.layout} direction="column" justify="center">
+      <div className={classes.layout} 
+      // flexDirection="column" justify="center"
+      >
         <Typography style={{ alignSelf: "center", paddingBottom: 20 }} color="textPrimary" variant="h4">
           {contestData.title}
         </Typography>
@@ -158,7 +160,7 @@ export const ViewContest = (props: any) => {
             </Typography>
           </Button>
         </Paper>
-      </Grid>
+      </div>
     </MuiPickersUtilsProvider>
   );
 };

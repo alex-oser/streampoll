@@ -8,6 +8,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     marginTop: "auto",
     width: "100%",
+    paddingTop: 5,
+    background: theme.palette.secondary.main,
+    position: "sticky",
+    bottom: 0,
+    zIndex: 999
   },
   dotGroup: {
     width: "100%",

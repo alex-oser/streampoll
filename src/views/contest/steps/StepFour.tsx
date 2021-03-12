@@ -30,10 +30,8 @@ export const StepFour = React.memo((props: any) => {
   };
   
   return (
-    <Grid container style={props.style}>
-      <Grid item xs={12} sm={6}>
-        <Typography color="textPrimary" variant="h6">CONFIRM SCREEN</Typography>
-      </Grid>
+    <form style={props.style}>
+      <Typography color="textPrimary" variant="h6">CONFIRM SCREEN</Typography>
       <ProgressBar
         numberOfSteps={4}
         canProceed
@@ -42,6 +40,6 @@ export const StepFour = React.memo((props: any) => {
         }}
         onSubmit={handleSubmitForm}
       />
-    </Grid>
+    </form>
   );
 });

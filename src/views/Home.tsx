@@ -3,6 +3,17 @@ import { PollOption } from "../components/PollOption";
 import { Context } from "../store";
 import { useContext } from "react";
 import { useBaseStyles } from "../style";
+import { makeStyles, Typography } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  main: {
+    alignItems: "right",
+    display: "flex",
+    height: "44px",
+    marginLeft: "auto",
+    marginTop: "1px"
+  },
+}));
 
 export const Home = React.memo(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -11,9 +22,10 @@ export const Home = React.memo(() => {
 
   return (
   <div className={baseClasses.layout}>
-    <div className="roboto-normal-white-36px">
+    <Typography color="textPrimary" variant="h3">
       Choose an option
-    </div>
+    </Typography>
+    
     <PollOption
       title="Poll (coming soon...)"
       description="Poll with admin created options of text/images"

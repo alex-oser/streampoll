@@ -13,14 +13,31 @@ import { Context } from "./store";
 import { UserData } from "./types/UserData";
 import { ViewContest } from "./views/contest/ViewContest";
 import { EnterContest } from "./views/contest/EnterContest";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  createPoll: {
+    alignItems: "center",
+    background: theme.palette.secondary.main,
+    display: "flex",
+    flexDirection: "column",
+    height: "100vh",
+    width: "100%",
+    "&. autoFlex": {
+     
+    }
+  }
+}));
+
 
 const App = () => {
   const userData: UserData | null = useAuth();
   const [state] = useContext(Context);
+  const classes = useStyles();
 
   return (
     <Router>
-      <div className="create-poll">
+      <div className={classes.createPoll}>
         <Header userData={userData} loginUrl={LOGIN_URL} />
 
         {state.section === "home" && (

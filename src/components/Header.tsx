@@ -24,6 +24,13 @@ import {
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  main: {
+    alignItems: "right",
+    display: "flex",
+    height: "44px",
+    marginLeft: "auto",
+    marginTop: "1px"
+  },
   root: {
     flexGrow: 1,
     display: "contents",
@@ -144,7 +151,7 @@ export const Header = ({ userData, loginUrl }: HeaderProps) => {
               />
             )}
           </a>
-          <div className="connect">
+          <div className={classes.main}>
             {userData ? (
               <UserLoginInfo
                 classes={classes}

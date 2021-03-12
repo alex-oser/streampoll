@@ -58,7 +58,6 @@ export const EnterContest = (props: any) => {
   const history = useHistory();
 
   const handleSubmit = (values: any) => {
-    console.log(`values are ${values}`);
     fetch("/api/enter/contest", {
       method: "POST",
       credentials: "include",

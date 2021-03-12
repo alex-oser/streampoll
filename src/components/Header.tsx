@@ -129,7 +129,6 @@ export const Header = ({ userData, loginUrl }: HeaderProps) => {
   const handleMenu = (event: {
     currentTarget: React.SetStateAction<null>;
   }) => {
-    console.log(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
 

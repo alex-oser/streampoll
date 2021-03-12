@@ -66,10 +66,6 @@ export const ViewContest = (props: any) => {
   }, []);
 
   const enterContest = (() => {
-    // if (hasEntered) {
-    //   console.log("you already have entered this contest")
-    //   return
-    // }
     history.push(`/contest/${params.id}/enter`);
   })
 

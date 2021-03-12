@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 export const PollOption = (props: any) => {
     const { title, description, isActive = true, style } = props;
   
@@ -5,36 +7,16 @@ export const PollOption = (props: any) => {
       <div
         style={style}
         onClick={props.onClick}
-        className={
-          "poll-option-inactive " +
-          (isActive === true ? "poll-option-active" : "")
-        }
+        className={clsx("poll-option-base", { "poll-option-active":isActive })}
       >
-        <div
-          className={
-            isActive === true
-              ? "poll-option-active-accent"
-              : "poll-option-inactive-accent"
-          }
-        ></div>
         <div className="auto-flex">
           <div
-            className={
-              "poll-option-title-i12 valign-text-middle " +
-              (isActive === true
-                ? "roboto-normal-white-24px"
-                : "roboto-normal-storm-dust-24px")
-            }
+            className={clsx("poll-option-title-i12 valign-text-middle", { "roboto-normal-white-24px":isActive, "roboto-normal-storm-dust-24px": ! isActive })}
           >
             {title}
           </div>
           <div
-            className={
-              "poll-option-text-i12 valign-text-middle " +
-              (isActive === true
-                ? "roboto-normal-white-18px"
-                : "roboto-normal-storm-dust-18px")
-            }
+            className={clsx("poll-option-title-i12 valign-text-middle", { "roboto-normal-white-18px":isActive, "roboto-normal-storm-dust-18px": ! isActive })}
           >
             {description}
           </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Typography, Grid } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import { useContext } from "react";
 import { AppleStyleToggle } from "../../../components/AppleStyleToggle";
 import { Context } from "../../../store";

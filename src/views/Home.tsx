@@ -2,15 +2,16 @@ import React from "react";
 import { PollOption } from "../components/PollOption";
 import { Context } from "../store";
 import { useContext } from "react";
-
+import { useBaseStyles } from "../style";
 
 export const Home = React.memo(() => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_state, dispatch] = useContext(Context);
+  const baseClasses = useBaseStyles();
 
   return (
-  <div>
-    <div className="choose-poll-title valign-text-middle roboto-normal-white-36px">
+  <div className={baseClasses.layout}>
+    <div className="roboto-normal-white-36px">
       Choose an option
     </div>
     <PollOption

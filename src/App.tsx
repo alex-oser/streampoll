@@ -21,37 +21,32 @@ const App = () => {
   return (
     <Router>
       <div className="create-poll">
-        <Header
-          userData={userData}
-          loginUrl={LOGIN_URL}
-        />
+        <Header userData={userData} loginUrl={LOGIN_URL} />
 
         {state.section === "home" && (
           <>
             <Route path="/" exact>
               <Home />
             </Route>
-            
+
             <Route path="/create/contest">
               <CreateContest />
             </Route>
-    
+
             <Route exact path="/contest/:id">
               <ViewContest />
             </Route>
             <Route exact path="/contest/:id/enter">
               <EnterContest />
             </Route>
-   
+
             <Route path="/profile">
               <Profile userData={userData} />
             </Route>
           </>
         )}
 
-        {state.section === "contest" && (
-          <CreateContest />
-        )}
+        {state.section === "contest" && <CreateContest />}
 
         <Footer />
       </div>

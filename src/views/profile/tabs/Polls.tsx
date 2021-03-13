@@ -1,4 +1,9 @@
-import { IconButton, makeStyles, Paper } from "@material-ui/core";
+import {
+  IconButton,
+  makeStyles,
+  Typography,
+  Paper,
+} from "@material-ui/core";
 import {
   Table,
   TableBody,
@@ -89,10 +94,10 @@ export const Polls = (props: any) => {
       label: "Title",
       style: { minWidth: 100, verticalAlign: "top" },
       format: (value: any, row: any) => (
-        <>
+        <div style={{ display: "flex" }}>
           <img
             src={row.hostProfileImageUrl}
-            style={{ height: 69 }}
+            style={{ height: 100 }}
             alt="contest host"
           />
           <IconButton
@@ -102,20 +107,22 @@ export const Polls = (props: any) => {
           >
             <EditIcon />
           </IconButton>
-          {value}
-        </>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Typography variant="h6">Hosted by {row.host}</Typography>
+            <Typography variant="subtitle1">{row.title}</Typography>
+            <Typography variant="subtitle2">
+              {row.description.substr(0, 255)}
+            </Typography>
+          </div>
+        </div>
       ),
     },
     {
-      id: "description",
-      label: "Description",
-      style: {
-        minWidth: 170,
-        wordBreak: "break-word",
-        verticalAlign: "top",
-        whiteSpace: "pre-wrap",
-      },
-      format: (value: any) => value,
+      id: "entryCount",
+      label: "# of Entries",
+      style: { minWidth: 100, verticalAlign: "top" },
+      align: "right",
+      format: (value: any) => value || 0,
     },
     {
       id: "createdAt",

@@ -1,7 +1,6 @@
 interface ContestSettings {
   title?: string;
   description?: string;
-  
   contestType?: string;
   entryStart?: Date;
   entryEnd?: Date;
@@ -11,8 +10,9 @@ interface ContestSettings {
   voteVisiblity?: Array<string>;
   voteFormat?: string;
   contestHost?: string;
+  hostProfileImageUrl?: string;
   excludeDescription?: boolean;
-  
+  entryCount?: number;
   allowImageLinks?: boolean;
   allowMultipleEntries?: boolean;
   useMods?: boolean;

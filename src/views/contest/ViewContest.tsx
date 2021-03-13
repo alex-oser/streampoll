@@ -1,9 +1,17 @@
-import { Button, makeStyles, Paper, Typography } from "@material-ui/core";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import {
+  Button,
+  makeStyles,
+  Paper,
+  Typography,
+} from "@material-ui/core";
+import {
+  DateTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { ContestSettings } from "../../types/ContestSettings"
+import { ContestSettings } from "../../types/ContestSettings";
 import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,13 +25,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "start",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       width: "80%",
     },
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       width: "60%",
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       width: "40%",
     },
   },
@@ -32,13 +40,15 @@ const useStyles = makeStyles((theme) => ({
     background: "none",
     border: "none",
     boxShadow: "none",
-  }
+  },
 }));
 
-const initialState: ContestSettings = {}
+const initialState: ContestSettings = {};
 
 export const ViewContest = (props: any) => {
-  const [contestData, setContestData] = useState<ContestSettings>(initialState);
+  const [contestData, setContestData] = useState<ContestSettings>(
+    initialState
+  );
   const [hasEntered, setHasEntered] = useState(true);
   const params: any = useParams();
   const classes = useStyles();
@@ -46,41 +56,55 @@ export const ViewContest = (props: any) => {
 
   useEffect(() => {
     fetch(`/api/contest/${params.id}`)
-      .then(res => res.json())
-      .then(res => {
-        setContestData(res)
-      })
+      .then((res) => res.json())
+      .then((res) => {
+        setContestData(res);
+      });
   }, [params.id]);
 
   useEffect(() => {
     fetch(`/api/me/entries`)
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         setHasEntered(
-          res.some((entry: any) =>
-            entry.contestId === params.id
-          )
-        )
-      })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+          res.some((entry: any) => entry.contestId === params.id)
+        );
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const enterContest = (() => {
+  const enterContest = () => {
     history.push(`/contest/${params.id}/enter`);
-  })
+  };
+
+  const getEntries = () => {
+    if (!contestData.entryCount) {
+      return "There aren't any entries yet ;(";
+    } else if (contestData.entryCount === 1) {
+      return "1 person beat you to it!";
+    } else {
+      return `There are already ${contestData.entryCount} entries!!!!`;
+    }
+  };
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <div className={classes.layout} 
-      // flexDirection="column" justify="center"
-      >
-        <Typography style={{ alignSelf: "center", paddingBottom: 20 }} color="textPrimary" variant="h4">
+      <div className={classes.layout}>
+        <Typography
+          style={{ alignSelf: "center", paddingBottom: 20 }}
+          color="textPrimary"
+          variant="h4"
+        >
           {contestData.title}
         </Typography>
         <Typography color="textPrimary" variant="h5">
           Contest Description
         </Typography>
-        <Typography color="textPrimary" style={{ paddingBottom: 20 }} variant="h6">
+        <Typography
+          color="textPrimary"
+          style={{ paddingBottom: 20 }}
+          variant="h6"
+        >
           {contestData.description}
         </Typography>
         <Typography color="textPrimary" variant="h5">
@@ -95,7 +119,7 @@ export const ViewContest = (props: any) => {
               name="entryStart"
               disabled
               value={contestData.entryStart}
-              onChange={() => { }}
+              onChange={() => {}}
             />
           </Paper>
           <Paper className={classes.paper}>
@@ -106,7 +130,7 @@ export const ViewContest = (props: any) => {
               name="entryEnd"
               disabled
               value={contestData.entryEnd}
-              onChange={() => { }}
+              onChange={() => {}}
             />
           </Paper>
         </div>
@@ -122,7 +146,7 @@ export const ViewContest = (props: any) => {
               name="voteStart"
               disabled
               value={contestData.voteStart}
-              onChange={() => { }}
+              onChange={() => {}}
             />
           </Paper>
           <Paper className={classes.paper}>
@@ -133,17 +157,22 @@ export const ViewContest = (props: any) => {
               name="voteStart"
               disabled
               value={contestData.voteEnd}
-              onChange={() => { }}
+              onChange={() => {}}
             />
           </Paper>
         </div>
-        <Paper className={classes.paper} style={{ marginTop: "auto" }}>
-          {hasEntered ?
+        <Paper
+          className={classes.paper}
+          style={{ marginTop: "auto" }}
+        >
+          <Typography color="textPrimary" variant="h6">
+            {getEntries()}
+          </Typography>
+          {hasEntered ? (
             <Typography color="textPrimary" variant="h6">
               You have already entered this contest.
             </Typography>
-            : null
-          }
+          ) : null}
           <Button
             onClick={() => enterContest()}
             variant="contained"

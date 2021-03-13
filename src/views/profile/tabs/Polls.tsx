@@ -90,6 +90,11 @@ export const Polls = (props: any) => {
       style: { minWidth: 100, verticalAlign: "top" },
       format: (value: any, row: any) => (
         <>
+          <img
+            src={row.hostProfileImageUrl}
+            style={{ height: 69 }}
+            alt="contest host"
+          />
           <IconButton
             onClick={() => {
               handleEdit(row.id);

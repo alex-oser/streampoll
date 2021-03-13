@@ -9,8 +9,8 @@ const { getTwitchUserinfo } = require("../service/twitch");
 router.get("/user/:name", async (req, res) => {
   try {
     const userInfo = await getTwitchUserinfo(req.params.name);
-    // create poll
-    res.send(userInfo);
+    const unwrappedData = userInfo.data[0]
+    res.send(unwrappedData);
   } catch {
     res.send({ error: "no user found" });
   }

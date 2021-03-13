@@ -38,3 +38,17 @@ app.use("/api/contest", contest.route);
 app.use("/api/twitch", twitch.route);
 
 exports.api = functions.https.onRequest(app);
+
+// Keeps track of the length of the 'entries' child list
+exports.countEntries = functions.database.ref('/contests/{contestId}/entries/{entryId}')
+  .onCreate((snapshot, context) => {
+    const entriesRef = snapshot.ref.parent;
+    const countRef = entriesRef.parent.child('entryCount');
+
+    countRef.transaction((current) => {
+      return (current || 0) + 1;
+    }).then(() => {
+      console.log('Counter updated.');
+      return null;
+    })
+  });

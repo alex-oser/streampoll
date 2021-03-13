@@ -17,6 +17,7 @@ import {
   FormHelperText,
   OutlinedInput,
 } from "@material-ui/core";
+import { TwitchUserData } from "../../../types/TwitchUserData";
 
 const validationSchema = yup.object({
   host: yup
@@ -26,10 +27,13 @@ const validationSchema = yup.object({
     .required("Host is required"),
 });
 
+const initialState: TwitchUserData = {};
+
 export const StepThree = (props: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, dispatch] = useContext(Context);
   const [isFetching, setIsFetching] = useState(false);
+  const [hostData, setHostData] = useState(initialState);
 
   const formik = useFormik({
     initialValues: {
@@ -56,6 +60,7 @@ export const StepThree = (props: any) => {
           formik.setFieldError("host", "User not found");
         }
         setIsFetching(false);
+        setHostData(res);
       });
   };
 
@@ -108,14 +113,23 @@ export const StepThree = (props: any) => {
           {formik.touched.host && formik.errors.host}
         </FormHelperText>
       </FormControl>
-
+      {hostData.profile_image_url ? (
+        <img
+          src={hostData.profile_image_url}
+          style={{ height: "100%" }}
+          alt="contest host"
+        />
+      ) : null}
       <ProgressBar
         numberOfSteps={4}
         canProceed={canProceed}
         onNext={() => {
           dispatch({
             type: "SET_CREATE_SETTINGS",
-            payload: formik.values,
+            payload: {
+              hostProfileImageUrl: hostData.profile_image_url,
+              ...formik.values,
+            },
           });
         }}
         onSubmit={formik.handleSubmit}

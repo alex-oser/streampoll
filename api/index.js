@@ -23,6 +23,7 @@ app.use(
     }),
     secret: "dgdgcat",
     resave: true,
+    cookie: { maxAge: 30 * 24 * 3600 * 1000 }, // cookie will last 30 days
     saveUninitialized: true,
     name: "__session",
   })
@@ -40,15 +41,18 @@ app.use("/api/twitch", twitch.route);
 exports.api = functions.https.onRequest(app);
 
 // Keeps track of the length of the 'entries' child list
-exports.countEntries = functions.database.ref('/contests/{contestId}/entries/{entryId}')
+exports.countEntries = functions.database
+  .ref("/contests/{contestId}/entries/{entryId}")
   .onCreate((snapshot, context) => {
     const entriesRef = snapshot.ref.parent;
-    const countRef = entriesRef.parent.child('entryCount');
+    const countRef = entriesRef.parent.child("entryCount");
 
-    countRef.transaction((current) => {
-      return (current || 0) + 1;
-    }).then(() => {
-      console.log('Counter updated.');
-      return null;
-    })
+    countRef
+      .transaction((current) => {
+        return (current || 0) + 1;
+      })
+      .then(() => {
+        console.log("Counter updated.");
+        return null;
+      });
   });

@@ -14,6 +14,8 @@ const core = require("./routes/core");
 const useless = require("./routes/useless");
 const twitch = require("./routes/twitch");
 const contest = require("./routes/contest");
+const tokenRefresh = require("./scheduled/tokens");
+
 const app = express();
 
 app.use(
@@ -55,4 +57,14 @@ exports.countEntries = functions.database
         console.log("Counter updated.");
         return null;
       });
+  });
+
+// handle token refresh logic with a cron function
+exports.tokenRefresh = tokenRefresh.schedule;
+
+exports.scheduledFunction = functions.pubsub
+  .schedule("every 2 hours")
+  .onRun((context) => {
+    console.log("every 2 hours");
+    return null;
   });

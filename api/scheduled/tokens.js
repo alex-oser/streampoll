@@ -1,9 +1,8 @@
-// TODO: make a job that runs every few hours to renew tokens
-const functions = require('firebase-functions');
+const functions = require("firebase-functions");
 
 exports.schedule = functions.pubsub
-  .schedule("every 1 minute")
+  .schedule("every 60 minutes")
   .onRun((context) => {
-    console.log("This will be run every 30 seconds");
+    console.log("This will be run every 60 minutes");
     return null;
   });

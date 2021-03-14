@@ -60,11 +60,9 @@ exports.countEntries = functions.database
   });
 
 // handle token refresh logic with a cron function
-exports.tokenRefresh = tokenRefresh.schedule;
-
-exports.scheduledFunction = functions.pubsub
-  .schedule("every 2 hours")
+exports.tokenRefresh = functions.pubsub
+  .schedule("every 60 minutes")
   .onRun((context) => {
-    console.log("every 2 hours");
+    console.log("This will be run every 60 minutes");
     return null;
   });

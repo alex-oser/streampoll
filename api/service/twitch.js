@@ -17,7 +17,10 @@ const createOauthToken = async () => {
   };
 
   const params = Object.keys(paramsMap)
-    .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(paramsMap[k]))
+    .map(
+      (k) =>
+        encodeURIComponent(k) + "=" + encodeURIComponent(paramsMap[k])
+    )
     .join("&");
 
   const apiUrl = `${TWITCH_OAUTH_BASE}/oauth2/token?${params}`;
@@ -59,15 +62,29 @@ const getTwitchUserInfo = async (username) => {
 
 const getTwitchMods = async (username) => {
   const apiUrl = "https://gql.twitch.tv/gql";
-  console.log("trying to get mods for", username)
+  console.log("trying to get mods for", username);
   const response = await got({
     url: apiUrl,
     headers: {
-      'Client-Id': `kimne78kx3ncx6brgo4mv6wki5h1ko`
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
+      "Client-Id": `kimne78kx3ncx6brgo4mv6wki5h1ko`,
     },
     method: "POST",
     responseType: "json",
-    body:`[{"operationName":"Mods","variables":{"login":"${username}"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"cb912a7e0789e0f8a4c85c25041a08324475831024d03d624172b59498caf085"}}}]`
+    body: JSON.stringify([
+      {
+        operationName: "Mods",
+        variables: { login: username },
+        extensions: {
+          persistedQuery: {
+            version: 1,
+            sha256Hash:
+              "cb912a7e0789e0f8a4c85c25041a08324475831024d03d624172b59498caf085",
+          },
+        },
+      },
+    ]),
   });
 
   if (response.statusCode !== 200) {
@@ -101,5 +118,5 @@ const getTwitchMods = async (username) => {
 module.exports = {
   createOauthToken,
   getTwitchUserInfo,
-  getTwitchMods
+  getTwitchMods,
 };

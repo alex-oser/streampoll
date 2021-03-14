@@ -145,21 +145,21 @@ export const Header = ({ userData, loginUrl }: HeaderProps) => {
             onClick={(e) => handleRoute(e, "/")}
             href="/"
           >
-            {matches ? (
-              <img
-                className={classes.image}
-                alt="streampoll-logo"
-                style={{ width: 30 }}
-                src={`/img/logo-small.svg`}
-              />
-            ) : (
-              <img
-                className={classes.image}
-                alt="streampoll-logo"
-                style={{ width: 250 }}
-                src={`/img/logo.svg`}
-              />
-            )}
+
+          <img
+            className={classes.image}
+            alt="streampoll-logo"
+            style={{ height: 30, width: 30, display: !matches ? "none" : "block" }}
+            src={`/img/logo-small.svg`}
+          />
+    
+          <img
+            className={classes.image}
+            alt="streampoll-logo"
+            style={{ width: 250,  display: matches ? "none" : "block" }}
+            src={`/img/logo.svg`}
+          />
+       
           </a>
           <div className={classes.main}>
             {userData ? (

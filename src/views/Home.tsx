@@ -15,12 +15,6 @@ export const Home = React.memo(() => {
       <Typography color="textPrimary" variant="h3">
         Choose an option
       </Typography>
-      
-      <PollOption
-        title="Poll (coming soon...)"
-        description="Poll with admin created options of text/images"
-        isActive={false}
-      />
 
       <PollOption
         onClick={() =>
@@ -32,8 +26,20 @@ export const Home = React.memo(() => {
       />
 
       <PollOption
+        title="Poll (coming soon...)"
+        description="Poll with admin created options of text/images"
+        isActive={false}
+      />
+
+      <PollOption
         title="Survey (coming soon...)"
         description="Create a survey and collect results"
+        isActive={false}
+      />
+
+      <PollOption
+        title="Giveaways (coming soon...)"
+        description="Create a giveaway with prizes"
         isActive={false}
       />
     </div>

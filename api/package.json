@@ -20,6 +20,7 @@
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "express-validator": "^6.10.0",
     "firebase-admin": "^9.5.0",
     "firebase-functions": "^3.13.2",
     "got": "^11.8.2",

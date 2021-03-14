@@ -39,7 +39,7 @@ const App = () => {
           <Home />
         </Route>
 
-        <Route path="/create/contest">
+        <Route exact path="/create/contest">
           <CreateContest />
         </Route>
 

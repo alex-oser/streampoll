@@ -10,8 +10,8 @@ import { ProgressBar } from "../../../components/StepProgress";
 const validationSchema = yup.object({
   title: yup
     .string()
-    .min(3, "min req")
-    .max(255, "Description should be of max of 255 characters")
+    .min(3, "Minimum length of 3 chars required")
+    .max(60, "Title should be of max of 60 characters")
     .required("Title is required"),
   description: yup
     .string()

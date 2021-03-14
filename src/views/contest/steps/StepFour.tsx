@@ -24,7 +24,7 @@ export const StepFour = React.memo((props: any) => {
       .then((res) => {
         const id = res.id;
         dispatch({ type: "RESET_STEP" });
-        history.push(`contest/${id}`);
+        history.push(`/contest/${id}`);
       });
   };
   

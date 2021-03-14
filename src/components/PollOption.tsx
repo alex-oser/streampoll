@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   disabled: {
     color: darken(theme.palette.secondary.contrastText, 0.45),
-    opacity: "0.5"
+    opacity: "0.5",
   },
 }));
 
@@ -46,7 +46,7 @@ export const PollOption = (props: any) => {
       style={style}
       onClick={props.onClick}
       className={clsx(classes.base, {
-        [classes.disabled]: !isActive 
+        [classes.disabled]: !isActive,
       })}
     >
       <div className={classes.autoFlex}>
@@ -59,9 +59,7 @@ export const PollOption = (props: any) => {
             {title}
           </Typography>
         </div>
-        <div
-          className={clsx()}
-        >
+        <div className={clsx()}>
           <Typography color="textPrimary" variant="body1">
             {description}
           </Typography>

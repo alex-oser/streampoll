@@ -1,4 +1,4 @@
-import { IconButton, makeStyles, Paper } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
 import {
   Table,
   TableBody,
@@ -15,17 +15,7 @@ import { useState } from "react";
 import { TabPanel } from "./TabPanel";
 import { useHistory } from "react-router";
 
-const useStyles = makeStyles({
-  root: {
-    width: "100%",
-  },
-  container: {
-    maxHeight: 440,
-  },
-});
-
 export const Polls = (props: any) => {
-  const classes = useStyles();
   const { value, index } = props;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -87,12 +77,12 @@ export const Polls = (props: any) => {
     {
       id: "title",
       label: "Title",
-      style: { minWidth: 100, verticalAlign: "top" },
+      style: { minWidth: 100, maxWidth: 400, verticalAlign: "top" },
       format: (value: any, row: any) => (
-        <>
+        <div style={{ display: "flex" }}>
           <img
             src={row.hostProfileImageUrl}
-            style={{ height: 69 }}
+            style={{ height: 100 }}
             alt="contest host"
           />
           <IconButton
@@ -102,20 +92,25 @@ export const Polls = (props: any) => {
           >
             <EditIcon />
           </IconButton>
-          {value}
-        </>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Typography variant="h6">Hosted by {row.host}</Typography>
+            <Typography variant="subtitle1">{row.title}</Typography>
+            <Typography
+              variant="subtitle2"
+              style={{ whiteSpace: "pre-line" }}
+            >
+              {row.description.substr(0, 255)}
+            </Typography>
+          </div>
+        </div>
       ),
     },
     {
-      id: "description",
-      label: "Description",
-      style: {
-        minWidth: 170,
-        wordBreak: "break-word",
-        verticalAlign: "top",
-        whiteSpace: "pre-wrap",
-      },
-      format: (value: any) => value,
+      id: "entryCount",
+      label: "# of Entries",
+      style: { minWidth: 100, verticalAlign: "top" },
+      align: "right",
+      format: (value: any) => value || 0,
     },
     {
       id: "createdAt",
@@ -138,76 +133,67 @@ export const Polls = (props: any) => {
 
   return (
     <>
-      <TabPanel
-        style={{
-          overflow: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-        value={value}
-        index={index}
-      >
-        <Paper className={classes.root}>
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column: any) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={column.style}
+      <TabPanel value={value} index={index}>
+        <TableContainer>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column: any) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={column.style}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+                .map((row: any, index: number) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={"row" + index}
                     >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows
-                  .slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                  .map((row: any, index: number) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={"row" + index}
-                      >
-                        {columns.map((column: any) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell
-                              key={column.id + "-" + index}
-                              align={column.align}
-                              style={column.style}
-                            >
-                              {column.format &&
-                              typeof value !== "object"
-                                ? column.format(value, row)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </Paper>
+                      {columns.map((column: any) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell
+                            key={column.id + "-" + index}
+                            align={column.align}
+                            style={column.style}
+                          >
+                            {column.format &&
+                            typeof value !== "object"
+                              ? column.format(value, row)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          style={{ display: "table" }}
+        />
       </TabPanel>
     </>
   );

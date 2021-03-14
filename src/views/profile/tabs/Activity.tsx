@@ -1,64 +1,80 @@
-import { IconButton, makeStyles, Paper } from "@material-ui/core";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@material-ui/core";
-import EditIcon from '@material-ui/icons/Edit';
+import { IconButton, Typography } from "@material-ui/core";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
+import { ContestStatus } from "../../../components/ContestStatus";
 import { useHistory } from "react-router";
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
-  container: {
-    maxHeight: 440,
-  },
-});
-
 export const Activity = (props: any) => {
-  const classes = useStyles();
   const { value, index } = props;
-  const [rows, setRows] = useState<any>([])
+  const [rows, setRows] = useState<any>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const history = useHistory()
+  const history = useHistory();
 
   const handleEdit = (contestId: string, entryId: string) => {
-    history.push(`/contest/${contestId}/entry/${entryId}/edit`); 
-  }
+    history.push(`/contest/${contestId}/entry/${entryId}/edit`);
+  };
 
   const columns = [
     {
-      id: 'contestTitle',
-      label: 'Contest',
+      id: "title",
+      label: "Contest",
       style: { minWidth: 100, verticalAlign: "top" },
-      format: (value: any, row: any) => (
-        <>
-          <IconButton onClick={() => { handleEdit(row.contestId, row.entryId) }}><EditIcon /></IconButton>{value}
-        </>
-      )
+      format: (row: any) => (
+        <div style={{ display: "flex" }}>
+          <img
+            src={row.contest.hostProfileImageUrl}
+            style={{ height: 100 }}
+            alt="contest host"
+          />
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Typography variant="h6">
+              Hosted by {row.contest.host}
+            </Typography>
+            <Typography variant="subtitle1">
+              <IconButton
+                onClick={() => {
+                  handleEdit(row.contest.id, row.entry.id);
+                }}
+              >
+                <EditIcon />
+              </IconButton>
+              {row.entry.title}
+            </Typography>
+            <Typography variant="subtitle2">
+              {row.entry.description.substr(0, 255)}
+            </Typography>
+          </div>
+        </div>
+      ),
     },
     {
-      id: 'entryTitle',
-      label: 'Title',
-      style: { minWidth: 100, wordBreak: "break-word", verticalAlign: "top" },
-      format: (value: any) => value.substr(0, 255)
-    },
-    {
-      id: 'entryDescription',
-      label: 'Description',
-      style: { minWidth: 170, wordBreak: "break-word", verticalAlign: "top" },
-      format: (value: any) => value.substr(0, 255)
-    },
-    {
-      id: 'entryCreatedAt',
-      label: 'Created At',
+      id: "createdAt",
+      label: "Submission Time",
       style: { minWidth: 100, verticalAlign: "top" },
-      align: 'right',
-      format: (value: any) => (new Date(value)).toLocaleDateString("en-US")
+      align: "right",
+      format: (row: any) =>
+        new Date(row.entry.createdAt).toLocaleDateString("en-US"),
+    },
+    {
+      id: "status",
+      label: "Status",
+      style: { minWidth: 100, verticalAlign: "top" },
+      align: "right",
+      format: (row: any) => <ContestStatus contest={row.contest} />,
     },
   ];
-
 
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
@@ -81,7 +97,7 @@ export const Activity = (props: any) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        setRows(res)
+        setRows(res);
       });
   };
 
@@ -93,60 +109,71 @@ export const Activity = (props: any) => {
       .then((res) => res.json())
       .then((res) => {
         if (!res.error) {
-          const entries = res
-          getEntriesData(entries)
+          const entries = res;
+          getEntriesData(entries);
         }
-      }
-      );
+      });
   }, []);
 
   return (
     <>
-      <TabPanel style={{ overflow: "auto", display: "flex", flexDirection: "column" }} value={value} index={index}>
-        <Paper className={classes.root}>
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column: any) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={column.style}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: any, index: number) => {
+      <TabPanel value={value} index={index}>
+        <TableContainer>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column: any) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={column.style}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+                .map((row: any, index: number) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={"row" + index}>
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={"row" + index}
+                    >
                       {columns.map((column: any) => {
-                        const value = row[column.id];
                         return (
-                          <TableCell key={column.id + "-" + index} align={column.align} style={column.style}>
-                            {column.format ? column.format(value, row) : value}
+                          <TableCell
+                            key={column.id + "-" + index}
+                            align={column.align}
+                            style={column.style}
+                          >
+                            {column.format(row)}
                           </TableCell>
                         );
                       })}
                     </TableRow>
                   );
                 })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </Paper>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          style={{ display: "table" }}
+        />
       </TabPanel>
     </>
   );

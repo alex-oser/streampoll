@@ -48,21 +48,18 @@ router.post("/entry/list", async (req, res) => {
   const results = [];
   const refs = [];
   entries.forEach((entry) => {
-    const result = {}
+    // const result = {}
     const contestRef = database.ref(`contests/${entry.contestId}`);
     const entryRef = database.ref(`contests/${entry.contestId}/entries/${entry.entryId}`);
     // get title of the contest
     refs.push(
       contestRef.once("value")
         .then((snapshot) => {
-          contestData = snapshot.val()
-          result.contestTitle = contestData.title;
-          result.contestId = entry.contestId;
+          const contestData = snapshot.val()
           const entryData = contestData.entries[entry.entryId];
-          result.entryId = entry.entryId;
-          result.entryTitle = entryData.title;
-          result.entryDescription = entryData.description
-          result.entryCreatedAt = entryData.createdAt
+          contestData.id = entry.contestId
+          entryData.id = entry.entryId
+          const result = { contest: contestData, entry: entryData }
           results.push(result)
         }, (errorObject) => {
           console.log("The read failed: " + errorObject.code);

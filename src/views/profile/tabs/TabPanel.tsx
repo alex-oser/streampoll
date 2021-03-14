@@ -1,20 +1,19 @@
-import { Typography } from "@material-ui/core";
-
 export function TabPanel(props: any) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, style } = props;
 
   return (
-    <Typography
-      component="div"
-      role="tabpanel"
+    <div
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
+      style={{
+        ...style,
+        display: "flex",
+        flexDirection: "column",
+        overflowY: "auto",
+      }}
     >
-      {value === index && (
-        children
-      )}
-    </Typography>
+      {value === index && children}
+    </div>
   );
 }

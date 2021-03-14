@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   InputAdornment,
   CircularProgress,
@@ -34,6 +34,7 @@ export const StepThree = (props: any) => {
   const [state, dispatch] = useContext(Context);
   const [isFetching, setIsFetching] = useState(false);
   const [hostData, setHostData] = useState(initialState);
+  const [spinner, setSpinner] = useState<any>();
 
   const formik = useFormik({
     initialValues: {
@@ -64,62 +65,73 @@ export const StepThree = (props: any) => {
       });
   };
 
-  const getSpinner = () => {
+  useEffect(() => {
     if (isFetching && formik.values.host) {
-      return <CircularProgress />;
+      setSpinner(<CircularProgress />);
     } else if (hasErrors) {
-      return <IconCross style={{ color: "red" }} />;
+      setSpinner(<IconCross style={{ color: "red" }} />);
     } else if (formik.values.host && formik.isValid) {
-      return <IconCheck style={{ color: "green" }} />;
+      setSpinner(<IconCheck style={{ color: "green" }} />);
     }
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFetching]);
 
   return (
     <form onSubmit={formik.handleSubmit} style={props.style}>
-      <FormControl variant="outlined">
-        <InputLabel htmlFor="host">Host</InputLabel>
-        <OutlinedInput
-          color="secondary"
-          required
-          id="host"
-          name="host"
-          label="Host"
-          style={{ width: "50%" }}
-          value={formik.values.host}
-          onBlur={(event) => {
-            formik.handleBlur(event);
-            validateUsername();
-          }}
-          onKeyDown={(event) => {
-            if (formik.isValid && event.code === "Enter") {
-              formik.handleChange(event);
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          alignItems: "center",
+        }}
+      >
+        <FormControl variant="outlined">
+          <InputLabel htmlFor="host">Host</InputLabel>
+          <OutlinedInput
+            color="secondary"
+            required
+            id="host"
+            name="host"
+            label="Host"
+            value={formik.values.host}
+            onBlur={(event) => {
+              formik.handleBlur(event);
               validateUsername();
+            }}
+            onKeyDown={(event) => {
+              if (formik.isValid && event.code === "Enter") {
+                formik.handleChange(event);
+                validateUsername();
+              }
+            }}
+            onChange={(event) => {
+              formik.handleChange(event);
+              setSpinner(null);
+            }}
+            endAdornment={
+              <InputAdornment position="end">
+                <>{spinner}</>
+              </InputAdornment>
             }
-          }}
-          onChange={formik.handleChange}
-          endAdornment={
-            <InputAdornment position="end">
-              <>{getSpinner()}</>
-            </InputAdornment>
-          }
-          aria-describedby="outlined-host-helper-text"
-          inputProps={{
-            "aria-label": "host",
-          }}
-          labelWidth={0}
-          error={formik.touched.host && Boolean(formik.errors.host)}
-        />
-        <FormHelperText id="outlined-host-helper-text">
-          {formik.touched.host && formik.errors.host}
-        </FormHelperText>
-      </FormControl>
-      {hostData.profile_image_url ? (
-        <img
-          src={hostData.profile_image_url}
-          style={{ height: "100%" }}
-          alt="contest host"
-        />
-      ) : null}
+            aria-describedby="outlined-host-helper-text"
+            inputProps={{
+              "aria-label": "host",
+            }}
+            labelWidth={0}
+            error={formik.touched.host && Boolean(formik.errors.host)}
+          />
+          <FormHelperText id="outlined-host-helper-text">
+            {formik.touched.host && formik.errors.host}
+          </FormHelperText>
+        </FormControl>
+        {hostData.profile_image_url ? (
+          <img
+            src={hostData.profile_image_url}
+            style={{ height: 69, paddingLeft: 20 }}
+            alt="contest host"
+          />
+        ) : null}
+      </div>
       <ProgressBar
         numberOfSteps={4}
         canProceed={canProceed}

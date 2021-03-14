@@ -1,10 +1,4 @@
-import {
-  Chip,
-  IconButton,
-  makeStyles,
-  Paper,
-  Typography,
-} from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
 import {
   Table,
   TableBody,
@@ -18,26 +12,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
+import { ContestStatus } from "../../../components/ContestStatus";
 import { useHistory } from "react-router";
 
-const useStyles = makeStyles({
-  root: {
-    width: "100%",
-  },
-  container: {
-    maxHeight: 440,
-  },
-});
-
-// const ActiveButton = withStyles((theme) => ({
-//   root: {
-//     // color: theme.palette.getContrastText(purple[500]),
-//     backgroundColor: "#80C687",
-//   },
-// }))(Button);
-
 export const Activity = (props: any) => {
-  const classes = useStyles();
   const { value, index } = props;
   const [rows, setRows] = useState<any>([]);
   const [page, setPage] = useState(0);
@@ -46,23 +24,6 @@ export const Activity = (props: any) => {
 
   const handleEdit = (contestId: string, entryId: string) => {
     history.push(`/contest/${contestId}/entry/${entryId}/edit`);
-  };
-
-  const getContestStatus = (contest: any) => {
-    const currDate = new Date();
-    const entryStart = new Date(contest.entryStart);
-    const entryEnd = new Date(contest.entryEnd);
-    const voteStart = new Date(contest.voteStart);
-    const voteEnd = new Date(contest.voteEnd);
-    if (currDate < contest.entryStart) {
-      return ["#FDBB3C", "Coming Up"];
-    } else if (entryStart < currDate && currDate < entryEnd) {
-      return ["#80C687", "Entry Open"];
-    } else if (voteStart < currDate && currDate < voteEnd) {
-      return ["#80C687", "Voting Open"];
-    } else {
-      return ["#FD615A", "Closed"];
-    }
   };
 
   const columns = [
@@ -77,18 +38,18 @@ export const Activity = (props: any) => {
             style={{ height: 100 }}
             alt="contest host"
           />
-          <IconButton
-            onClick={() => {
-              handleEdit(row.contest.id, row.entry.id);
-            }}
-          >
-            <EditIcon />
-          </IconButton>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <Typography variant="h6">
               Hosted by {row.contest.host}
             </Typography>
             <Typography variant="subtitle1">
+              <IconButton
+                onClick={() => {
+                  handleEdit(row.contest.id, row.entry.id);
+                }}
+              >
+                <EditIcon />
+              </IconButton>
               {row.entry.title}
             </Typography>
             <Typography variant="subtitle2">
@@ -111,17 +72,7 @@ export const Activity = (props: any) => {
       label: "Status",
       style: { minWidth: 100, verticalAlign: "top" },
       align: "right",
-      format: (row: any) => {
-        const [backgroundColor, label] = getContestStatus(
-          row.contest
-        );
-        return (
-          <Chip
-            style={{ backgroundColor: backgroundColor }}
-            label={label}
-          />
-        );
-      },
+      format: (row: any) => <ContestStatus contest={row.contest} />,
     },
   ];
 
@@ -166,72 +117,63 @@ export const Activity = (props: any) => {
 
   return (
     <>
-      <TabPanel
-        style={{
-          overflow: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-        value={value}
-        index={index}
-      >
-        <Paper className={classes.root}>
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column: any) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={column.style}
+      <TabPanel value={value} index={index}>
+        <TableContainer>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column: any) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={column.style}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+                .map((row: any, index: number) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={"row" + index}
                     >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows
-                  .slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                  .map((row: any, index: number) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={"row" + index}
-                      >
-                        {columns.map((column: any) => {
-                          return (
-                            <TableCell
-                              key={column.id + "-" + index}
-                              align={column.align}
-                              style={column.style}
-                            >
-                              {column.format(row)}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </Paper>
+                      {columns.map((column: any) => {
+                        return (
+                          <TableCell
+                            key={column.id + "-" + index}
+                            align={column.align}
+                            style={column.style}
+                          >
+                            {column.format(row)}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          style={{ display: "table" }}
+        />
       </TabPanel>
     </>
   );

@@ -1,7 +1,6 @@
 import React, { createContext, useReducer } from "react";
 
 const initialState: any = {
-  section: "home",
   stepIndex: 0,
   canProceed: false,
   isAuthed: false,
@@ -10,11 +9,6 @@ const initialState: any = {
 
 const Reducer = (state: any, action: { type: any; payload: any; }) => {
   switch (action.type) {
-    case "SET_SECTION":
-      return {
-        ...state,
-        section: action.payload,
-      };
     case "RESET_STEP":
       return {
         ...state,

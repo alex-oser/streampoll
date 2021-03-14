@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography } from "@material-ui/core";
 import { useContext } from "react";
 import { Context } from "../../store";
@@ -23,8 +23,16 @@ const getStyle = ((isActive: Boolean) => {
 })
 
 export const CreateContest = React.memo(() => {
-  const [state] = useContext(Context);
+  const [state, dispatch] = useContext(Context);
   const baseClasses = useBaseStyles();
+
+  // reset step on comp unmount
+  useEffect(() => {
+    return () => {
+      dispatch({ type: "RESET_STEP" });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div

@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
@@ -8,7 +7,6 @@ import { useAuth } from "./hooks/useAuth";
 import { Home } from "./views/Home";
 import { Profile } from "./views/profile/Profile";
 import { CreateContest } from "./views/contest/CreateContest";
-import { Context } from "./store";
 
 import { UserData } from "./types/UserData";
 import { ViewContest } from "./views/contest/ViewContest";
@@ -24,16 +22,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     height: "100vh",
     width: "100%",
-    "&. autoFlex": {
-     
-    }
-  }
+    "&. autoFlex": {},
+  },
 }));
-
 
 const App = () => {
   const userData: UserData | null = useAuth();
-  const [state] = useContext(Context);
   const classes = useStyles();
 
   return (
@@ -41,33 +35,28 @@ const App = () => {
       <div className={classes.createPoll}>
         <Header userData={userData} loginUrl={LOGIN_URL} />
 
-        {state.section === "home" && (
-          <>
-            <Route path="/" exact>
-              <Home />
-            </Route>
+        <Route path="/" exact>
+          <Home />
+        </Route>
 
-            <Route path="/create/contest">
-              <CreateContest />
-            </Route>
+        <Route path="/create/contest">
+          <CreateContest />
+        </Route>
 
-            <Route exact path="/contest/:id">
-              <ViewContest />
-            </Route>
-            <Route exact path="/contest/:id/enter">
-              <NewContestEntry />
-            </Route>
-            <Route exact path="/contest/:contestId/entry/:entryId/edit">
-              <EditContestEntry />
-            </Route>
+        <Route exact path="/contest/:id">
+          <ViewContest />
+        </Route>
 
-            <Route path="/profile">
-              <Profile userData={userData} />
-            </Route>
-          </>
-        )}
+        <Route exact path="/contest/:id/enter">
+          <NewContestEntry />
+        </Route>
+        <Route exact path="/contest/:contestId/entry/:entryId/edit">
+          <EditContestEntry />
+        </Route>
 
-        {state.section === "contest" && <CreateContest />}
+        <Route path="/profile">
+          <Profile userData={userData} />
+        </Route>
 
         <Footer />
       </div>

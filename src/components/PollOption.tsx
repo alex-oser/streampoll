@@ -38,12 +38,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const PollOption = (props: any) => {
-  const { title, description, isActive = true, style } = props;
+  const { title, description, isActive = true } = props;
   const classes = useStyles();
 
   return (
     <div
-      style={style}
       onClick={props.onClick}
       className={clsx(classes.base, {
         [classes.disabled]: !isActive,

@@ -118,7 +118,6 @@ export const Header = ({ userData, loginUrl }: HeaderProps) => {
     path: string
   ) => {
     event.preventDefault();
-    dispatch({ type: "SET_SECTION", payload: "home" });
     history.push(path);
   };
 

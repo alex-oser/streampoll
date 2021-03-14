@@ -260,6 +260,11 @@
     }
   },
   "sessions": {
+    "2L1ndPsSJFaVQz9xs9Nmdvv8CM4cS1vF": {
+      "expires": 1618331453305,
+      "sess": "{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2021-04-13T16:30:53.305Z\",\"httpOnly\":true,\"path\":\"/\"},\"auth\":{\"access_token\":\"dm6ukboq910jd9p3mkef17k7v6h2oe\",\"expires_in\":15751,\"refresh_token\":\"6ejt5ef0jyu0egbk5wb8y3sk90ji86pnrzwd3mr00wjqp23v4u\",\"scope\":[\"user:read:email\"],\"token_type\":\"bearer\",\"id\":\"15848764\"}}",
+      "type": "connect-session"
+    },
     "qLzWZkUj0YsceDG6TmRzZx6ZpQJR3RD6": {
       "expires": 1618330980420,
       "sess": "{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2021-04-13T16:23:00.420Z\",\"httpOnly\":true,\"path\":\"/\"},\"auth\":{\"access_token\":\"\",\"expires_in\":14397,\"refresh_token\":\"\",\"scope\":[\"user:read:email\"],\"token_type\":\"bearer\",\"id\":\"180790944\"}}",
@@ -293,7 +298,7 @@
         }
       },
       "id": "15848764",
-      "lastLogin": "2021-03-11T06:08:38.749Z",
+      "lastLogin": "2021-03-14T16:30:51.840Z",
       "login": "hacksore",
       "offline_image_url": "",
       "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/a6082e80-6d61-4545-aa43-dc837413fd27-profile_image-300x300.png",

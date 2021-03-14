@@ -34,6 +34,7 @@
     "start": "concurrently npm:backend npm:frontend",
     "backend": "firebase emulators:start --import=seed",
     "frontend": "react-scripts start",
+    "dbexport": "firebase emulators:export seed",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "postinstall": "cd api && npm install",

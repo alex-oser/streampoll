@@ -22,20 +22,20 @@ const getMods = async (channel) => {
     client.connect().catch(console.error);
 
     client.on("mods", (channel, mods) => {
-      console.log("Mods", mods);
-
       client.disconnect();
       resolve(mods);
     });
 
-    client.on("join", () => {
-      console.log("joined", channel)
-      client.say(channel, "/mods\n");
+    client.on("error", (channel, mods) => {
+      reject("soemthing went wong");
     });
 
+    client.on("join", () => {
+      client.say(channel, "/mods\n");
+    });
   });
-}
+};
 
 module.exports = {
-  getMods
+  getMods,
 };

@@ -12,7 +12,14 @@ router.get("/", async (req, res) => {
   const ref = database.ref("users/" + req.session.auth.id);
   ref.once("value").then(
     (snapshot) => {
-      return res.send(snapshot.val());
+      const data = snapshot.val();
+      return res.send({
+        username: data["display_name"],
+        photoUrl: data["profile_image_url"],
+        id: data["id"],
+        email: data["email"],
+        settings: data.settings,
+      });
     },
     (errorObject) => {
       console.log("The read failed: " + errorObject.code);

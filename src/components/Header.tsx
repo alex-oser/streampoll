@@ -90,10 +90,10 @@ const UserLoginInfo = ({
             borderRadius: "50%",
             border: "3px solid #524366",
           }}
-          src={userData.profile_image_url}
+          src={userData.photoUrl}
         />
         <span className={classes.userLink}>
-          {userData.display_name}
+          {userData.username}
         </span>
       </div>
     </>

@@ -48,7 +48,7 @@ export const StepThree = (props: any) => {
 
   const formik = useFormik({
     initialValues: {
-      host: "",
+      host: state.userData.username || "",
     },
     validateOnChange: true,
     validationSchema: validationSchema,

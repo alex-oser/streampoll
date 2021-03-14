@@ -11,6 +11,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: set DEPLOY_START_TIME environment variable
         run: echo "DEPLOY_START_TIME=$(date +%s)" >> $GITHUB_ENV
+      - uses: actions/setup-node@v2
+      - name: Jenkinsfile
+        run: node actions.js
       - name: CLI
         uses: w9jds/firebase-action@master
         with:

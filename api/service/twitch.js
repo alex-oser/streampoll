@@ -35,7 +35,7 @@ const createOauthToken = async () => {
  * @param {string} username username to lookup
  * @returns some usefull shoit aobueig iowjhgeog shoghoesafjosfojies josigjos huhsrhu
  */
-const getTwitchUserinfo = async (username) => {
+const getTwitchUserInfo = async (username) => {
   const token = await createOauthToken();
 
   const apiUrl = `${TWITCH_API_BASE}/helix/users?login=${username}`;
@@ -57,12 +57,31 @@ const getTwitchUserinfo = async (username) => {
   return response.body;
 };
 
+const getTwitchMods = async (username) => {
+  const apiUrl = "https://gql.twitch.tv/gql";
+  console.log("trying to get mods for", username)
+  const response = await got({
+    url: apiUrl,
+    headers: {
+      'Client-Id': `kimne78kx3ncx6brgo4mv6wki5h1ko`
+    },
+    method: "POST",
+    responseType: "json",
+    body:`[{"operationName":"Mods","variables":{"login":"${username}"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"cb912a7e0789e0f8a4c85c25041a08324475831024d03d624172b59498caf085"}}}]`
+  });
+
+  if (response.statusCode !== 200) {
+    throw new Error({ error: "soemtign went wong" });
+  }
+  return response.body;
+};
+
 // /**
 //  *
 //  * @param {string} username username to lookup
 //  * @returns some usefull shoit aobueig iowjhgeog shoghoesafjosfojies josigjos huhsrhu
 //  */
-// const getTwitchUserinfo = async (username) => {
+// const getTwitchUserInfo = async (username) => {
 //   const token = await createOauthToken();
 //   console.log("token", token);
 //   const apiUrl = `${TWITCH_API_BASE}/helix/users?login=${username}`;
@@ -81,5 +100,6 @@ const getTwitchUserinfo = async (username) => {
 
 module.exports = {
   createOauthToken,
-  getTwitchUserinfo,
+  getTwitchUserInfo,
+  getTwitchMods
 };

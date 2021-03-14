@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
 import {
   InputAdornment,
+  Checkbox,
   CircularProgress,
+  FormControlLabel,
   InputLabel,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  Typography,
+  TableRow,
+  Paper
 } from "@material-ui/core";
 import { useContext } from "react";
 
@@ -35,6 +44,7 @@ export const StepThree = (props: any) => {
   const [isFetching, setIsFetching] = useState(false);
   const [hostData, setHostData] = useState(initialState);
   const [spinner, setSpinner] = useState<any>();
+  const [ mods, setMods ] = useState([]);
 
   const formik = useFormik({
     initialValues: {
@@ -63,6 +73,14 @@ export const StepThree = (props: any) => {
         setIsFetching(false);
         setHostData(res);
       });
+
+    fetch(`/api/twitch/user/${formik.values.host}/mods`)
+      .then((res) => res.json())
+      .then((res) => {
+        if (! res.error) {
+          setMods(res);
+        }
+      });
   };
 
   useEffect(() => {
@@ -76,61 +94,145 @@ export const StepThree = (props: any) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);
 
+  // const rows = [
+  //   "hacksore",
+  //   "isalong",
+  //   "sodapoppin"
+  // ]
   return (
     <form onSubmit={formik.handleSubmit} style={props.style}>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          alignItems: "center",
-        }}
-      >
-        <FormControl variant="outlined">
-          <InputLabel htmlFor="host">Host</InputLabel>
-          <OutlinedInput
-            color="secondary"
-            required
-            id="host"
-            name="host"
-            label="Host"
-            value={formik.values.host}
-            onBlur={(event) => {
-              formik.handleBlur(event);
-              validateUsername();
-            }}
-            onKeyDown={(event) => {
-              if (formik.isValid && event.code === "Enter") {
-                formik.handleChange(event);
+      <div style={{
+        display: "flex",
+        width: "100%",
+      }}>
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "50%",
+      }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <FormControl variant="outlined">
+            <InputLabel htmlFor="host">Host</InputLabel>
+            <OutlinedInput
+              color="secondary"
+              required
+              id="host"
+              name="host"
+              label="Host"
+              value={formik.values.host}
+              onBlur={(event) => {
+                formik.handleBlur(event);
                 validateUsername();
+              }}
+              onKeyDown={(event) => {
+                if (formik.isValid && event.code === "Enter") {
+                  formik.handleChange(event);
+                  validateUsername();
+                }
+              }}
+              onChange={(event) => {
+                formik.handleChange(event);
+                setSpinner(null);
+              }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <>{spinner}</>
+                </InputAdornment>
               }
-            }}
-            onChange={(event) => {
-              formik.handleChange(event);
-              setSpinner(null);
-            }}
-            endAdornment={
-              <InputAdornment position="end">
-                <>{spinner}</>
-              </InputAdornment>
-            }
-            aria-describedby="outlined-host-helper-text"
-            inputProps={{
-              "aria-label": "host",
-            }}
-            labelWidth={0}
-            error={formik.touched.host && Boolean(formik.errors.host)}
-          />
-          <FormHelperText id="outlined-host-helper-text">
-            {formik.touched.host && formik.errors.host}
-          </FormHelperText>
-        </FormControl>
-        {hostData.profile_image_url ? (
-          <img
-            src={hostData.profile_image_url}
-            style={{ height: 69, paddingLeft: 20 }}
-            alt="contest host"
-          />
-        ) : null}
+              aria-describedby="outlined-host-helper-text"
+              inputProps={{
+                "aria-label": "host",
+              }}
+              labelWidth={0}
+              error={formik.touched.host && Boolean(formik.errors.host)}
+            />
+            <FormHelperText id="outlined-host-helper-text">
+              {formik.touched.host && formik.errors.host}
+            </FormHelperText>
+          </FormControl>
+          {hostData.profile_image_url ? (
+            <img
+              src={hostData.profile_image_url}
+              style={{ height: 69, paddingLeft: 20 }}
+              alt="contest host"
+            />
+          ) : null}
+        </div>
+        <FormControlLabel
+          style={{ color: "#fff" }}
+          control={
+            <Checkbox
+              color="primary"
+              // checked={settings.requireTwitchAuth}
+              onChange={() => {}
+                // setSettings({
+                //   ...settings,
+                //   requireTwitchAuth: !settings.requireTwitchAuth,
+                // })
+              }
+              name="enterAnybody"
+            />
+          }
+          label="Require Twitch authentication after each login"
+        />
+        <FormControlLabel
+          style={{ color: "#fff" }}
+          control={
+            <Checkbox
+              color="primary"
+              // checked={settings.requireTwitchAuth}
+              onChange={() => {}
+                // setSettings({
+                //   ...settings,
+                //   requireTwitchAuth: !settings.requireTwitchAuth,
+                // })
+              }
+              name="enterAnybody"
+            />
+          }
+          label="Require Twitch authentication after each login"
+        />
+        <FormControlLabel
+          style={{ color: "#fff" }}
+          control={
+            <Checkbox
+              color="primary"
+              // checked={settings.requireTwitchAuth}
+              onChange={() => {}
+                // setSettings({
+                //   ...settings,
+                //   requireTwitchAuth: !settings.requireTwitchAuth,
+                // })
+              }
+              name="enterAnybody"
+            />
+          }
+          label="Require Twitch authentication after each login"
+        />
+      </div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+      <Typography color="textPrimary" variant="h6">
+          Contest Admins
+      </Typography>
+        <TableContainer style={{ width: "auto", height: "fit-content" }} component={Paper}>
+          <Table size="small" aria-label="a dense table">
+            <TableBody>
+              {mods.map((mod) => (
+                <TableRow key={mod}>
+                  <TableCell component="th" scope="row">
+                    {mod}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        </div>
       </div>
       <ProgressBar
         numberOfSteps={4}

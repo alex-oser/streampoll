@@ -1,7 +1,5 @@
 import { AppBar, Tab, Tabs, Typography } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
-import { UserData } from "../../types/UserData";
-import { TabPanel } from "./tabs/TabPanel";
 import { Settings } from "./tabs/Settings";
 import { Polls } from "./tabs/Polls";
 import { Activity } from "./tabs/Activity";
@@ -30,11 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Profile = ({
-  userData,
-}: {
-  userData: UserData | null;
-}) => {
+export const Profile = () => {
   const classes = useStyles();
   const baseClasses = useBaseStyles();
   const [value, setValue] = useState<number>(0);
@@ -57,16 +51,7 @@ export const Profile = ({
       title: "Settings",
       component: Settings,
       children: null,
-    },
-    {
-      title: "Test",
-      component: TabPanel,
-      children: (
-        <pre style={{ color: "#fff" }}>
-          {JSON.stringify(userData, null, 2)}
-        </pre>
-      ),
-    },
+    }
   ];
 
   return (
@@ -83,13 +68,14 @@ export const Profile = ({
           value={value}
           variant="fullWidth"
           onChange={handleChange}
-          // indicatorColor="primary"
+          indicatorColor="secondary"
           aria-label="simple tabs example"
         >
           {tabMap.map((tab, index) => (
             <Tab
               key={tab.title}
               label={tab.title}
+              style={{ fontWeight: "bold" }}
               {...a11yProps(index)}
             />
           ))}

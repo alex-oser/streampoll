@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   base: {
     alignItems: "center",
-    backgroundColor: darken(theme.palette.secondary.main, 0.15),
+    backgroundColor: darken(theme.palette.background.default, 0.15),
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     display: "flex",
@@ -28,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 21,
     width: "100%",
     "&:hover": {
-      backgroundColor: lighten(theme.palette.secondary.main, 0.05),
+      backgroundColor: lighten(theme.palette.background.default, 0.05),
     },
   },
   disabled: {
-    color: darken(theme.palette.secondary.contrastText, 0.45),
+    color: darken(theme.palette.primary.contrastText, 0.45),
     opacity: "0.5",
   },
 }));

@@ -1,4 +1,4 @@
-import { Button, darken, makeStyles } from "@material-ui/core";
+import { Button, lighten, makeStyles } from "@material-ui/core";
 import { useContext } from "react";
 import { Context } from "../../store";
 import classNames from "classnames";
@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "auto",
     width: "100%",
     paddingTop: 5,
-    background: theme.palette.secondary.main,
+    background: theme.palette.background.default,
     position: "sticky",
     bottom: 0,
     zIndex: 999
@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50%",
     width: 12,
     height: 12,
-    background: darken(theme.palette.secondary.light, 0.6),
+    background: lighten(theme.palette.background.default, 0.2),
   },
   activeDot: {
-    background: theme.palette.secondary.light,
+    background: theme.palette.secondary.main,
   },
 }));
 

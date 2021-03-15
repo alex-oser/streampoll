@@ -17,7 +17,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   createPoll: {
     alignItems: "center",
-    background: theme.palette.secondary.main,
+    background: theme.palette.background.default,
     display: "flex",
     flexDirection: "column",
     height: "100vh",
@@ -55,7 +55,7 @@ const App = () => {
         </Route>
 
         <Route path="/profile">
-          <Profile userData={userData} />
+          <Profile />
         </Route>
 
         <Footer />

@@ -80,7 +80,6 @@ export const StepThree = (props: any) => {
       return;
     }
 
-    console.log("vh", formik.values.host);
     setIsFetching(true);
     fetch(`/api/twitch/user/${formik.values.host}`)
       .then((res) => res.json())

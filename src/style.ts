@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) =>
     "@global": {
       "html,body": {
         boxSizing: "border-box",
-        background: theme.palette.secondary.main,
+        background: theme.palette.background.default,
       },
     },
   })

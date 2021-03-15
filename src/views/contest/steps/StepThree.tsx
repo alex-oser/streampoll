@@ -58,19 +58,18 @@ export const StepThree = (props: any) => {
     onSubmit: (values) => {},
   });
 
-  // useEffect(() => {
-  //   if (userData) {
-  //     formik.setFieldValue("host", userData.username);
-  //     formik.setFieldTouched("host");
-  //   }
+  useEffect(() => {
+    if (userData) {
+      formik.setFieldValue("host", userData.username, true);
+    }
 
-  // }, [userData]);
+  }, [userData]);
 
-  // useEffect(() => {
-  //   if (formik.touched.host) {
-  //     validateUsername();
-  //   }
-  // }, [formik.values.host])
+  useEffect(() => {
+    if (formik.touched.host) {
+      validateUsername();
+    }
+  }, [formik.values.host])
 
   const canProceed = formik.isValid && formik.dirty;
   const hasErrors = formik.getFieldMeta("host").error != null;

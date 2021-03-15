@@ -152,6 +152,37 @@ router.post("/:contestId/entry/:entryId", async (req, res) => {
   );
 });
 
+// delete a specific entry id
+router.delete("/:contestId/entry/:entryId", async (req, res) => {
+  if (!req.session.auth) {
+    return res.send({ error: "no session" }, 401);
+  }
+
+  const contestId = req.params.contestId;
+  const entryId = req.params.entryId;
+  const entryRef = database.ref(
+    `contests/${contestId}/entries/${entryId}`
+  );
+  entryRef.remove()
+  .then(() => {
+    console.log("just deleted that old record")
+    // returns an object that contains the remaining entries
+    const userRef = database.ref(`users/${req.session.auth.id}/entries`)
+    contestRef.once("value").then(
+      (snapshot) => {
+        res.send(snapshot.val());
+      },
+      (errorObject) => {
+        console.log("The read failed: " + errorObject.code);
+      }
+    );
+    },
+    (errorObject) => {
+      console.log("The write failed: " + errorObject.code);
+    }
+  );
+});
+
 // Get details for a list of contests
 router.post("/list", async (req, res) => {
   const ids = req.body;

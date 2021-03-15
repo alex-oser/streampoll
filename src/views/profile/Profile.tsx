@@ -44,13 +44,13 @@ export const Profile = ({
 
   const tabMap = [
     {
-      title: "Polls",
-      component: Polls,
+      title: "Activity",
+      component: Activity,
       children: null,
     },
     {
-      title: "Activity",
-      component: Activity,
+      title: "Polls",
+      component: Polls,
       children: null,
     },
     {

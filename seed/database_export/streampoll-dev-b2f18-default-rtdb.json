@@ -68,6 +68,75 @@
       "voteStart": "2021-03-15T20:46:53.596Z",
       "voteSubscribers": false,
       "voteType": "upvote"
+    },
+    "-MVrrf7Hd-YMYf3F9gw1": {
+      "allowImageLinks": false,
+      "createdAt": 1615845044762,
+      "createdBy": "15848764",
+      "description": "- No NSFW content\n- You can use all the dank memes you want\n- Please only use the color Minecraft\n- Rick and Morty are allowed 👽\n- No pickle Ricks though",
+      "enterAnybody": true,
+      "enterFollowers": true,
+      "enterSubcribers": false,
+      "enterSubscribers": true,
+      "entryEnd": "2021-03-15T21:49:07.261Z",
+      "entryStart": "2021-03-15T21:49:07.261Z",
+      "excludeDescription": false,
+      "host": "Hacksore",
+      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/a6082e80-6d61-4545-aa43-dc837413fd27-profile_image-300x300.png",
+      "multipleUploads": false,
+      "title": "Hacksore's Legit Tshirt Contest",
+      "voteAnybody": true,
+      "voteEnd": "2021-03-15T21:49:07.261Z",
+      "voteFollowers": false,
+      "voteStart": "2021-03-15T21:49:07.261Z",
+      "voteSubscribers": false,
+      "voteType": "upvote"
+    },
+    "-MVrs5smCOGmxj107rTR": {
+      "allowImageLinks": false,
+      "createdAt": 1615845158456,
+      "createdBy": "15848764",
+      "description": "- No anime tiddies\n- YOU GARBAGE BRONZIES ONLY\n- No Udry content, only other good champs\n- 💰 STRAIGHT TO THE BANK 💰",
+      "enterAnybody": true,
+      "enterFollowers": true,
+      "enterSubcribers": false,
+      "enterSubscribers": true,
+      "entryEnd": "2021-03-15T21:50:51.489Z",
+      "entryStart": "2021-03-15T21:50:51.489Z",
+      "excludeDescription": false,
+      "host": "trick2g",
+      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/05529c10f7dfbf81-profile_image-300x300.png",
+      "multipleUploads": false,
+      "title": "Trick2G Trash Can Bronze Cup Contest",
+      "voteAnybody": true,
+      "voteEnd": "2021-03-15T21:50:51.489Z",
+      "voteFollowers": true,
+      "voteStart": "2021-03-15T21:50:51.489Z",
+      "voteSubscribers": true,
+      "voteType": "upvote"
+    },
+    "-MVrsuXWij4ni_RAQYQh": {
+      "allowImageLinks": false,
+      "createdAt": 1615845370026,
+      "createdBy": "15848764",
+      "description": "- Make good looking Sandals\n- Only can use hemp\n- Must wear socks\n- 🌈 RGB is allowed 🌈",
+      "enterAnybody": false,
+      "enterFollowers": true,
+      "enterSubcribers": false,
+      "enterSubscribers": true,
+      "entryEnd": "2021-03-15T21:52:57.193Z",
+      "entryStart": "2021-03-15T21:52:57.193Z",
+      "excludeDescription": false,
+      "host": "linustech",
+      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/4d5c1c89-10c8-4b58-96c5-c9a7dcc06c2f-profile_image-300x300.png",
+      "multipleUploads": false,
+      "title": "LinusTechTips Office Sandal Contest",
+      "voteAnybody": false,
+      "voteEnd": "2021-03-15T21:52:57.193Z",
+      "voteFollowers": true,
+      "voteStart": "2021-03-15T21:52:57.193Z",
+      "voteSubscribers": true,
+      "voteType": "upvote"
     }
   },
   "entries": {
@@ -104,8 +173,8 @@
   },
   "sessions": {
     "2L1ndPsSJFaVQz9xs9Nmdvv8CM4cS1vF": {
-      "expires": 1618331453305,
-      "sess": "{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2021-04-13T16:30:53.305Z\",\"httpOnly\":true,\"path\":\"/\"},\"auth\":{\"access_token\":\"dm6ukboq910jd9p3mkef17k7v6h2oe\",\"expires_in\":15751,\"refresh_token\":\"6ejt5ef0jyu0egbk5wb8y3sk90ji86pnrzwd3mr00wjqp23v4u\",\"scope\":[\"user:read:email\"],\"token_type\":\"bearer\",\"id\":\"15848764\"}}",
+      "expires": 1618437371641,
+      "sess": "{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2021-04-14T21:56:11.641Z\",\"httpOnly\":true,\"path\":\"/\"},\"auth\":{\"access_token\":\"bzv0sljfuvv579j3f5nffvzsg32yiy\",\"expires_in\":14529,\"refresh_token\":\"d2k1w2apu5j8e0eco86o047ijs5v775hucrojtii1nhrb2q89v\",\"scope\":[\"user:read:email\"],\"token_type\":\"bearer\",\"id\":\"15848764\"}}",
       "type": "connect-session"
     },
     "Me-8xWdhpHFff6U5lH6omcHj3sFl8vNQ": {
@@ -120,6 +189,29 @@
     }
   },
   "users": {
+    "15848764": {
+      "broadcaster_type": "",
+      "contests": {
+        "-MVrrf7Hd-YMYf3F9gw1": true,
+        "-MVrs5smCOGmxj107rTR": true,
+        "-MVrsuXWij4ni_RAQYQh": true
+      },
+      "created_at": "2010-09-21T00:04:53.311779Z",
+      "description": "",
+      "display_name": "Hacksore",
+      "email": "hacksore@mcskinsearch.com",
+      "id": "15848764",
+      "login": "hacksore",
+      "offline_image_url": "",
+      "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/a6082e80-6d61-4545-aa43-dc837413fd27-profile_image-300x300.png",
+      "settings": {
+        "allowEmailNotifications": false,
+        "allowTwitchNotifications": false,
+        "requireTwitchAuth": false
+      },
+      "type": "",
+      "view_count": 30
+    },
     "180790944": {
       "broadcaster_type": "",
       "contests": {

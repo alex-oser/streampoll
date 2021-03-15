@@ -1,268 +1,116 @@
 {
   "contests": {
-    "b9f1ad09-6ac6-477d-86e2-f2344073150Apex": {
+    "-MVrcGNNED2WAooSmU0W": {
       "allowImageLinks": false,
-      "createdAt": 1615485891805,
-      "createdBy": "74066664",
-      "description": "- Designs have to be at least 4000x5323 pixel and 300 dpi resolution. (Can be bigger yes) The design has to be this resolution, not the mock up/preview\n- You have to follow Discord and Twitch TOS.\n- No copyrighted material, fair use allowed. (example: No BTTV/FFZ emotes, no company logos, no \"googled images\". (unless you show me that you have rights to them.))\n- You can put a watermark over your design, if you want.\n- No transparency effect (The final design has to be 100% opacity)\n- Follow the template attached to this message. (https://i.imgur.com/55J7OuM.png / https://i.imgur.com/Llij6dE.png)\n- You can create your free mock up on these websites: https://bit.ly/2ZZw9NC or https://bit.ly/2NJg3Fz or anywhere else.",
-      "enterAnybody": true,
-      "enterFollowers": false,
-      "enterSubcribers": false,
-      "entries": {
-        "-MVXSkQWH5VJzk4FLdS6": {
-          "createdAt": 1615485929197,
-          "createdBy": "74066664",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my tshirt design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS7": {
-          "createdAt": 1615485929197,
-          "createdBy": "74066664",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my tshirt design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS8": {
-          "createdAt": 1615485929197,
-          "createdBy": "74066664",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my tshirt design!!!"
-        }
-      },
-      "entryCount": 3,
-      "entryEnd": "2021-03-18T17:02:00.000Z",
-      "entryStart": "2021-03-11T18:02:00.000Z",
-      "excludeDescription": false,
-      "host": "sodapoppin",
-      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/ffae100f-96b3-4863-8415-71750169d734-profile_image-300x300.png",
-      "multipleUploads": false,
-      "title": "sodapoppin's tshirt contest",
-      "voteAnybody": true,
-      "voteEnd": "2021-03-25T17:02:00.000Z",
-      "voteFollowers": false,
-      "voteStart": "2021-03-18T17:02:00.000Z",
-      "voteSubcribers": false,
-      "voteType": "upvote"
-    },
-    "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore": {
-      "allowImageLinks": false,
-      "createdAt": 1615485891805,
-      "createdBy": "15848764",
-      "description": "- Designs have to be at least 4000x5323 pixel and 300 dpi resolution. (Can be bigger yes) The design has to be this resolution, not the mock up/preview\n- You have to follow Discord and Twitch TOS.\n- No copyrighted material, fair use allowed. (example: No BTTV/FFZ emotes, no company logos, no \"googled images\". (unless you show me that you have rights to them.))\n- You can put a watermark over your design, if you want.\n- No transparency effect (The final design has to be 100% opacity)\n- Follow the template attached to this message. (https://i.imgur.com/55J7OuM.png / https://i.imgur.com/Llij6dE.png)\n- You can create your free mock up on these websites: https://bit.ly/2ZZw9NC or https://bit.ly/2NJg3Fz or anywhere else.",
-      "enterAnybody": true,
-      "enterFollowers": false,
-      "enterSubcribers": false,
-      "entries": {
-        "-MVXSkQWH5VJzk4FLdS6": {
-          "createdAt": 1615485929197,
-          "createdBy": "15848764",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my tshirt design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS7": {
-          "createdAt": 1615485929197,
-          "createdBy": "15848764",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my tshirt design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS8": {
-          "createdAt": 1615485929197,
-          "createdBy": "15848764",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my tshirt design!!!"
-        }
-      },
-      "entryCount": 3,
-      "entryEnd": "2021-03-18T17:02:00.000Z",
-      "entryStart": "2021-03-11T18:02:00.000Z",
-      "excludeDescription": false,
-      "host": "sodapoppin",
-      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/ffae100f-96b3-4863-8415-71750169d734-profile_image-300x300.png",
-      "multipleUploads": false,
-      "title": "sodapoppin's tshirt contest",
-      "voteAnybody": true,
-      "voteEnd": "2021-03-25T17:02:00.000Z",
-      "voteFollowers": false,
-      "voteStart": "2021-03-18T17:02:00.000Z",
-      "voteSubcribers": false,
-      "voteType": "upvote"
-    },
-    "b9f1ad09-6ac6-477d-86e2-f2344073150d": {
-      "allowImageLinks": false,
-      "createdAt": 1615485891805,
+      "createdAt": 1615841007133,
       "createdBy": "180790944",
-      "description": "- Designs have to be at least 4000x5323 pixel and 300 dpi resolution. (Can be bigger yes) The design has to be this resolution, not the mock up/preview\n- You have to follow Discord and Twitch TOS.\n- No copyrighted material, fair use allowed. (example: No BTTV/FFZ emotes, no company logos, no \"googled images\". (unless you show me that you have rights to them.))\n- You can put a watermark over your design, if you want.\n- No transparency effect (The final design has to be 100% opacity)\n- Follow the template attached to this message. (https://i.imgur.com/55J7OuM.png / https://i.imgur.com/Llij6dE.png)\n- You can create your free mock up on these websites: https://bit.ly/2ZZw9NC or https://bit.ly/2NJg3Fz or anywhere else.",
+      "description": "- Designs have to be at least 4000x5323 pixel and 300 dpi resolution. (Can be bigger yes) The design has to be this resolution, not the mock up/preview\n- You have to follow Discord and Twitch TOS.\n- No copyrighted material, fair use allowed. (example: No BTTV/FFZ emotes, no company logos, no \"googled images\". (unless you show me that you have rights to them.))\n- You can put a watermark over your design, if you want.\n- No transparency effect (The final design has to be 100% opacity)\n- Follow the template attached to this message. (https://i.imgur.com/55J7OuM.png / https://i.imgur.com/Llij6dE.png)\n- You can create your free mock up on these websites: https://bit.ly/2ZZw9NC or https://bit.ly/2NJg3Fz or anywhere else.\"",
       "enterAnybody": true,
-      "enterFollowers": false,
+      "enterFollowers": true,
       "enterSubcribers": false,
-      "entries": {
-        "-MVXSkQWH5VJzk4FLdS6": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my tshirt design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS7": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my tshirt design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS8": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my tshirt design!!!"
-        }
-      },
-      "entryCount": 3,
-      "entryEnd": "2021-07-18T17:02:00.000Z",
-      "entryStart": "2021-03-11T18:02:00.000Z",
+      "enterSubscribers": false,
+      "entryEnd": "2021-03-15T20:42:08.757Z",
+      "entryStart": "2021-03-15T20:42:08.757Z",
       "excludeDescription": false,
       "host": "sodapoppin",
       "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/ffae100f-96b3-4863-8415-71750169d734-profile_image-300x300.png",
       "multipleUploads": false,
-      "title": "sodapoppin's tshirt contest",
+      "title": "april tshirt contest",
       "voteAnybody": true,
-      "voteEnd": "2021-07-25T17:02:00.000Z",
+      "voteEnd": "2021-03-15T20:42:08.757Z",
       "voteFollowers": false,
-      "voteStart": "2021-07-18T17:02:00.000Z",
-      "voteSubcribers": false,
+      "voteStart": "2021-03-15T20:42:08.757Z",
+      "voteSubscribers": false,
       "voteType": "upvote"
     },
-    "b9f1ad09-6ac6-477d-86e2-f2344073150d2": {
+    "-MVrcTjdHGzORcUE0fZB": {
       "allowImageLinks": false,
-      "createdAt": 1615485891805,
+      "createdAt": 1615841061869,
       "createdBy": "180790944",
-      "description": "- Designs have to be at least 4000x5323 pixel and 300 dpi resolution. (Can be bigger yes) The design has to be this resolution, not the mock up/preview\n- You have to follow Discord and Twitch TOS.\n- No copyrighted material, fair use allowed. (example: No BTTV/FFZ emotes, no company logos, no \"googled images\". (unless you show me that you have rights to them.))\n- You can put a watermark over your design, if you want.\n- No transparency effect (The final design has to be 100% opacity)\n- Follow the template attached to this message. (https://i.imgur.com/55J7OuM.png / https://i.imgur.com/Llij6dE.png)\n- You can create your free mock up on these websites: https://bit.ly/2ZZw9NC or https://bit.ly/2NJg3Fz or anywhere else.",
+      "description": "who do you think this mysterious man is? who do you think this mysterious man is? who do you think this mysterious man is? who do you think this mysterious man is?",
       "enterAnybody": true,
-      "enterFollowers": false,
+      "enterFollowers": true,
       "enterSubcribers": false,
-      "entries": {
-        "-MVXSkQWH5VJzk4FLdS6": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my second design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS7": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my second design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS8": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my second design!!!"
-        }
-      },
-      "entryCount": 3,
-      "entryEnd": "2021-03-12T17:02:00.000Z",
-      "entryStart": "2021-03-11T18:02:00.000Z",
+      "enterSubscribers": false,
+      "entryEnd": "2021-03-15T20:43:43.657Z",
+      "entryStart": "2021-03-15T20:43:43.657Z",
       "excludeDescription": false,
-      "host": "sodapoppin",
-      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/ffae100f-96b3-4863-8415-71750169d734-profile_image-300x300.png",
+      "host": "hacksore",
+      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/a6082e80-6d61-4545-aa43-dc837413fd27-profile_image-300x300.png",
       "multipleUploads": false,
-      "title": "sodapoppin's tshirt contest",
+      "title": "who is hacksore?",
       "voteAnybody": true,
-      "voteEnd": "2021-07-25T17:02:00.000Z",
+      "voteEnd": "2021-03-15T20:43:43.657Z",
       "voteFollowers": false,
-      "voteStart": "2021-03-12T17:02:00.000Z",
-      "voteSubcribers": false,
+      "voteStart": "2021-03-15T20:43:43.657Z",
+      "voteSubscribers": false,
       "voteType": "upvote"
     },
-    "b9f1ad09-6ac6-477d-86e2-f2344073150d3": {
+    "-MVrdAJUqPOMOmDEWmjd": {
       "allowImageLinks": false,
-      "createdAt": 1615485891805,
+      "createdAt": 1615841244452,
       "createdBy": "180790944",
-      "description": "- Designs have to be at least 4000x5323 pixel and 300 dpi resolution. (Can be bigger yes) The design has to be this resolution, not the mock up/preview\n- You have to follow Discord and Twitch TOS.\n- No copyrighted material, fair use allowed. (example: No BTTV/FFZ emotes, no company logos, no \"googled images\". (unless you show me that you have rights to them.))\n- You can put a watermark over your design, if you want.\n- No transparency effect (The final design has to be 100% opacity)\n- Follow the template attached to this message. (https://i.imgur.com/55J7OuM.png / https://i.imgur.com/Llij6dE.png)\n- You can create your free mock up on these websites: https://bit.ly/2ZZw9NC or https://bit.ly/2NJg3Fz or anywhere else.",
+      "description": "vote in this bvefore its too late",
       "enterAnybody": true,
-      "enterFollowers": false,
+      "enterFollowers": true,
       "enterSubcribers": false,
-      "entries": {
-        "-MVXSkQWH5VJzk4FLdS6": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my second design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS7": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my second design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS8": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my second design!!!"
-        }
-      },
-      "entryCount": 3,
-      "entryEnd": "2021-07-12T17:02:00.000Z",
-      "entryStart": "2021-07-11T18:02:00.000Z",
+      "enterSubscribers": false,
+      "entryEnd": "2021-03-15T20:46:53.596Z",
+      "entryStart": "2021-03-15T20:46:53.596Z",
       "excludeDescription": false,
-      "host": "sodapoppin",
-      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/ffae100f-96b3-4863-8415-71750169d734-profile_image-300x300.png",
+      "host": "isalong",
+      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/d7e50278-099b-4d6e-a226-bed14dbf2ee5-profile_image-300x300.png",
       "multipleUploads": false,
-      "title": "sodapoppin's tshirt contest",
+      "title": "first contest ever",
       "voteAnybody": true,
-      "voteEnd": "2021-07-25T17:02:00.000Z",
+      "voteEnd": "2021-03-15T20:46:53.596Z",
       "voteFollowers": false,
-      "voteStart": "2021-07-12T17:02:00.000Z",
-      "voteSubcribers": false,
+      "voteStart": "2021-03-15T20:46:53.596Z",
+      "voteSubscribers": false,
       "voteType": "upvote"
+    }
+  },
+  "entries": {
+    "-MVrcGNNED2WAooSmU0W": {
+      "-MVrcyECNoMc5b0Sr7Os": {
+        "contestId": "-MVrcGNNED2WAooSmU0W",
+        "createdAt": 1615841190865,
+        "createdBy": "180790944",
+        "description": "vote for it you frogs",
+        "title": "best design ever",
+        "url": ""
+      }
     },
-    "b9f1ad09-6ac6-477d-86e2-f2344073150d4": {
-      "allowImageLinks": false,
-      "createdAt": 1615485891805,
-      "createdBy": "180790944",
-      "description": "- Designs have to be at least 4000x5323 pixel and 300 dpi resolution. (Can be bigger yes) The design has to be this resolution, not the mock up/preview\n- You have to follow Discord and Twitch TOS.\n- No copyrighted material, fair use allowed. (example: No BTTV/FFZ emotes, no company logos, no \"googled images\". (unless you show me that you have rights to them.))\n- You can put a watermark over your design, if you want.\n- No transparency effect (The final design has to be 100% opacity)\n- Follow the template attached to this message. (https://i.imgur.com/55J7OuM.png / https://i.imgur.com/Llij6dE.png)\n- You can create your free mock up on these websites: https://bit.ly/2ZZw9NC or https://bit.ly/2NJg3Fz or anywhere else.",
-      "enterAnybody": true,
-      "enterFollowers": false,
-      "enterSubcribers": false,
-      "entries": {
-        "-MVXSkQWH5VJzk4FLdS6": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my second design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS7": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my second design!!!"
-        },
-        "-MVXSkQWH5VJzk4FLdS8": {
-          "createdAt": 1615485929197,
-          "createdBy": "180790944",
-          "description": "this the best design ever and everybody should vote for it",
-          "title": "my second design!!!"
-        }
-      },
-      "entryCount": 3,
-      "entryEnd": "2021-01-12T17:02:00.000Z",
-      "entryStart": "2021-01-11T18:02:00.000Z",
-      "excludeDescription": false,
-      "host": "sodapoppin",
-      "hostProfileImageUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/ffae100f-96b3-4863-8415-71750169d734-profile_image-300x300.png",
-      "multipleUploads": false,
-      "title": "sodapoppin's tshirt contest",
-      "voteAnybody": true,
-      "voteEnd": "2021-01-25T17:02:00.000Z",
-      "voteFollowers": false,
-      "voteStart": "2021-01-12T17:02:00.000Z",
-      "voteSubcribers": false,
-      "voteType": "upvote"
+    "-MVrcTjdHGzORcUE0fZB": {
+      "-MVrd1q51kN00AnT2pNL": {
+        "contestId": "-MVrcTjdHGzORcUE0fZB",
+        "createdAt": 1615841209738,
+        "createdBy": "180790944",
+        "description": "it's shawun",
+        "title": "i know who it is ",
+        "url": ""
+      }
+    },
+    "-MVrdAJUqPOMOmDEWmjd": {
+      "-MVrdD6Hg9V2ZycpRdLa": {
+        "contestId": "-MVrdAJUqPOMOmDEWmjd",
+        "createdAt": 1615841255894,
+        "createdBy": "180790944",
+        "description": "wogooogoogoogoogoogoogogogo",
+        "title": "wohooo",
+        "url": ""
+      }
     }
   },
   "sessions": {
     "2L1ndPsSJFaVQz9xs9Nmdvv8CM4cS1vF": {
       "expires": 1618331453305,
       "sess": "{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2021-04-13T16:30:53.305Z\",\"httpOnly\":true,\"path\":\"/\"},\"auth\":{\"access_token\":\"dm6ukboq910jd9p3mkef17k7v6h2oe\",\"expires_in\":15751,\"refresh_token\":\"6ejt5ef0jyu0egbk5wb8y3sk90ji86pnrzwd3mr00wjqp23v4u\",\"scope\":[\"user:read:email\"],\"token_type\":\"bearer\",\"id\":\"15848764\"}}",
+      "type": "connect-session"
+    },
+    "Me-8xWdhpHFff6U5lH6omcHj3sFl8vNQ": {
+      "expires": 1618433261753,
+      "sess": "{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2021-04-14T20:47:41.753Z\",\"httpOnly\":true,\"path\":\"/\"},\"auth\":{\"access_token\":\"xnhnbx0l5fsr1ssp9qpgl8k4z6oxqs\",\"expires_in\":13972,\"refresh_token\":\"4nqpps3butya34iaopftfvf33fbokdfm4gmtt6y9mjkgpsw0oi\",\"scope\":[\"user:read:email\"],\"token_type\":\"bearer\",\"id\":\"180790944\"}}",
       "type": "connect-session"
     },
     "qLzWZkUj0YsceDG6TmRzZx6ZpQJR3RD6": {
@@ -272,154 +120,24 @@
     }
   },
   "users": {
-    "15848764": {
-      "broadcaster_type": "",
-      "contests": {
-        "-MVXSbI8dXpuygEa677f": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore"
-        }
-      },
-      "created_at": "2010-09-21T00:04:53.311779Z",
-      "description": "",
-      "display_name": "Hacksore",
-      "email": "hacksore@mcskinsearch.com",
-      "entries": {
-        "-MVXSkQZlnPANuyR2Ka2": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryId": "-MVXSkQWH5VJzk4FLdS8"
-        },
-        "-MVXSkQZlnPANuyR2Ka3": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryId": "-MVXSkQWH5VJzk4FLdS7"
-        },
-        "-MVXSkQZlnPANuyR2Ka4": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Hacksore",
-          "entryId": "-MVXSkQWH5VJzk4FLdS6"
-        }
-      },
-      "id": "15848764",
-      "lastLogin": "2021-03-14T16:30:51.840Z",
-      "login": "hacksore",
-      "offline_image_url": "",
-      "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/a6082e80-6d61-4545-aa43-dc837413fd27-profile_image-300x300.png",
-      "settings": {
-        "allowEmailNotifications": false,
-        "allowTwitchNotifications": false,
-        "requireTwitchAuth": false
-      },
-      "type": "",
-      "view_count": 27
-    },
-    "74066664": {
-      "broadcaster_type": "",
-      "contests": {
-        "-MVXSbI8dXpuygEa677f": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Apex"
-        }
-      },
-      "created_at": "2014-10-30T17:13:39.500273Z",
-      "description": "Ṱ̝͈͞ò͎̼̻̤̠ ̞̰͝i͞n͍̻̺̕v̻o̱͍͎̝̩̯̻k̞ͅè͖̭͇̗ ̪͚t̡͈̻͇̲̟h̝̱̹̱̻̖̞e̻̙̠̟ ̪͈̻̱͈̳h͞i̡̼̯̺̼͕ve͉-̮̜͙̻̩̣̙ṃ̖̱͙̘̩͞ͅin̳̩͔d̛̗̬̜ ̘͔r͞e̩͙̘̦̙͓͓p̹̱̝̯̮͉̤r̴e͞s̱̬͞e̖̺̠͎n̯̗̩͚͟t̬͇̻̻̱̠i̵̬̫̭̯̳̙n̦̳g̕ ͕͖͍̠͉̩̳c̸͎͉̰̯͕̝̞h̶̳̹̳̬a̗̝̗̮̱̗ǫ̹̘̯͓͙s͍̩͖͍̝.̰̞̣̜̠̠̻̼I̛̻̥̠͙͍ͅn͏̼̯̮v̮̱͓ok͍̦i̷n͕̥͞g̸ ̵̯͖̙̯̭̹̼t̬͕̼h̠̹̫̫͕̮̣͞é̖̗ ͍͈̥͘f̗̹ḙ̸̜̠̺͚͚̹e͏l",
-      "display_name": "ApexTier",
-      "email": "seanboult@gmail.com",
-      "entries": {
-        "-MVXSkQZlnPANuyR2Ka2": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Apex",
-          "entryId": "-MVXSkQWH5VJzk4FLdS8"
-        },
-        "-MVXSkQZlnPANuyR2Ka3": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Apex",
-          "entryId": "-MVXSkQWH5VJzk4FLdS7"
-        },
-        "-MVXSkQZlnPANuyR2Ka4": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150Apex",
-          "entryId": "-MVXSkQWH5VJzk4FLdS6"
-        }
-      },
-      "id": "74066664",
-      "lastLogin": "2021-03-11T17:01:36.378Z",
-      "login": "apextier",
-      "offline_image_url": "",
-      "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/fd959e37ef1df369-profile_image-300x300.png",
-      "settings": {
-        "allowEmailNotifications": false,
-        "allowTwitchNotifications": true,
-        "requireTwitchAuth": true
-      },
-      "type": "",
-      "view_count": 107
-    },
     "180790944": {
       "broadcaster_type": "",
       "contests": {
-        "-MVXSbI8dXpuygEa677f": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d"
-        },
-        "-MVXSbI8dXpuygEa677f2": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d2"
-        },
-        "-MVXSbI8dXpuygEa677f3": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d3"
-        },
-        "-MVXSbI8dXpuygEa677f4": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d4"
-        }
+        "-MVrcGNNED2WAooSmU0W": true,
+        "-MVrcTjdHGzORcUE0fZB": true,
+        "-MVrdAJUqPOMOmDEWmjd": true
       },
       "created_at": "2017-11-07T07:08:00.735781Z",
       "description": "",
       "display_name": "isalong",
       "email": "aoser9552@gmail.com",
       "entries": {
-        "-MVXSkQZlnPANuyR2Ka10": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d3",
-          "entryId": "-MVXSkQWH5VJzk4FLdS6"
-        },
-        "-MVXSkQZlnPANuyR2Ka11": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d4",
-          "entryId": "-MVXSkQWH5VJzk4FLdS8"
-        },
-        "-MVXSkQZlnPANuyR2Ka12": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d4",
-          "entryId": "-MVXSkQWH5VJzk4FLdS7"
-        },
-        "-MVXSkQZlnPANuyR2Ka13": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d4",
-          "entryId": "-MVXSkQWH5VJzk4FLdS6"
-        },
-        "-MVXSkQZlnPANuyR2Ka2": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d",
-          "entryId": "-MVXSkQWH5VJzk4FLdS8"
-        },
-        "-MVXSkQZlnPANuyR2Ka3": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d",
-          "entryId": "-MVXSkQWH5VJzk4FLdS7"
-        },
-        "-MVXSkQZlnPANuyR2Ka4": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d",
-          "entryId": "-MVXSkQWH5VJzk4FLdS6"
-        },
-        "-MVXSkQZlnPANuyR2Ka5": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d2",
-          "entryId": "-MVXSkQWH5VJzk4FLdS8"
-        },
-        "-MVXSkQZlnPANuyR2Ka6": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d2",
-          "entryId": "-MVXSkQWH5VJzk4FLdS7"
-        },
-        "-MVXSkQZlnPANuyR2Ka7": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d2",
-          "entryId": "-MVXSkQWH5VJzk4FLdS6"
-        },
-        "-MVXSkQZlnPANuyR2Ka8": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d3",
-          "entryId": "-MVXSkQWH5VJzk4FLdS8"
-        },
-        "-MVXSkQZlnPANuyR2Ka9": {
-          "contestId": "b9f1ad09-6ac6-477d-86e2-f2344073150d3",
-          "entryId": "-MVXSkQWH5VJzk4FLdS7"
-        }
+        "-MVrcGNNED2WAooSmU0W": { "-MVrcyECNoMc5b0Sr7Os": true },
+        "-MVrcTjdHGzORcUE0fZB": { "-MVrd1q51kN00AnT2pNL": true },
+        "-MVrdAJUqPOMOmDEWmjd": { "-MVrdD6Hg9V2ZycpRdLa": true }
       },
       "id": "180790944",
-      "lastLogin": "2021-03-14T16:22:59.466Z",
+      "lastLogin": "2021-03-15T20:42:07.737Z",
       "login": "isalong",
       "offline_image_url": "",
       "profile_image_url": "https://static-cdn.jtvnw.net/user-default-pictures-uv/de130ab0-def7-11e9-b668-784f43822e80-profile_image-300x300.png",

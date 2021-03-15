@@ -41,10 +41,7 @@ export const Activity = (props: any) => {
         "Content-Type": "application/json",
       },
     })
-    .then((res) => res.json())
-    .then((res) => {
-      getMyEntries();
-    });
+    .then(() => getMyEntries());
   }
 
   const columns = [
@@ -159,6 +156,7 @@ export const Activity = (props: any) => {
   // On page load fetch contests the authenticated user has created
   useEffect(() => {
     getMyEntries();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

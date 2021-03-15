@@ -36,15 +36,9 @@ router.get("/contests", async (req, res) => {
   const ref = database.ref(`users/${req.session.auth.id}/contests`);
   ref.once("value").then(
     (snapshot) => {
-      var contests = [];
-      if (snapshot.exists()) {
-        // extract contestIds from nested storage data structure
-        Object.values(snapshot.val()).forEach((contest) => {
-          contests.push(contest.contestId);
-        });
-      }
+      const contests = snapshot.val()
       // returns a list of strings with contest ids or an empty list
-      return res.send(contests);
+      return res.send(Object.keys(contests));
     },
     (errorObject) => {
       console.log("The read failed: " + errorObject.code);
@@ -58,19 +52,22 @@ router.get("/entries", async (req, res) => {
     return res.send({ error: "no session" }, 401);
   }
 
-  const ref = database.ref(`users/${req.session.auth.id}/entries`);
-  ref.once("value").then(
-    (snapshot) => {
-      var entries = [];
-      if (snapshot.exists()) {
-        // extract contestIds from nested storage data structure
-        Object.values(snapshot.val()).forEach((entry) => {
-          entries.push(entry);
-        });
-      }
-      // returns a list of strings with contest ids or an empty list
-      return res.send(entries);
-    },
+  const entriesRef = database.ref(`users/${req.session.auth.id}/entries`);
+  entriesRef.once("value")
+  .then((snapshot) => {
+    if (snapshot.exists()) {
+      const entriesData = snapshot.val()
+      const entriesMap = []
+      Object.entries(entriesData).map(([contest, entries]) => {
+        Object.keys(entries).map((entry) => {    
+          entriesMap.push({ contestId: contest, entryId: entry })
+        })
+      })
+      res.send(entriesMap);
+    } else {
+      res.send([]);
+    }
+  },
     (errorObject) => {
       console.log("The read failed: " + errorObject.code);
     }

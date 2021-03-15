@@ -31,8 +31,7 @@ const createValidationSchema = {
   },
 };
 
-router.post(
-  "/create",
+router.post("/create",
   checkSchema(createValidationSchema),
   async (req, res) => {
     if (!req.session.auth) {
@@ -48,20 +47,23 @@ router.post(
       ...req.body,
       createdBy: req.session.auth.id,
       createdAt: admin.database.ServerValue.TIMESTAMP,
-      entries: [],
     };
-    const contestId = uuid.v4();
 
-    database.ref(`contests/${contestId}`).set(body);
-    database.ref(`users/${req.session.auth.id}/contests`).push({
-      contestId,
-    });
-
-    // create contest
-    res.send({
-      message: "success",
-      id: contestId,
-    });
+    const contestRef = database.ref(`contests`).push(body);
+    const contestKey = contestRef.key
+    database.ref(`users/${req.session.auth.id}/contests/${contestKey}`)
+    .set(true)
+    .then(() => {
+        // returns an object that contains the contest details
+        res.send({
+          message: "SUCCESS",
+          id: contestKey,
+        });
+      },
+      (errorObject) => {
+        console.log("The read failed: " + errorObject.code);
+      }
+    );
   }
 );
 
@@ -77,26 +79,27 @@ router.post("/enter", async (req, res) => {
     createdAt: admin.database.ServerValue.TIMESTAMP,
   };
   // push entry data to contest and get unique key generated for entry
-  const entryRef = database
-    .ref(`contests/${contestId}/entries`)
-    .push(entryBody);
-  // push contestId and entryId to user
-  database.ref(`users/${req.session.auth.id}/entries`).push({
-    contestId,
-    entryId: entryRef.key,
-  });
-
-  // create contest
-  res.send({
-    message: "success",
-    id: contestId,
+  const entryRef = database.ref(`entries/${contestId}`).push(entryBody);
+  const entryKey = entryRef.key
+  // get a user's current contest entries
+  const userEntryRef = database.ref(`users/${req.session.auth.id}/entries/${contestId}/${entryKey}`);
+  userEntryRef.set(true).then(() => {
+    // returns an object that contains the contest details
+    res.send({
+      message: "success",
+      id: entryKey,
+    });
+  },
+  (errorObject) => {
+    console.log("The read failed: " + errorObject.code);
   });
 });
 
 // Get details for a specific contest id
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
-  const ref = database.ref(`contests/${id}`);
+router.get("/:contestId", async (req, res) => {
+  const contestId = req.params.contestId;
+  const ref = database.ref(`contests/${contestId}`);
+  console.log("MAADDDEEE ITTTTT")
   ref.once("value").then(
     (snapshot) => {
       // returns an object that contains the contest details
@@ -110,10 +113,9 @@ router.get("/:id", async (req, res) => {
 
 // Get details for a specific entry id
 router.get("/:contestId/entry/:entryId", async (req, res) => {
-  const contestId = req.params.contestId;
-  const entryId = req.params.entryId;
+  const { contestId, entryId } = req.params;
   const ref = database.ref(
-    `contests/${contestId}/entries/${entryId}`
+    `entries/${contestId}/${entryId}`
   );
   ref.once("value").then(
     (snapshot) => {
@@ -136,12 +138,12 @@ router.post("/:contestId/entry/:entryId", async (req, res) => {
     ...req.body,
     createdAt: admin.database.ServerValue.TIMESTAMP,
   };
-  const contestId = req.params.contestId;
-  const entryId = req.params.entryId;
-  const ref = database.ref(
-    `contests/${contestId}/entries/${entryId}`
+
+  const { contestId, entryId } = req.params;
+  const entryRef = database.ref(
+    `entries/${contestId}/${entryId}`
   );
-  ref.set(entryBody).then(
+  entryRef.set(entryBody).then(
     () => {
       // returns an object that contains the contest details
       res.send("SUCCESS");
@@ -157,25 +159,17 @@ router.delete("/:contestId/entry/:entryId", async (req, res) => {
   if (!req.session.auth) {
     return res.send({ error: "no session" }, 401);
   }
-
-  const contestId = req.params.contestId;
-  const entryId = req.params.entryId;
-  const entryRef = database.ref(
-    `contests/${contestId}/entries/${entryId}`
-  );
-  entryRef.remove()
+  const { contestId, entryId } = req.params
+  console.log(`ABOUT TO DELETE @ users/${req.session.auth.id}/${contestId}/${entryId}`)
+  const updates = {
+    [`users/${req.session.auth.id}/entries/${contestId}/${entryId}`]: null,
+    [`entries/${contestId}/${entryId}`]: null
+  }
+  const entryRef = database.ref();
+  entryRef.update(updates)
   .then(() => {
     console.log("just deleted that old record")
-    // returns an object that contains the remaining entries
-    const userRef = database.ref(`users/${req.session.auth.id}/entries`)
-    contestRef.once("value").then(
-      (snapshot) => {
-        res.send(snapshot.val());
-      },
-      (errorObject) => {
-        console.log("The read failed: " + errorObject.code);
-      }
-    );
+    res.send("DELETED")
     },
     (errorObject) => {
       console.log("The write failed: " + errorObject.code);

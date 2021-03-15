@@ -23,7 +23,7 @@ router.post("/create/survey", async (req, res) => {
 //   if (!req.session.auth) {
 //     return res.send({ error: "no session" }, 401);
 //   }
-//   const params 
+//   const params
 //   const id = req.params.id;
 //   const ref = database.ref(`contests/${id}`);
 //   ref.once("value")
@@ -39,8 +39,8 @@ router.post("/create/survey", async (req, res) => {
 
 // Get details for a list of entries
 /**
- * POST - 
- *  req.body = 
+ * POST -
+ *  req.body =
  *  res.body =
  */
 router.post("/entry/list", async (req, res) => {
@@ -48,24 +48,33 @@ router.post("/entry/list", async (req, res) => {
   const results = [];
   const refs = [];
   entries.forEach((entry) => {
-    // const result = {}
     const contestRef = database.ref(`contests/${entry.contestId}`);
-    const entryRef = database.ref(`contests/${entry.contestId}/entries/${entry.entryId}`);
+    const entryRef = database.ref(
+      `entries/${entry.contestId}/${entry.entryId}`
+    );
+    const result = {};
     // get title of the contest
     refs.push(
-      contestRef.once("value")
+      entryRef
+        .once("value")
         .then((snapshot) => {
-          const contestData = snapshot.val()
-          const entryData = contestData.entries[entry.entryId];
-          contestData.id = entry.contestId
+          const entryData = snapshot.val();
           entryData.id = entry.entryId
-          const result = { contest: contestData, entry: entryData }
-          results.push(result)
-        }, (errorObject) => {
-          console.log("The read failed: " + errorObject.code);
-        }
+          result.entry = entryData;
+          return contestRef.once("value");
+        })
+        .then(
+          (snapshot) => {
+            const contestData = snapshot.val();
+            contestData.id = entry.contestId
+            result.contest = contestData;
+            results.push(result);
+          },
+          (errorObject) => {
+            console.log("The read failed: " + errorObject.code);
+          }
         )
-    );
+    )
   });
   Promise.all(refs).then(() => {
     // returns a list of objects that contain the contest details

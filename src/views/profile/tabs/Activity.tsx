@@ -8,6 +8,7 @@ import {
   TablePagination,
   TableRow,
 } from "@material-ui/core";
+import Skeleton from "@material-ui/lab/Skeleton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -19,10 +20,36 @@ import { useHistory } from "react-router";
 
 export const Activity = (props: any) => {
   const { value, index } = props;
-  const [rows, setRows] = useState<any>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const history = useHistory();
+  const height = 69;
+  const [rows, setRows] = useState<any>([
+    {
+      title: <Skeleton height={height} />,
+      createdAt: <Skeleton height={height} />,
+      status: <Skeleton height={height} />,
+      edit: <Skeleton height={height} />,
+    },
+    {
+      title: <Skeleton height={height} />,
+      createdAt: <Skeleton height={height} />,
+      status: <Skeleton height={height} />,
+      edit: <Skeleton height={height} />,
+    },
+    {
+      title: <Skeleton height={height} />,
+      createdAt: <Skeleton height={height} />,
+      status: <Skeleton height={height} />,
+      edit: <Skeleton height={height} />,
+    },
+    {
+      title: <Skeleton height={height} />,
+      createdAt: <Skeleton height={height} />,
+      status: <Skeleton height={height} />,
+      edit: <Skeleton height={height} />,
+    },
+  ]);
 
   const handleView = (contestId: string, entryId: string) => {
     history.push(`/contest/${contestId}/entry/${entryId}/edit`);
@@ -192,13 +219,17 @@ export const Activity = (props: any) => {
                       key={"row" + index}
                     >
                       {columns.map((column: any) => {
+                        const value = row[column.id];
                         return (
                           <TableCell
                             key={column.id + "-" + index}
                             align={column.align}
                             style={column.style}
                           >
-                            {column.format(row)}
+                            {column.format &&
+                            typeof value !== "object"
+                              ? column.format(row)
+                              : value}
                           </TableCell>
                         );
                       })}

@@ -10,6 +10,8 @@ import {
 } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from '@material-ui/icons/Delete';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
@@ -69,29 +71,38 @@ export const Polls = (props: any) => {
       });
   }, []);
 
-  const handleEdit = (id: any) => {
-    history.push(`contest/${id}`);
+  const handleView = (contestId: string) => {
+    history.push(`/contest/${contestId}`);
   };
+
+  const handleEdit = (id: any) => {
+    // history.push(`contest/${id}`);
+  };
+
+  const handleDelete = (contestId: string, entryId: string) => {
+    // fetch(`/api/contest/${contestId}/entry/${entryId}`, {
+    //   method: "DELETE",
+    //   credentials: "include",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    // .then(() => getMyEntries());
+  }
 
   const columns = [
     {
       id: "title",
       label: "Title",
       style: { minWidth: 100, maxWidth: 400, verticalAlign: "top" },
-      format: (value: any, row: any) => (
+      format: (row: any) => (
         <div style={{ display: "flex" }}>
           <img
             src={row.hostProfileImageUrl}
-            style={{ height: 100 }}
+            style={{ height: 100, paddingRight: 16 }}
             alt="contest host"
           />
-          <IconButton
-            onClick={() => {
-              handleEdit(row.id);
-            }}
-          >
-            <EditIcon />
-          </IconButton>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <Typography variant="h6">Hosted by {row.host}</Typography>
             <Typography variant="subtitle1">{row.title}</Typography>
@@ -110,16 +121,46 @@ export const Polls = (props: any) => {
       label: "# of Entries",
       style: { minWidth: 100, verticalAlign: "top" },
       align: "right",
-      format: (value: any) => value || 0,
+      format: (row: any) => row.entryCount || 0,
     },
     {
       id: "createdAt",
       label: "Created At",
       style: { minWidth: 100, verticalAlign: "top" },
       align: "right",
-      format: (value: any) =>
-        new Date(value).toLocaleDateString("en-US"),
+      format: (row: any) =>
+        new Date(row.createdAt).toLocaleDateString("en-US"),
     },
+    {
+      id: "edit",
+      label: "",
+      align: "right",
+      format: (row: any) => (
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <IconButton
+            onClick={() => {
+              handleEdit(row.contest.id);
+            }}
+          >
+            <ExitToAppIcon />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              handleView(row.id);
+            }}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              handleDelete(row, row);
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </div>
+      ),
+    }
   ];
 
   const handleChangePage = (event: any, newPage: any) => {
@@ -173,7 +214,7 @@ export const Polls = (props: any) => {
                           >
                             {column.format &&
                             typeof value !== "object"
-                              ? column.format(value, row)
+                              ? column.format(row)
                               : value}
                           </TableCell>
                         );

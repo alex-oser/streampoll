@@ -99,11 +99,31 @@ router.post("/enter", async (req, res) => {
 router.get("/:contestId", async (req, res) => {
   const contestId = req.params.contestId;
   const ref = database.ref(`contests/${contestId}`);
-  console.log("MAADDDEEE ITTTTT")
   ref.once("value").then(
     (snapshot) => {
       // returns an object that contains the contest details
       res.send(snapshot.val());
+    },
+    (errorObject) => {
+      console.log("The read failed: " + errorObject.code);
+    }
+  );
+});
+
+// Get number of entries in a specific contest
+router.get("/:contestId/entry/count", async (req, res) => {
+  const { contestId } = req.params;
+  const ref = database.ref(
+    `entries/${contestId}/entryCount`
+  );
+  ref.once("value").then(
+    (snapshot) => {
+      if (snapshot.exists()) {
+        // returns an object that contains the contest details
+        res.send(`${snapshot.val()}`);
+      } else {
+        res.send("0");
+      }
     },
     (errorObject) => {
       console.log("The read failed: " + errorObject.code);
@@ -180,8 +200,8 @@ router.delete("/:contestId/entry/:entryId", async (req, res) => {
 // Get details for a list of contests
 router.post("/list", async (req, res) => {
   const ids = req.body;
-  var contests = [];
-  var refs = [];
+  const contests = [];
+  const refs = [];
   ids.forEach((id) => {
     const ref = database.ref(`contests/${id}`);
     refs.push(

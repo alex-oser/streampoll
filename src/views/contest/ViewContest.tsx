@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { ContestSettings } from "../../types/ContestSettings";
 import { useHistory } from "react-router";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -41,14 +42,14 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     boxShadow: "none",
   },
+  skeletonSpacing: { margin: "12px 0 12px 0", padding: 0 },
 }));
 
-const initialState: ContestSettings = {};
-
 export const ViewContest = (props: any) => {
-  const [contestData, setContestData] = useState<ContestSettings>(
-    initialState
-  );
+  const [
+    contestData,
+    setContestData,
+  ] = useState<ContestSettings | null>(null);
   const [hasEntered, setHasEntered] = useState(true);
   const params: any = useParams();
   const classes = useStyles();
@@ -70,7 +71,6 @@ export const ViewContest = (props: any) => {
           res.some((entry: any) => entry.contestId === params.id)
         );
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const enterContest = () => {
@@ -78,20 +78,53 @@ export const ViewContest = (props: any) => {
   };
 
   const getEntries = () => {
-    if (!contestData.entryCount) {
+    if (!contestData?.entryCount) {
       return "There aren't any entries yet ;(";
-    } else if (contestData.entryCount === 1) {
+    } else if (contestData?.entryCount === 1) {
       return "1 person beat you to it!";
     } else {
-      return `There are already ${contestData.entryCount} entries!!!!`;
+      return `There are already ${contestData?.entryCount} entries!!!!`;
     }
   };
+
+  if (!contestData) {
+    return (
+      <div style={{ marginTop: 50 }}>
+        <Skeleton
+          width={400}
+          height={20}
+          className={classes.skeletonSpacing}
+        />
+        <Skeleton
+          width={400}
+          height={200}
+          variant="rect"
+          style={{ margin: 0, padding: 0 }}
+        />
+        <Skeleton
+          width={400}
+          height={10}
+          className={classes.skeletonSpacing}
+        />
+        <Skeleton
+          width={400}
+          height={10}
+          className={classes.skeletonSpacing}
+        />
+        <Skeleton
+          width={400}
+          height={20}
+          className={classes.skeletonSpacing}
+        />
+      </div>
+    );
+  }
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div className={classes.layout}>
         <Typography
-          style={{ alignSelf: "center", paddingBottom: 20 }}
+          style={{ paddingBottom: 20 }}
           color="textPrimary"
           variant="h4"
         >
@@ -102,8 +135,8 @@ export const ViewContest = (props: any) => {
         </Typography>
         <Typography
           color="textPrimary"
-          style={{ paddingBottom: 20 }}
-          variant="h6"
+          style={{ paddingBottom: 20, whiteSpace: "pre-line" }}
+          variant="body2"
         >
           {contestData.description}
         </Typography>
@@ -168,11 +201,13 @@ export const ViewContest = (props: any) => {
           <Typography color="textPrimary" variant="h6">
             {getEntries()}
           </Typography>
-          {hasEntered ? (
+
+          {hasEntered && (
             <Typography color="textPrimary" variant="h6">
               You have already entered this contest.
             </Typography>
-          ) : null}
+          )}
+
           <Button
             onClick={() => enterContest()}
             variant="contained"

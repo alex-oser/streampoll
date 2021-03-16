@@ -45,19 +45,15 @@ exports.api = functions.https.onRequest(app);
 
 // Keeps track of the length of the 'entries' child list
 exports.countEntries = functions.database
-  .ref("/contests/{contestId}/entries/{entryId}")
+  .ref("/entries/{contestId}/{entryId}/createdBy")
   .onCreate((snapshot, context) => {
-    const entriesRef = snapshot.ref.parent;
-    const countRef = entriesRef.parent.child("entryCount");
-
-    countRef
-      .transaction((current) => {
-        return (current || 0) + 1;
-      })
-      .then(() => {
-        console.log("Counter updated.");
-        return null;
-      });
+    const contestId = context.params.contestId
+    const countRef = database.ref(`/contests/${contestId}/entryCount`);
+    countRef.transaction(count => {
+      console.log("******COUNTER UPDATED******")
+      return (count || 0) + 1
+    })
+    return "Counter updated."
   });
 
 // handle token refresh logic with a cron function

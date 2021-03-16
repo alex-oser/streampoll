@@ -7,6 +7,7 @@ const {
   checkSchema,
   validationResult,
 } = require("express-validator");
+const { RestoreRounded } = require("@material-ui/icons");
 
 const createValidationSchema = {
   title: {
@@ -197,15 +198,12 @@ router.post("/:contestId/entry/:entryId", async (req, res) => {
   );
 });
 
-// delete a specific entry id
-router.delete("/:contestId/entry/:entryId", async (req, res) => {
+// delete a contest
+router.delete("/:contestId", async (req, res) => {
   if (!req.session.auth) {
     return res.send({ error: "no session" }, 401);
   }
   const { contestId, entryId } = req.params;
-  console.log(
-    `ABOUT TO DELETE @ users/${req.session.auth.id}/${contestId}/${entryId}`
-  );
   const updates = {
     [`users/${req.session.auth.id}/entries/${contestId}/${entryId}`]: null,
     [`entries/${contestId}/${entryId}`]: null,
@@ -220,6 +218,40 @@ router.delete("/:contestId/entry/:entryId", async (req, res) => {
       console.log("The write failed: " + errorObject.code);
     }
   );
+});
+
+// delete a specific entry id
+router.delete("/:contestId/entry/:entryId", async (req, res) => {
+  if (!req.session.auth) {
+    return res.send({ error: "no session" }, 401);
+  }
+  const { contestId, entryId } = req.params;
+  const userRef = database.ref(
+    `users/${req.session.auth.id}/entries/${contestId}/${entryId}`
+  );
+  userRef
+    .once("value")
+    .then((snapshot) => {
+      if (!snapshot.exists()) {
+        res.status(403).send("You are not the owner of this entry.");
+      }
+    })
+    .then(() => {
+      const updates = {
+        [`users/${req.session.auth.id}/entries/${contestId}/${entryId}`]: null,
+        [`entries/${contestId}/${entryId}`]: null,
+      };
+      const entryRef = database.ref();
+      return entryRef.update(updates);
+    })
+    .then(
+      () => {
+        res.send("DELETED");
+      },
+      (errorObject) => {
+        console.log("The write failed: " + errorObject.code);
+      }
+    );
 });
 
 // Get details for a list of contests
@@ -243,6 +275,45 @@ router.post("/list", async (req, res) => {
   Promise.all(refs).then(() => {
     // returns a list of objects that contain the contest details
     res.send(JSON.stringify(contests));
+  });
+});
+
+router.post("/entry/list", async (req, res) => {
+  const entries = req.body;
+  const results = [];
+  const refs = [];
+  entries.forEach((entry) => {
+    const contestRef = database.ref(`contests/${entry.contestId}`);
+    const entryRef = database.ref(
+      `entries/${entry.contestId}/${entry.entryId}`
+    );
+    const result = {};
+    // get title of the contest
+    refs.push(
+      entryRef
+        .once("value")
+        .then((snapshot) => {
+          const entryData = snapshot.val();
+          entryData.id = entry.entryId;
+          result.entry = entryData;
+          return contestRef.once("value");
+        })
+        .then(
+          (snapshot) => {
+            const contestData = snapshot.val();
+            contestData.id = entry.contestId;
+            result.contest = contestData;
+            results.push(result);
+          },
+          (errorObject) => {
+            console.log("The read failed: " + errorObject.code);
+          }
+        )
+    );
+  });
+  Promise.all(refs).then(() => {
+    // returns a list of objects that contain the contest details
+    res.send(JSON.stringify(results));
   });
 });
 

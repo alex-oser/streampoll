@@ -136,22 +136,24 @@ export const Polls = (props: any) => {
       label: "",
       align: "right",
       format: (row: any) => (
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <IconButton
-            onClick={() => {
-              handleEdit(row.contest.id);
-            }}
-          >
-            <ExitToAppIcon />
-          </IconButton>
+        <div style={{ display: "flex", flexDirection: "column", width: 48 }}>
           <IconButton
             onClick={() => {
               handleView(row.id);
             }}
           >
+            <ExitToAppIcon />
+          </IconButton>
+          <IconButton
+            disabled
+            onClick={() => {
+              handleEdit(row.id);
+            }}
+          >
             <EditIcon />
           </IconButton>
           <IconButton
+            disabled
             onClick={() => {
               handleDelete(row, row);
             }}

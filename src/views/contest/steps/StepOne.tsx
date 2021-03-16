@@ -45,6 +45,7 @@ export const StepOne = React.memo((props: any) => {
         label="Title"
         value={formik.values.title}
         fullWidth
+        inputProps={{ maxLength: 60 }}
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
         error={formik.touched.title && Boolean(formik.errors.title)}
@@ -60,6 +61,7 @@ export const StepOne = React.memo((props: any) => {
         name="description"
         label="Description"
         fullWidth
+        inputProps={{ maxLength: 2000 }}
         value={formik.values.description}
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}

@@ -48,6 +48,7 @@ export const StepThree = (props: any) => {
   const [spinner, setSpinner] = useState<any>();
   const [mods, setMods] = useState([]);
   const userData: UserData | null = useAuth();
+  const [selfName, setSelfName] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -60,14 +61,14 @@ export const StepThree = (props: any) => {
 
   useEffect(() => {
     if (userData) {
-      formik.setFieldValue("host", userData.username, true);
+      formik.setFieldValue("host", userData.username);
     }
-
   }, [userData]);
 
   useEffect(() => {
-    if (formik.touched.host) {
+    if (!selfName && formik.values.host) {
       validateUsername();
+      setSelfName(true);
     }
   }, [formik.values.host])
 

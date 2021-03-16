@@ -7,31 +7,42 @@ import { StepTwo } from "./steps/StepTwo";
 import { StepThree } from "./steps/StepThree";
 import { StepFour } from "./steps/StepFour";
 import { useBaseStyles } from "../../style";
+import { Prompt } from "react-router";
 
 const stepComponents = [StepOne, StepTwo, StepThree, StepFour];
 
-const getStyle = ((isActive: Boolean) => {
+const getStyle = (isActive: Boolean) => {
   if (isActive) {
     return {
       display: "flex",
       flexDirection: "column",
-      height: "100%"
-    }
+      height: "100%",
+    };
   } else {
-    return { display: "none" }
+    return { display: "none" };
   }
-})
+};
 
 export const CreateContest = React.memo(() => {
   const [state, dispatch] = useContext(Context);
   const baseClasses = useBaseStyles();
 
+  const beforeUnloadListener = (event: any) => {
+    event.preventDefault();
+    return event.returnValue = "Are you sure you want to exit?";
+  };
+
   // reset step on comp unmount
   useEffect(() => {
+
+    window.addEventListener("beforeunload", beforeUnloadListener, {
+      capture: true,
+    });
+
     return () => {
       dispatch({ type: "RESET_STEP" });
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      window.removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+    };
   }, []);
 
   return (
@@ -39,7 +50,12 @@ export const CreateContest = React.memo(() => {
       className={baseClasses.layout}
       style={{ display: "flex", flexDirection: "column" }}
     >
-      <Typography color="textPrimary" variant="h4" style={{ paddingBottom: 20 }}>
+      <Prompt message="Are you sure you want to leave?"/>
+      <Typography
+        color="textPrimary"
+        variant="h4"
+        style={{ paddingBottom: 20 }}
+      >
         Create a contest
       </Typography>
 

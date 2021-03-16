@@ -13,6 +13,7 @@ import { ViewContest } from "./views/contest/ViewContest";
 import { NewContestEntry } from "./views/contest/NewContestEntry";
 import { EditContestEntry } from "./views/contest/EditContestEntry";
 import { makeStyles } from "@material-ui/core";
+// import { usePrompt } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   createPoll: {

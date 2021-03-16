@@ -10,7 +10,7 @@ export const Home = React.memo(() => {
   return (
     <div className={baseClasses.layout}>
       <Typography color="textPrimary" variant="h3">
-        Choose an option
+        I want to create a...
       </Typography>
 
       <Link style={{ textDecoration: "none" }} to="/create/contest">

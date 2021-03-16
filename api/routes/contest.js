@@ -7,6 +7,7 @@ const {
   checkSchema,
   validationResult,
 } = require("express-validator");
+const { RestoreRounded } = require("@material-ui/icons");
 
 const createValidationSchema = {
   title: {
@@ -31,7 +32,8 @@ const createValidationSchema = {
   },
 };
 
-router.post("/create",
+router.post(
+  "/create",
   checkSchema(createValidationSchema),
   async (req, res) => {
     if (!req.session.auth) {
@@ -50,20 +52,22 @@ router.post("/create",
     };
 
     const contestRef = database.ref(`contests`).push(body);
-    const contestKey = contestRef.key
-    database.ref(`users/${req.session.auth.id}/contests/${contestKey}`)
-    .set(true)
-    .then(() => {
-        // returns an object that contains the contest details
-        res.send({
-          message: "SUCCESS",
-          id: contestKey,
-        });
-      },
-      (errorObject) => {
-        console.log("The read failed: " + errorObject.code);
-      }
-    );
+    const contestKey = contestRef.key;
+    database
+      .ref(`users/${req.session.auth.id}/contests/${contestKey}`)
+      .set(true)
+      .then(
+        () => {
+          // returns an object that contains the contest details
+          res.send({
+            message: "SUCCESS",
+            id: contestKey,
+          });
+        },
+        (errorObject) => {
+          console.log("The read failed: " + errorObject.code);
+        }
+      );
   }
 );
 
@@ -79,20 +83,26 @@ router.post("/enter", async (req, res) => {
     createdAt: admin.database.ServerValue.TIMESTAMP,
   };
   // push entry data to contest and get unique key generated for entry
-  const entryRef = database.ref(`entries/${contestId}`).push(entryBody);
-  const entryKey = entryRef.key
+  const entryRef = database
+    .ref(`entries/${contestId}`)
+    .push(entryBody);
+  const entryKey = entryRef.key;
   // get a user's current contest entries
-  const userEntryRef = database.ref(`users/${req.session.auth.id}/entries/${contestId}/${entryKey}`);
-  userEntryRef.set(true).then(() => {
-    // returns an object that contains the contest details
-    res.send({
-      message: "success",
-      id: entryKey,
-    });
-  },
-  (errorObject) => {
-    console.log("The read failed: " + errorObject.code);
-  });
+  const userEntryRef = database.ref(
+    `users/${req.session.auth.id}/entries/${contestId}/${entryKey}`
+  );
+  userEntryRef.set(true).then(
+    () => {
+      // returns an object that contains the contest details
+      res.send({
+        message: "success",
+        id: entryKey,
+      });
+    },
+    (errorObject) => {
+      console.log("The read failed: " + errorObject.code);
+    }
+  );
 });
 
 // Get details for a specific contest id
@@ -113,9 +123,7 @@ router.get("/:contestId", async (req, res) => {
 // Get number of entries in a specific contest
 router.get("/:contestId/entry/count", async (req, res) => {
   const { contestId } = req.params;
-  const ref = database.ref(
-    `entries/${contestId}/entryCount`
-  );
+  const ref = database.ref(`entries/${contestId}/entryCount`);
   ref.once("value").then(
     (snapshot) => {
       if (snapshot.exists()) {
@@ -134,9 +142,7 @@ router.get("/:contestId/entry/count", async (req, res) => {
 // Get details for a specific entry id
 router.get("/:contestId/entry/:entryId", async (req, res) => {
   const { contestId, entryId } = req.params;
-  const ref = database.ref(
-    `entries/${contestId}/${entryId}`
-  );
+  const ref = database.ref(`entries/${contestId}/${entryId}`);
   ref.once("value").then(
     (snapshot) => {
       // returns an object that contains the contest details
@@ -160,13 +166,33 @@ router.post("/:contestId/entry/:entryId", async (req, res) => {
   };
 
   const { contestId, entryId } = req.params;
-  const entryRef = database.ref(
-    `entries/${contestId}/${entryId}`
-  );
+  const entryRef = database.ref(`entries/${contestId}/${entryId}`);
   entryRef.set(entryBody).then(
     () => {
       // returns an object that contains the contest details
       res.send("SUCCESS");
+    },
+    (errorObject) => {
+      console.log("The write failed: " + errorObject.code);
+    }
+  );
+});
+
+// delete a contest
+router.delete("/:contestId", async (req, res) => {
+  if (!req.session.auth) {
+    return res.send({ error: "no session" }, 401);
+  }
+  const { contestId, entryId } = req.params;
+  const updates = {
+    [`users/${req.session.auth.id}/entries/${contestId}/${entryId}`]: null,
+    [`entries/${contestId}/${entryId}`]: null,
+  };
+  const entryRef = database.ref();
+  entryRef.update(updates).then(
+    () => {
+      console.log("just deleted that old record");
+      res.send("DELETED");
     },
     (errorObject) => {
       console.log("The write failed: " + errorObject.code);
@@ -179,22 +205,33 @@ router.delete("/:contestId/entry/:entryId", async (req, res) => {
   if (!req.session.auth) {
     return res.send({ error: "no session" }, 401);
   }
-  const { contestId, entryId } = req.params
-  console.log(`ABOUT TO DELETE @ users/${req.session.auth.id}/${contestId}/${entryId}`)
-  const updates = {
-    [`users/${req.session.auth.id}/entries/${contestId}/${entryId}`]: null,
-    [`entries/${contestId}/${entryId}`]: null
-  }
-  const entryRef = database.ref();
-  entryRef.update(updates)
-  .then(() => {
-    console.log("just deleted that old record")
-    res.send("DELETED")
-    },
-    (errorObject) => {
-      console.log("The write failed: " + errorObject.code);
-    }
+  const { contestId, entryId } = req.params;
+  const userRef = database.ref(
+    `users/${req.session.auth.id}/entries/${contestId}/${entryId}`
   );
+  userRef
+    .once("value")
+    .then((snapshot) => {
+      if (!snapshot.exists()) {
+        res.status(403).send("You are not the owner of this entry.");
+      }
+    })
+    .then(() => {
+      const updates = {
+        [`users/${req.session.auth.id}/entries/${contestId}/${entryId}`]: null,
+        [`entries/${contestId}/${entryId}`]: null,
+      };
+      const entryRef = database.ref();
+      return entryRef.update(updates);
+    })
+    .then(
+      () => {
+        res.send("DELETED");
+      },
+      (errorObject) => {
+        console.log("The write failed: " + errorObject.code);
+      }
+    );
 });
 
 // Get details for a list of contests
@@ -218,6 +255,45 @@ router.post("/list", async (req, res) => {
   Promise.all(refs).then(() => {
     // returns a list of objects that contain the contest details
     res.send(JSON.stringify(contests));
+  });
+});
+
+router.post("/entry/list", async (req, res) => {
+  const entries = req.body;
+  const results = [];
+  const refs = [];
+  entries.forEach((entry) => {
+    const contestRef = database.ref(`contests/${entry.contestId}`);
+    const entryRef = database.ref(
+      `entries/${entry.contestId}/${entry.entryId}`
+    );
+    const result = {};
+    // get title of the contest
+    refs.push(
+      entryRef
+        .once("value")
+        .then((snapshot) => {
+          const entryData = snapshot.val();
+          entryData.id = entry.entryId;
+          result.entry = entryData;
+          return contestRef.once("value");
+        })
+        .then(
+          (snapshot) => {
+            const contestData = snapshot.val();
+            contestData.id = entry.contestId;
+            result.contest = contestData;
+            results.push(result);
+          },
+          (errorObject) => {
+            console.log("The read failed: " + errorObject.code);
+          }
+        )
+    );
+  });
+  Promise.all(refs).then(() => {
+    // returns a list of objects that contain the contest details
+    res.send(JSON.stringify(results));
   });
 });
 

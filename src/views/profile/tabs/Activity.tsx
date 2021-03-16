@@ -115,7 +115,7 @@ export const Activity = (props: any) => {
       label: "",
       align: "right",
       format: (row: any) => (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column", width: 50 }}>
           <IconButton
             onClick={() => {
               handleView(row.contest.id, row.entry.id);
@@ -165,7 +165,7 @@ export const Activity = (props: any) => {
   })
 
   const getEntriesData = (entries: any) => {
-    fetch("/api/entry/list", {
+    fetch("/api/contest/entry/list", {
       method: "POST",
       credentials: "include",
       headers: {

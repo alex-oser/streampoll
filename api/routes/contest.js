@@ -82,6 +82,26 @@ router.post("/enter", async (req, res) => {
     createdBy: req.session.auth.id,
     createdAt: admin.database.ServerValue.TIMESTAMP,
   };
+
+  // get the contest metadata
+  const constest = await database
+    .ref(`contests/${contestId}`)
+    .once("value");
+
+  if (!constest.val().multipleUploads) {
+    // get a list of the users entires for this contest
+    const entries = await database
+      .ref(`users/${req.session.auth.id}/entries/${contestId}`)
+      .once("value");
+
+    // if multipleUploads is turned on then don't allow more than 1 uploads
+    if (entries.exists() && Object.keys(entries.val()).length >= 1) {
+      return res
+        .status(403)
+        .json({ error: "No sir, you have too many BITCH!!!!" });
+    }
+  }
+
   // push entry data to contest and get unique key generated for entry
   const entryRef = database
     .ref(`entries/${contestId}`)

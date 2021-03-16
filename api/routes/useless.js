@@ -8,7 +8,7 @@ router.get("/status", async (req, res) => {
   const response = await got({
     url: "https://api.github.com/repos/alex-oser/streampoll/actions/runs",
     headers: {
-      Authorization: `token ${config.github.pat}`,
+      "Authorization": `token ${config.github.pat}`,
       "User-Agent": "TotallyNotARobot",
     },
     responseType: "json",
@@ -18,7 +18,7 @@ router.get("/status", async (req, res) => {
   // create poll
   res.send({
     status: data.status,
-    conclusion: data.conclusion
+    conclusion: data.conclusion,
   });
 });
 

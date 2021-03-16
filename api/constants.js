@@ -10,5 +10,5 @@ module.exports = {
   TWITCH_API_BASE,
   TWITCH_OAUTH_BASE,
   CLIENT_ID,
-  CLIENT_SECRET
-}
+  CLIENT_SECRET,
+};

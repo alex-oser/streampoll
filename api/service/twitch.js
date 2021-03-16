@@ -35,8 +35,8 @@ const createOauthToken = async () => {
 
 /**
  *
- * @param {string} username username to lookup
- * @returns some usefull shoit aobueig iowjhgeog shoghoesafjosfojies josigjos huhsrhu
+ * @param {string} username - username to lookup
+ * @return {object} some usefull info about a twich user
  */
 const getTwitchUserInfo = async (username) => {
   const token = await createOauthToken();
@@ -47,7 +47,7 @@ const getTwitchUserInfo = async (username) => {
     method: "GET",
     headers: {
       "client-id": CLIENT_ID,
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
     responseType: "json",
     throwHttpErrors: false,
@@ -68,7 +68,7 @@ const getTwitchMods = async (username) => {
     headers: {
       "User-Agent":
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
-      "Client-Id": `kimne78kx3ncx6brgo4mv6wki5h1ko`,
+      "Client-Id": "kimne78kx3ncx6brgo4mv6wki5h1ko",
     },
     method: "POST",
     responseType: "json",

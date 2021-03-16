@@ -10,9 +10,9 @@ let HOST;
 if (FUNCTIONS_EMULATOR) {
   HOST = "http://localhost:5000";
 } else if (GCLOUD_PROJECT === "streampoll-cf56b") {
-  HOST = "https://streampoll.me"
+  HOST = "https://streampoll.me";
 } else if (GCLOUD_PROJECT === "streampoll-dev-b2f18") {
-  HOST = "https://dev.streampoll.me"
+  HOST = "https://dev.streampoll.me";
 }
 
 const getTwitchAuthToken = async (code) => {
@@ -31,13 +31,14 @@ const getTwitchAuthToken = async (code) => {
     },
     responseType: "json",
   });
-  
+
   return response.body;
 };
 
 /**
  * This is to fetch the profile infomration from the twitch api
- * @returns the twitch user data
+ * @param {string} token - An ouath token
+ * @return {string} test
  */
 const getTwitchUserdata = async (token) => {
   const response = await got({
@@ -45,7 +46,7 @@ const getTwitchUserdata = async (token) => {
     method: "GET",
     headers: {
       "Client-ID": clientid,
-      Authorization: `Bearer ${token}`,
+      "Authorization": `Bearer ${token}`,
     },
     responseType: "json",
   });

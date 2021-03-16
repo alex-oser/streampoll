@@ -6,9 +6,6 @@ const { getTwitchAuthToken, getTwitchUserdata } = require("../util");
 
 // TODO: make post, as this can be exploited?
 router.get("/logout", async (req, res) => {
-  // the session id if we ever need it
-  const sessionId = req.cookies.__session;
-
   // nuke session on logout
   req.session.destroy();
   res.redirect("/");
@@ -19,34 +16,36 @@ router.get("/oauth/callback", async (req, res) => {
   const { code } = req.query;
   const tokenData = await getTwitchAuthToken(code);
   const profile = await getTwitchUserdata(tokenData.access_token);
-  const userRef = database.ref("users/" + profile.id)
+  const userRef = database.ref("users/" + profile.id);
   const defaultSettings = {
     requireTwitchAuth: false,
     allowEmailNotifications: false,
     allowTwitchNotifications: false,
-  }
+  };
 
-  userRef.once("value")
-  .then((snapshot) => {
-    // if user already has an account
-    if (snapshot.exists()) {
-      userRef.update({ ...snapshot.val(), lastLogin: new Date()})
-    // user is logging in for the first time
-    } else {
-      userRef.set({ 
-        ...profile, 
-        lastLogin: new Date(),
-        settings: defaultSettings,
-      });
+  userRef.once("value").then(
+    (snapshot) => {
+      // if user already has an account
+      if (snapshot.exists()) {
+        userRef.update({ ...snapshot.val(), lastLogin: new Date() });
+        // user is logging in for the first time
+      } else {
+        userRef.set({
+          ...profile,
+          lastLogin: new Date(),
+          settings: defaultSettings,
+        });
+      }
+    },
+    (errorObject) => {
+      console.log("The read failed: " + errorObject.code);
     }
-  }, (errorObject) => {
-    console.log("The read failed: " + errorObject.code);
-  });
+  );
 
   // create the session
   req.session.auth = {
     ...tokenData,
-    id: profile.id
+    id: profile.id,
   };
 
   // make sure we don't cache on the client

@@ -2,12 +2,10 @@ const express = require("express");
 const router = express.Router();
 const admin = require("firebase-admin");
 const database = admin.database();
-const uuid = require("uuid");
 const {
   checkSchema,
   validationResult,
 } = require("express-validator");
-const { RestoreRounded } = require("@material-ui/icons");
 
 const createValidationSchema = {
   title: {
@@ -51,7 +49,7 @@ router.post(
       createdAt: admin.database.ServerValue.TIMESTAMP,
     };
 
-    const contestRef = database.ref(`contests`).push(body);
+    const contestRef = database.ref("contests").push(body);
     const contestKey = contestRef.key;
     database
       .ref(`users/${req.session.auth.id}/contests/${contestKey}`)

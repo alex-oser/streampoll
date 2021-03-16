@@ -27,7 +27,7 @@ const getMods = async (channel) => {
     });
 
     client.on("error", (channel, mods) => {
-      reject("soemthing went wong");
+      reject(new Error("soemthing went wong"));
     });
 
     client.on("join", () => {

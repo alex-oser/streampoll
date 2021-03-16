@@ -14,7 +14,6 @@ const core = require("./routes/core");
 const useless = require("./routes/useless");
 const twitch = require("./routes/twitch");
 const contest = require("./routes/contest");
-const tokenRefresh = require("./scheduled/tokens");
 
 const app = express();
 
@@ -47,13 +46,15 @@ exports.api = functions.https.onRequest(app);
 exports.countEntries = functions.database
   .ref("/entries/{contestId}/{entryId}/createdBy")
   .onCreate((snapshot, context) => {
-    const contestId = context.params.contestId
-    const countRef = database.ref(`/contests/${contestId}/entryCount`);
-    countRef.transaction(count => {
-      console.log("******COUNTER UPDATED******")
-      return (count || 0) + 1
-    })
-    return "Counter updated."
+    const contestId = context.params.contestId;
+    const countRef = database.ref(
+      `/contests/${contestId}/entryCount`
+    );
+    countRef.transaction((count) => {
+      console.log("******COUNTER UPDATED******");
+      return (count || 0) + 1;
+    });
+    return "Counter updated.";
   });
 
 // handle token refresh logic with a cron function

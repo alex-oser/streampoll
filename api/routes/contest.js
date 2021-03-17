@@ -10,6 +10,9 @@ const {
 const {
   getContestById,
   setContestDataById,
+  createUserEntryReference,
+  getUserContestEntries,
+  createEntry,
 } = require("../service/contests");
 
 const { getTwitchUserInfo } = require("../service/twitch");
@@ -74,9 +77,9 @@ router.patch(
   checkSchema(UPDATE_CONTEST_SCHEMA),
   // filterKeys,
   async (req, res) => {
-    // if (!req.session.auth) {
-    //   return res.send({ error: "no session" }, 401);
-    // }
+    if (!req.session.auth) {
+      return res.send({ error: "no session" }, 401);
+    }
 
     const errors = validationResult(req);
 
@@ -112,7 +115,6 @@ router.post("/enter", async (req, res) => {
     return res.send({ error: "no session" }, 401);
   }
   const contestId = req.body.contestId;
-
   const entryBody = {
     ...req.body,
     createdBy: req.session.auth.id,
@@ -120,45 +122,36 @@ router.post("/enter", async (req, res) => {
   };
 
   // get the contest metadata
-  const constest = await database
-    .ref(`contests/${contestId}`)
-    .once("value");
+  const constest = await getContestById(contestId);
 
+  // if multipleUploads is turned on then don't allow more than 1 uploads
   if (!constest.val().multipleUploads) {
-    // get a list of the users entires for this contest
-    const entries = await database
-      .ref(`users/${req.session.auth.id}/entries/${contestId}`)
-      .once("value");
+    const entries = await getUserContestEntries(
+      req.session.auth.id,
+      contestId
+    );
 
-    // if multipleUploads is turned on then don't allow more than 1 uploads
     if (entries.exists() && Object.keys(entries.val()).length >= 1) {
       return res
         .status(403)
-        .json({ error: "No sir, you have too many BITCH!!!!" });
+        .json({
+          error: "multipleUploads is not enabled for this contest",
+        });
     }
   }
 
-  // push entry data to contest and get unique key generated for entry
-  const entryRef = database
-    .ref(`entries/${contestId}`)
-    .push(entryBody);
-  const entryKey = entryRef.key;
+  const entryId = await createEntry(contestId, entryBody);
   // get a user's current contest entries
-  const userEntryRef = database.ref(
-    `users/${req.session.auth.id}/entries/${contestId}/${entryKey}`
+  await createUserEntryReference(
+    req.session.auth.id,
+    contestId,
+    entryId
   );
-  userEntryRef.set(true).then(
-    () => {
-      // returns an object that contains the contest details
-      res.send({
-        message: "success",
-        id: entryKey,
-      });
-    },
-    (errorObject) => {
-      console.log("The read failed: " + errorObject.code);
-    }
-  );
+
+  res.send({
+    message: "success",
+    id: entryId,
+  });
 });
 
 // Get details for a specific contest id

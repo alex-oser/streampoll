@@ -16,6 +16,7 @@ const {
   getContestEntryById,
   getUserInfo,
   addUserEntryVoteReference,
+  getEntriesByContestId,
 } = require("../service/contests");
 
 const { getTwitchUserInfo } = require("../service/twitch");
@@ -363,6 +364,19 @@ router.post("/:contestId/:entryId/vote", async (req, res) => {
 
 router.delete("/:id/vote", async (req, res) => {
   // /votes/pijeoigjoij
+});
+
+
+router.get("/:contestId/entries", async (req, res) => {
+  const ref = await getEntriesByContestId(req.params.contestId);
+
+  const rawValue = ref.val();
+  const formattedResponse = Object.entries(rawValue).map(([k, v]) => ({
+    ...v,
+    entryId: k,
+  }));
+
+  res.json(formattedResponse);
 });
 
 exports.route = router;

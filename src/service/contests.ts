@@ -71,3 +71,24 @@ export const updateContest = (id: string, data: any) => {
       .catch((err) => reject(err));
   });
 };
+
+export const getEntriesById = (contestId: string): any => {
+  return new Promise((resolve, reject) => {
+    fetch(
+      `/api/contest/${contestId}/entries`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        resolve(res);
+      })
+      .catch(err => reject(err));
+  });
+}

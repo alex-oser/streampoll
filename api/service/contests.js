@@ -52,6 +52,11 @@ const getUserInfo = (userId) => {
     .once("value");
 };
 
+const getEntriesByContestId = (contestId) => {
+  return database
+    .ref(`entries/${contestId}`)
+    .once("value");
+};
 
 module.exports = {
   getContestById,
@@ -63,4 +68,5 @@ module.exports = {
   addUserEntryVoteReference,
   getContestEntryById,
   getUserInfo,
+  getEntriesByContestId,
 };

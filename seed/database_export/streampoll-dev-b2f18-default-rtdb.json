@@ -6,10 +6,10 @@
       "createdBy": "180790944",
       "description": "- Designs have to be at least 4000x5323 pixel and 300 dpi resolution. (Can be bigger yes) The design has to be this resolution, not the mock up/preview\n- You have to follow Discord and Twitch TOS.\n- No copyrighted material, fair use allowed. (example: No BTTV/FFZ emotes, no company logos, no \"googled images\". (unless you show me that you have rights to them.))\n- You can put a watermark over your design, if you want.\n- No transparency effect (The final design has to be 100% opacity)\n- Follow the template attached to this message. (https://i.imgur.com/55J7OuM.png / https://i.imgur.com/Llij6dE.png)\n- You can create your free mock up on these websites: https://bit.ly/2ZZw9NC or https://bit.ly/2NJg3Fz or anywhere else.\"",
       "enterAnybody": true,
-      "entryCount": 1,
       "enterFollowers": true,
       "enterSubcribers": false,
       "enterSubscribers": false,
+      "entryCount": 1,
       "entryEnd": "2021-03-15T20:42:08.757Z",
       "entryStart": "2021-03-15T20:42:08.757Z",
       "excludeDescription": false,
@@ -30,10 +30,10 @@
       "createdBy": "180790944",
       "description": "who do you think this mysterious man is? who do you think this mysterious man is? who do you think this mysterious man is? who do you think this mysterious man is?",
       "enterAnybody": true,
-      "entryCount": 1,
       "enterFollowers": true,
       "enterSubcribers": false,
       "enterSubscribers": false,
+      "entryCount": 1,
       "entryEnd": "2021-03-15T20:43:43.657Z",
       "entryStart": "2021-03-15T20:43:43.657Z",
       "excludeDescription": false,
@@ -54,10 +54,10 @@
       "createdBy": "180790944",
       "description": "vote in this bvefore its too late",
       "enterAnybody": true,
-      "entryCount": 1,
       "enterFollowers": true,
       "enterSubcribers": false,
       "enterSubscribers": false,
+      "entryCount": 1,
       "entryEnd": "2021-03-15T20:46:53.596Z",
       "entryStart": "2021-03-15T20:46:53.596Z",
       "excludeDescription": false,
@@ -127,6 +127,7 @@
       "enterFollowers": true,
       "enterSubcribers": false,
       "enterSubscribers": true,
+      "entryCount": 1,
       "entryEnd": "2021-03-15T21:52:57.193Z",
       "entryStart": "2021-03-15T21:52:57.193Z",
       "excludeDescription": false,
@@ -172,12 +173,32 @@
         "title": "wohooo",
         "url": ""
       }
+    },
+    "-MVrsuXWij4ni_RAQYQh": {
+      "-MW1JM8WBQiTe4nEaBJ9": {
+        "contestId": "-MVrsuXWij4ni_RAQYQh",
+        "createdAt": 1616020337331,
+        "createdBy": "15848764",
+        "description": "This is a image post",
+        "title": "TEst entry",
+        "url": "https://i.imgur.com/ylqnbPt.jpeg"
+      }
     }
   },
   "sessions": {
     "2L1ndPsSJFaVQz9xs9Nmdvv8CM4cS1vF": {
       "expires": 1618437371641,
       "sess": "{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2021-04-14T21:56:11.641Z\",\"httpOnly\":true,\"path\":\"/\"},\"auth\":{\"access_token\":\"bzv0sljfuvv579j3f5nffvzsg32yiy\",\"expires_in\":14529,\"refresh_token\":\"d2k1w2apu5j8e0eco86o047ijs5v775hucrojtii1nhrb2q89v\",\"scope\":[\"user:read:email\"],\"token_type\":\"bearer\",\"id\":\"15848764\"}}",
+      "type": "connect-session"
+    },
+    "E8keYvNN1xqERCf2KHNJjt4afeeGANbN": {
+      "expires": 1618611905468,
+      "sess": "{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2021-04-16T22:25:05.468Z\",\"httpOnly\":true,\"path\":\"/\"}}",
+      "type": "connect-session"
+    },
+    "FC-IMXE0Mv4sSU-IGJcjfJcSc--xyV2r": {
+      "expires": 1618612337507,
+      "sess": "{\"cookie\":{\"originalMaxAge\":2592000000,\"expires\":\"2021-04-16T22:32:17.507Z\",\"httpOnly\":true,\"path\":\"/\"},\"auth\":{\"access_token\":\"iqdmfuo412iuyyu4j9lcemp7yekp4i\",\"expires_in\":14483,\"refresh_token\":\"h3yqnimc70tpu7g1ya5n66lzhrec9n8pzccf478m2e6hb6umsl\",\"scope\":[\"user:read:email\"],\"token_type\":\"bearer\",\"id\":\"15848764\"}}",
       "type": "connect-session"
     },
     "Me-8xWdhpHFff6U5lH6omcHj3sFl8vNQ": {
@@ -203,7 +224,11 @@
       "description": "",
       "display_name": "Hacksore",
       "email": "hacksore@mcskinsearch.com",
+      "entries": {
+        "-MVrsuXWij4ni_RAQYQh": { "-MW1JM8WBQiTe4nEaBJ9": true }
+      },
       "id": "15848764",
+      "lastLogin": "2021-03-17T22:31:43.198Z",
       "login": "hacksore",
       "offline_image_url": "",
       "profile_image_url": "https://static-cdn.jtvnw.net/jtv_user_pictures/a6082e80-6d61-4545-aa43-dc837413fd27-profile_image-300x300.png",

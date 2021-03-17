@@ -50,17 +50,22 @@ export const StepThree = (props: any) => {
   const [mods, setMods] = useState([]);
   const userData: UserData | null = useAuth();
   const [selfName, setSelfName] = useState(false);
-
+  
   const formik = useFormik({
     initialValues: {
       host: userData?.username || "",
     },
-    validateOnChange: true,
+    validateOnChange: false,
     validationSchema: validationSchema,
-    onSubmit: (values: FormikValues, formikBag: any) => {
-      handleSubmitForm(values);
+    onSubmit: async (values: FormikValues) => {      
+      handleSubmitForm({
+        ...state.createSettings,
+        ...values,
+      })
     },
   });
+
+  const hasErrors = formik.getFieldMeta("host").error != null;
 
   useEffect(() => {
     if (userData) {
@@ -75,7 +80,7 @@ export const StepThree = (props: any) => {
     }
   }, [formik.values.host]);
 
-  const hasErrors = formik.getFieldMeta("host").error != null;
+ 
 
   const validateUsername = () => {
     if (!formik.isValid && formik.values.host !== "") {

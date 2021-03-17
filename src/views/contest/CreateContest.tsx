@@ -68,7 +68,7 @@ export const CreateContest = ({
       id = params.id;
       await updateContest(id, settings);
     } else {
-      id = await createContest(state.createSettings);
+      id = await createContest(settings);
     }
 
     history.push(`/contest/${id}`);

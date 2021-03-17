@@ -57,7 +57,7 @@ const getTwitchUserInfo = async (username) => {
     throw new Error({ error: "soemtign went wong" });
   }
 
-  return response.body;
+  return response.body.data[0];
 };
 
 const getTwitchMods = async (username) => {

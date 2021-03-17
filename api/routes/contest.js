@@ -7,34 +7,19 @@ const {
   validationResult,
 } = require("express-validator");
 
-const { getContestById, setContestDataById } = require("../service/contests");
+const {
+  getContestById,
+  setContestDataById,
+} = require("../service/contests");
 
-const createValidationSchema = {
-  title: {
-    in: ["body"],
-    isLength: {
-      errorMessage: "Title must be at least 3 chars",
-      options: { min: 3, max: 60 },
-    },
-    exists: {
-      errorMessage: "Title is required",
-    },
-  },
-  description: {
-    in: ["body"],
-    isLength: {
-      errorMessage: "Description must be at least 2000 chars",
-      options: { min: 5, max: 2000 },
-    },
-    exists: {
-      errorMessage: "Title is required",
-    },
-  },
-};
+const { getTwitchUserInfo } = require("../service/twitch");
+
+const UPDATE_CONTEST_SCHEMA = require("../schemas/updateContestSchema");
+const CREATE_CONTEST_SCHEMA = require("../schemas/createContestSchema");
 
 router.post(
   "/create",
-  checkSchema(createValidationSchema),
+  checkSchema(CREATE_CONTEST_SCHEMA),
   async (req, res) => {
     if (!req.session.auth) {
       return res.send({ error: "no session" }, 401);
@@ -45,8 +30,21 @@ router.post(
       return res.status(400).json(errors.array());
     }
 
+    for (const key of Object.keys(req.body)) {
+      if (CREATE_CONTEST_SCHEMA[key] === undefined) {
+        return res
+          .status(400)
+          .json({ error: `Bad key bro "${key}"` });
+      }
+    }
+
+    // get twitch data
+    const twitchData = await getTwitchUserInfo(req.body.host);
+    console.log(twitchData);
+
     const body = {
       ...req.body,
+      hostProfileImageUrl: twitchData.profile_image_url,
       createdBy: req.session.auth.id,
       createdAt: admin.database.ServerValue.TIMESTAMP,
     };
@@ -71,44 +69,43 @@ router.post(
   }
 );
 
-// TODO: VALIDATEION CHECK
-// TODO: SECURE ROUTE
-router.patch("/:id", async (req, res) => {
-  // if (!req.session.auth) {
-  //   return res.send({ error: "no session" }, 401);
-  // }
+router.patch(
+  "/:id",
+  checkSchema(UPDATE_CONTEST_SCHEMA),
+  // filterKeys,
+  async (req, res) => {
+    // if (!req.session.auth) {
+    //   return res.send({ error: "no session" }, 401);
+    // }
 
-  const { id } = req.params;
-  const contest = await getContestById(id);
-  const payload = req.body;
+    const errors = validationResult(req);
 
-  const updatedContest = {
-    ...contest.val(),
-    ...payload,
-  };
+    for (const key of Object.keys(req.body)) {
+      if (UPDATE_CONTEST_SCHEMA[key] === undefined) {
+        return res
+          .status(400)
+          .json({ error: `Bad key bro "${key}"` });
+      }
+    }
 
-  await setContestDataById(id, updatedContest);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
+    }
 
-  res.send(updatedContest);
+    const { id } = req.params;
+    const contest = await getContestById(id);
+    const payload = req.body;
 
-  // const contestRef = database.ref("contests
-  // const contestKey = contestRef.key;
-  // database
-  //   .ref(`users/${req.session.auth.id}/contests/${contestKey}`)
-  //   .set(true)
-  //   .then(
-  //     () => {
-  //       // returns an object that contains the contest details
-  //       res.send({
-  //         message: "SUCCESS",
-  //         id: contestKey,
-  //       });
-  //     },
-  //     (errorObject) => {
-  //       console.log("The read failed: " + errorObject.code);
-  //     }
-  //   );
-});
+    const updatedContest = {
+      ...contest.val(),
+      ...payload,
+    };
+
+    await setContestDataById(id, updatedContest);
+
+    res.send(updatedContest);
+  }
+);
 
 router.post("/enter", async (req, res) => {
   if (!req.session.auth) {

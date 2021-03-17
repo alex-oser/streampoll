@@ -10,8 +10,7 @@ const { getMods } = require("../service/chatbot");
 router.get("/user/:name", async (req, res) => {
   try {
     const userInfo = await getTwitchUserInfo(req.params.name);
-    const unwrappedData = userInfo.data[0];
-    res.send(unwrappedData);
+    res.send(userInfo);
   } catch {
     res.send({ error: "no user found" });
   }

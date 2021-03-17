@@ -35,6 +35,7 @@ export const createContest = (data: any) => {
 
 export const updateContest = (id: string, data: any) => {
   return new Promise((resolve, reject) => {
+
     fetch(`/api/contest/${id}`, {
       method: "PATCH",
       credentials: "include",
@@ -42,7 +43,26 @@ export const updateContest = (id: string, data: any) => {
         "Accept": "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        "allowImageLinks": data.allowImageLinks,
+        "description": data.description,
+        "enterAnybody": data.enterAnybody,
+        "enterFollowers": data.enterFollowers,
+        "enterSubcribers": data.enterSubcribers,
+        "enterSubscribers": data.enterSubscribers,
+        "entryEnd": data.entryEnd,
+        "entryStart": data.entryStart,
+        "excludeDescription": data.excludeDescription,
+        "host": data.host,
+        "multipleUploads": data.multipleUploads,
+        "title": data.title,
+        "voteAnybody": data.voteAnybody,
+        "voteEnd": data.voteEnd,
+        "voteFollowers": data.voteFollowers,
+        "voteStart": data.voteStart,
+        "voteSubscribers": data.voteSubscribers,
+        "voteType": data.voteType
+      }),
     })
       .then((res) => res.json())
       .then((res) => {

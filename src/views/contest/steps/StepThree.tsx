@@ -17,7 +17,7 @@ import { useContext } from "react";
 
 import { Context } from "../../../store";
 import * as yup from "yup";
-import { useFormik } from "formik";
+import { FormikValues, useFormik } from "formik";
 import { ProgressBar } from "../../../components/StepProgress";
 import IconCheck from "@material-ui/icons/CheckRounded";
 import IconCross from "@material-ui/icons/Clear";
@@ -29,6 +29,7 @@ import {
 import { TwitchUserData } from "../../../types/TwitchUserData";
 import { UserData } from "../../../types/UserData";
 import { useAuth } from "../../../hooks/useAuth";
+import { Prompt } from "react-router";
 
 const validationSchema = yup.object({
   host: yup
@@ -56,7 +57,9 @@ export const StepThree = (props: any) => {
     },
     validateOnChange: true,
     validationSchema: validationSchema,
-    onSubmit: (values) => {},
+    onSubmit: (values: FormikValues, formikBag: any) => {
+      handleSubmitForm(values);
+    },
   });
 
   useEffect(() => {
@@ -70,13 +73,11 @@ export const StepThree = (props: any) => {
       validateUsername();
       setSelfName(true);
     }
-  }, [formik.values.host])
+  }, [formik.values.host]);
 
-  const canProceed = formik.isValid && formik.dirty;
   const hasErrors = formik.getFieldMeta("host").error != null;
 
   const validateUsername = () => {
-
     if (!formik.isValid && formik.values.host !== "") {
       return;
     }
@@ -101,6 +102,15 @@ export const StepThree = (props: any) => {
       });
   };
 
+  const handleSubmitForm = async (values: any) => {
+    const contestSettings = {
+      ...values,
+      ...state.createSettings,
+    }
+
+    props.onSubmit(contestSettings);
+  };
+
   useEffect(() => {
     if (isFetching && formik.values.host) {
       setSpinner(<CircularProgress />);
@@ -112,8 +122,23 @@ export const StepThree = (props: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);
 
+  // load data test for edit
+  useEffect(() => {
+    if (!props.initialValues) {
+      return;
+    }
+
+    formik.setValues(props.initialValues);
+    formik.validateForm();
+  }, [props.initialValues]);
+
   return (
     <form onSubmit={formik.handleSubmit} style={props.style}>
+      <Prompt
+        message="Are you sure you want to leave?"
+        when={formik.submitCount === 0}
+      />
+
       <div
         style={{
           display: "flex",
@@ -199,43 +224,7 @@ export const StepThree = (props: any) => {
               />
             }
             label="Require Twitch authentication after each login"
-          />
-          <FormControlLabel
-            style={{ color: "#fff" }}
-            control={
-              <Checkbox
-                color="primary"
-                // checked={settings.requireTwitchAuth}
-                onChange={
-                  () => {}
-                  // setSettings({
-                  //   ...settings,
-                  //   requireTwitchAuth: !settings.requireTwitchAuth,
-                  // })
-                }
-                name="enterAnybody"
-              />
-            }
-            label="Require Twitch authentication after each login"
-          />
-          <FormControlLabel
-            style={{ color: "#fff" }}
-            control={
-              <Checkbox
-                color="primary"
-                // checked={settings.requireTwitchAuth}
-                onChange={
-                  () => {}
-                  // setSettings({
-                  //   ...settings,
-                  //   requireTwitchAuth: !settings.requireTwitchAuth,
-                  // })
-                }
-                name="enterAnybody"
-              />
-            }
-            label="Require Twitch authentication after each login"
-          />
+          />   
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Typography color="textPrimary" variant="h6">
@@ -260,18 +249,8 @@ export const StepThree = (props: any) => {
         </div>
       </div>
       <ProgressBar
-        numberOfSteps={4}
-        canProceed={canProceed}
-        onNext={() => {
-          dispatch({
-            type: "SET_CREATE_SETTINGS",
-            payload: {
-              hostProfileImageUrl: hostData.profile_image_url,
-              ...formik.values,
-            },
-          });
-        }}
-        onSubmit={formik.handleSubmit}
+        numberOfSteps={3}       
+        onSubmit={() => {}}
       />
     </form>
   );

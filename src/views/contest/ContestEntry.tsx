@@ -62,9 +62,9 @@ export const ContestEntry = (props: any) => {
   const title = props.title;
   const classes = useStyles();
 
+  // set data on edit
   useEffect(() => {
     formik.setValues(props.initialValues);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.initialValues]);
 
   const formik = useFormik({

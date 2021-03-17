@@ -13,14 +13,15 @@ import {
   DateTimePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import { useContext } from "react";
-import { Context } from "../../../store";
 import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { UserData } from "../../../types/UserData";
 import { useAuth } from "../../../hooks/useAuth";
 import { ProgressBar } from "../../../components/StepProgress";
+import { useContext, useEffect } from "react";
+import { Context } from "../../../store";
+import { Prompt } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +56,8 @@ const validationSchema = yup.object({
 });
 
 export const StepTwo = (props: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [state, dispatch] = useContext(Context);
   const userData: UserData | null = useAuth();
   const classes = useStyles();
 
@@ -70,23 +73,43 @@ export const StepTwo = (props: any) => {
       voteAnybody: true,
       voteSubscribers: false,
       voteFollowers: false,
-      allowImageLinks: false,
+      allowImageLinks: true,
       multipleUploads: false,
       enterSubscribers: false,
       excludeDescription: false,
       voteType: "upvote",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {},
+    onSubmit: (values) => {
+      dispatch({
+        type: "SET_CREATE_SETTINGS",
+        payload: {
+          ...values,
+          ...state.createSettings,
+        }
+      });
+      dispatch({ type: "NEXT_STEP" });
+    },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [state, dispatch] = useContext(Context);
-  const canProceed = formik.isValid && formik.dirty;
+  // load data test for edit
+  useEffect(() => {
+    if (!props.initialValues) {
+      return;
+    }
+    
+    formik.setValues(props.initialValues);
+    formik.validateForm();
+  }, [props.initialValues]);
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <form style={ props.style }>
+      <form style={ props.style } onSubmit={formik.handleSubmit}>
+
+        <Prompt
+          message="Are you sure you want to leave?"
+        />
+
         <Paper className={classes.paper}>
           <Typography color="textPrimary" variant="h6">
             Entry Settings
@@ -334,14 +357,7 @@ export const StepTwo = (props: any) => {
           </Paper>
         </div>
         <ProgressBar
-          numberOfSteps={4}
-          canProceed={canProceed}
-          onNext={() => {
-            dispatch({
-              type: "SET_CREATE_SETTINGS",
-              payload: formik.values,
-            });
-          }}
+          numberOfSteps={3}   
           onSubmit={formik.handleSubmit}
         />
       </form>

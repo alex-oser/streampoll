@@ -10,12 +10,13 @@ import {
 } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
 import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from '@material-ui/icons/Delete';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import DeleteIcon from "@material-ui/icons/Delete";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 export const Polls = (props: any) => {
   const { value, index } = props;
@@ -75,10 +76,6 @@ export const Polls = (props: any) => {
     history.push(`/contest/${contestId}`);
   };
 
-  const handleEdit = (id: any) => {
-    // history.push(`contest/${id}`);
-  };
-
   const handleDelete = (contestId: string, entryId: string) => {
     // fetch(`/api/contest/${contestId}/entry/${entryId}`, {
     //   method: "DELETE",
@@ -89,7 +86,7 @@ export const Polls = (props: any) => {
     //   },
     // })
     // .then(() => getMyEntries());
-  }
+  };
 
   const columns = [
     {
@@ -136,7 +133,13 @@ export const Polls = (props: any) => {
       label: "",
       align: "right",
       format: (row: any) => (
-        <div style={{ display: "flex", flexDirection: "column", width: 48 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: 48,
+          }}
+        >
           <IconButton
             onClick={() => {
               handleView(row.id);
@@ -144,14 +147,12 @@ export const Polls = (props: any) => {
           >
             <ExitToAppIcon />
           </IconButton>
-          <IconButton
-            disabled
-            onClick={() => {
-              handleEdit(row.id);
-            }}
-          >
-            <EditIcon />
-          </IconButton>
+
+          <Link to={`/contest/${row.id}/edit`}>
+            <IconButton>
+              <EditIcon />
+            </IconButton>
+          </Link>
           <IconButton
             disabled
             onClick={() => {
@@ -162,7 +163,7 @@ export const Polls = (props: any) => {
           </IconButton>
         </div>
       ),
-    }
+    },
   ];
 
   const handleChangePage = (event: any, newPage: any) => {

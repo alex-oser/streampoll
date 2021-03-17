@@ -61,8 +61,8 @@ export const ProgressDots = ({
 type ProgressBarProps = {
   numberOfSteps: number;
   onSubmit: Function;
-  onNext: Function;
-  canProceed: boolean;
+  onNext?: Function;
+  canProceed?: boolean;
 };
 
 export const ProgressBar = ({
@@ -80,9 +80,9 @@ export const ProgressBar = ({
       return onSubmit();
     }
 
-    onNext();
+    // onNext();
 
-    dispatch({ type: "NEXT_STEP" });
+    // dispatch({ type: "NEXT_STEP" });
   };
 
   const handlePrev = () => {
@@ -113,7 +113,8 @@ export const ProgressBar = ({
         onClick={handleNext}
         variant="contained"
         color="primary"
-        disabled={!canProceed}
+        type="submit"
+        // disabled={!canProceed}
       >
         {isLastStep ? "Submit" : "Next"}
       </Button>

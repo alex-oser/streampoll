@@ -4,6 +4,7 @@ const initialState: any = {
   stepIndex: 0,
   canProceed: false,
   isAuthed: false,
+  contestEditMode: false,
   createSettings: {}
 };
 
@@ -24,6 +25,11 @@ const Reducer = (state: any, action: { type: any; payload: any; }) => {
         ...state,
         stepIndex: state.stepIndex - 1,
       };
+    case "RESET_CREATE_SETTINGS":
+      return {
+        ...state,
+        createSettings: {}
+      };
     case "SET_CREATE_SETTINGS":
       return {
         ...state,
@@ -33,6 +39,11 @@ const Reducer = (state: any, action: { type: any; payload: any; }) => {
       return {
         ...state,
         canProceed: action.payload
+      };
+    case "SET_CONTEST_EDIT_MODE":
+      return {
+        ...state,
+        contestEditMode: action.payload
       };
     default:
       return state;

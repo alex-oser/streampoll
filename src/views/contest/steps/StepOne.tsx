@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TextField, Typography } from "@material-ui/core";
 import { useContext } from "react";
 import { AppleStyleToggle } from "../../../components/AppleStyleToggle";
@@ -6,6 +6,7 @@ import { Context } from "../../../store";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { ProgressBar } from "../../../components/StepProgress";
+import { Prompt } from "react-router";
 
 const validationSchema = yup.object({
   title: yup
@@ -30,13 +31,31 @@ export const StepOne = React.memo((props: any) => {
       allowImageLinks: true,
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {},
+    onSubmit: (values) => {
+      dispatch({
+        type: "SET_CREATE_SETTINGS",
+        payload: values,
+      });
+      dispatch({ type: "NEXT_STEP" });
+    },
   });
 
-  const canProceed = formik.isValid && formik.dirty;
+  // load data test for edit
+  useEffect(() => {
+    if (!props.initialValues) {
+      return;
+    }
+    
+    formik.setValues(props.initialValues);
+    formik.validateForm();
+  }, [props.initialValues]);
 
   return (
-    <form style={ props.style } onSubmit={formik.handleSubmit}>
+    <form style={props.style} onSubmit={formik.handleSubmit}>
+      <Prompt
+        message="Are you sure you want to leave?"
+      />
+
       <TextField
         color="secondary"
         required
@@ -86,17 +105,7 @@ export const StepOne = React.memo((props: any) => {
         Selecting photo contest will require each submission to have
         an image.
       </Typography>
-      <ProgressBar
-        numberOfSteps={4}
-        canProceed={canProceed}
-        onNext={() => {
-          dispatch({
-            type: "SET_CREATE_SETTINGS",
-            payload: formik.values,
-          });
-        }}
-        onSubmit={formik.handleSubmit}
-      />
+      <ProgressBar numberOfSteps={3} onSubmit={formik.handleSubmit} />
     </form>
   );
 });

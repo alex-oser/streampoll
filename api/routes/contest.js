@@ -7,6 +7,8 @@ const {
   validationResult,
 } = require("express-validator");
 
+const { getContestById, setContestDataById } = require("../service/contests");
+
 const createValidationSchema = {
   title: {
     in: ["body"],
@@ -68,6 +70,45 @@ router.post(
       );
   }
 );
+
+// TODO: VALIDATEION CHECK
+// TODO: SECURE ROUTE
+router.patch("/:id", async (req, res) => {
+  // if (!req.session.auth) {
+  //   return res.send({ error: "no session" }, 401);
+  // }
+
+  const { id } = req.params;
+  const contest = await getContestById(id);
+  const payload = req.body;
+
+  const updatedContest = {
+    ...contest.val(),
+    ...payload,
+  };
+
+  await setContestDataById(id, updatedContest);
+
+  res.send(updatedContest);
+
+  // const contestRef = database.ref("contests
+  // const contestKey = contestRef.key;
+  // database
+  //   .ref(`users/${req.session.auth.id}/contests/${contestKey}`)
+  //   .set(true)
+  //   .then(
+  //     () => {
+  //       // returns an object that contains the contest details
+  //       res.send({
+  //         message: "SUCCESS",
+  //         id: contestKey,
+  //       });
+  //     },
+  //     (errorObject) => {
+  //       console.log("The read failed: " + errorObject.code);
+  //     }
+  //   );
+});
 
 router.post("/enter", async (req, res) => {
   if (!req.session.auth) {

@@ -42,7 +42,6 @@ export const EditContestEntry = (props: any) => {
       .then((res) => {
         setInitialValues(res);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -14,6 +14,10 @@ const core = require("./routes/core");
 const useless = require("./routes/useless");
 const twitch = require("./routes/twitch");
 const contest = require("./routes/contest");
+const {
+  addEntryVote,
+  removeEntryVote,
+} = require("./functions/entryVoting");
 
 const app = express();
 
@@ -64,3 +68,6 @@ exports.tokenRefresh = functions.pubsub
     console.log("This will be run every 60 minutes");
     return null;
   });
+
+exports.addEntryVote = addEntryVote;
+exports.removeEntryVote = removeEntryVote;

@@ -14,6 +14,7 @@ import { NewContestEntry } from "./views/contest/NewContestEntry";
 import { EditContestEntry } from "./views/contest/EditContestEntry";
 import { makeStyles } from "@material-ui/core";
 import { EditContest } from "./views/contest/EditContest";
+import { ViewContestEntry } from "./views/contest/ViewContestEntry";
 // import { usePrompt } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +60,10 @@ const App = () => {
 
         <Route exact path="/contest/:contestId/entry/:entryId/edit">
           <EditContestEntry />
+        </Route>
+
+        <Route exact path="/contest/:contestId/entry/:entryId">
+          <ViewContestEntry />
         </Route>
 
         <Route path="/profile">

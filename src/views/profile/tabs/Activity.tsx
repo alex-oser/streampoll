@@ -52,7 +52,7 @@ export const Activity = (props: any) => {
   ]);
 
   const handleView = (contestId: string, entryId: string) => {
-    history.push(`/contest/${contestId}/entry/${entryId}/edit`);
+    history.push(`/contest/${contestId}/entry/${entryId}`);
   };
 
   const handleEdit = (contestId: string, entryId: string) => {

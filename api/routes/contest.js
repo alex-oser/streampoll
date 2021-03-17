@@ -13,6 +13,9 @@ const {
   createUserEntryReference,
   getUserContestEntries,
   createEntry,
+  getContestEntryById,
+  getUserInfo,
+  addUserEntryVoteReference,
 } = require("../service/contests");
 
 const { getTwitchUserInfo } = require("../service/twitch");
@@ -191,16 +194,16 @@ router.get("/:contestId/entry/count", async (req, res) => {
 // Get details for a specific entry id
 router.get("/:contestId/entry/:entryId", async (req, res) => {
   const { contestId, entryId } = req.params;
-  const ref = database.ref(`entries/${contestId}/${entryId}`);
-  ref.once("value").then(
-    (snapshot) => {
-      // returns an object that contains the contest details
-      res.send(snapshot.val());
-    },
-    (errorObject) => {
-      console.log("The read failed: " + errorObject.code);
-    }
-  );
+  const ref = await getContestEntryById(contestId, entryId);
+  const snapshot = ref.val();
+
+  // get twich data
+  const userInfo = await getUserInfo(snapshot.createdBy);
+
+  res.send({
+    ...snapshot,
+    username: userInfo.val().display_name,
+  });
 });
 
 // edit a specific entry id
@@ -344,6 +347,22 @@ router.post("/entry/list", async (req, res) => {
     // returns a list of objects that contain the contest details
     res.send(JSON.stringify(results));
   });
+});
+
+router.post("/:contestId/:entryId/vote", async (req, res) => {
+  const { contestId, entryId} = req.params;
+
+  await addUserEntryVoteReference({
+    userId: req.session.auth.id,
+    entryId,
+    contestId,
+  });
+
+  res.json(1);
+});
+
+router.delete("/:id/vote", async (req, res) => {
+  // /votes/pijeoigjoij
 });
 
 exports.route = router;

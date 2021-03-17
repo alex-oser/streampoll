@@ -237,7 +237,7 @@ export const StepTwo = (props: any) => {
                 name="multipleUploads"
               />
             }
-            label="Allow for multple entries"
+            label="Allow for multiple entries"
           />
         </Paper>
 

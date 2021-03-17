@@ -1,5 +1,5 @@
 import { useParams, useHistory } from "react-router";
-import { ContestEntry } from "./ContestEntry"
+import { ContestEntry } from "./ContestEntry";
 
 export const NewContestEntry = (props: any) => {
   const params: any = useParams();
@@ -19,16 +19,22 @@ export const NewContestEntry = (props: any) => {
         description: values.description,
         url: values.url,
       }),
-    }).then(() => history.push(`/contest/${params.id}`));
+    })
+      .then((res) => res.json())
+      .then((res) => history.push(`/contest/${params.id}/entry/${res.id}`));
   };
 
   const initialValues = {
     title: "",
     description: "",
     url: "",
-  }
+  };
 
   return (
-    <ContestEntry title="Enter the contest!!!" initialValues={initialValues} handleSubmit={handleSubmit} />
+    <ContestEntry
+      title="Enter the contest!!!"
+      initialValues={initialValues}
+      handleSubmit={handleSubmit}
+    />
   );
 };

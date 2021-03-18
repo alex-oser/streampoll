@@ -19,6 +19,8 @@ const {
   removeEntryVote,
 } = require("./functions/entryVoting");
 
+const { tokenRefresh } = require("./functions/tokenRefresh");
+
 const app = express();
 
 app.use(
@@ -62,12 +64,6 @@ exports.countEntries = functions.database
   });
 
 // handle token refresh logic with a cron function
-exports.tokenRefresh = functions.pubsub
-  .schedule("every 60 minutes")
-  .onRun((context) => {
-    console.log("This will be run every 60 minutes");
-    return null;
-  });
-
+exports.tokenRefresh = tokenRefresh;
 exports.addEntryVote = addEntryVote;
 exports.removeEntryVote = removeEntryVote;

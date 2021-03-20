@@ -2,29 +2,29 @@ const express = require("express");
 const router = express.Router();
 const admin = require("firebase-admin");
 const database = admin.database();
+const {
+  getUserInfo,
+} = require("../service/users");
+
 
 router.get("/", async (req, res) => {
   if (!req.session.auth) {
     return res.send({ error: "no session" }, 401);
   }
 
-  // get the user profile from the db
-  const ref = database.ref("users/" + req.session.auth.id);
-  ref.once("value").then(
-    (snapshot) => {
-      const data = snapshot.val();
-      return res.send({
-        username: data["display_name"],
-        photoUrl: data["profile_image_url"],
-        id: data["id"],
-        email: data["email"],
-        settings: data.settings,
-      });
-    },
-    (errorObject) => {
-      console.log("The read failed: " + errorObject.code);
-    }
-  );
+  const snapshot = await getUserInfo(`${req.session.auth.id}/twitch`);
+  if (snapshot.exists()) {
+    const data = snapshot.val();
+    return res.send({
+      username: data["display_name"],
+      photoUrl: data["profile_image_url"],
+      id: data["id"],
+      email: data["email"],
+      settings: data.settings,
+    });
+  } else {
+    return res.status(401).send(`No such user ID: ${req.session.auth.id}`);
+  }
 });
 
 // Get all contests associated to a user

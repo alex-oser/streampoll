@@ -40,7 +40,7 @@ const getTwitchAuthToken = async (code) => {
  * @param {string} token - An ouath token
  * @return {string} test
  */
-const getTwitchUserdata = async (token) => {
+const getTwitchUserData = async (token) => {
   const response = await got({
     url: TWITCH_API_URL,
     method: "GET",
@@ -55,4 +55,4 @@ const getTwitchUserdata = async (token) => {
 };
 
 exports.getTwitchAuthToken = getTwitchAuthToken;
-exports.getTwitchUserdata = getTwitchUserdata;
+exports.getTwitchUserData = getTwitchUserData;

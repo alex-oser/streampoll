@@ -73,6 +73,10 @@ export const ViewContest = (props: any) => {
       });
   }, []);
 
+  const viewEntries = () => {
+    history.push(`/contest/${params.id}/entries`);
+  };
+
   const enterContest = () => {
     history.push(`/contest/${params.id}/enter`);
   };
@@ -207,6 +211,16 @@ export const ViewContest = (props: any) => {
               You have already entered this contest.
             </Typography>
           )}
+          <Button
+            onClick={() => viewEntries()}
+            variant="contained"
+            color="primary"
+            style={{ display: "flex", margin: "auto" }}
+          >
+            <Typography color="textPrimary" variant="h5">
+              View Entries
+            </Typography>
+          </Button>
 
           <Button
             onClick={() => enterContest()}

@@ -15,7 +15,6 @@ import {
 import Skeleton from "@material-ui/lab/Skeleton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
@@ -66,10 +65,6 @@ export const Activity = (props: any) => {
       edit: <Skeleton height={height} />,
     },
   ]);
-
-  const handleView = (contestId: string, entryId: string) => {
-    history.push(`/contest/${contestId}/entry/${entryId}`);
-  };
 
   const handleEdit = (contestId: string, entryId: string) => {
     history.push(`/contest/${contestId}/entry/${entryId}/edit`);

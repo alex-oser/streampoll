@@ -57,7 +57,6 @@ exports.countEntries = functions.database
       `/contests/${contestId}/entryCount`
     );
     countRef.transaction((count) => {
-      console.log("******COUNTER UPDATED******");
       return (count || 0) + 1;
     });
     return "Counter updated.";

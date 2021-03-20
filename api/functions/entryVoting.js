@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 const database = admin.database();
 
 const addEntryVote = functions.database
-  .ref("/users/{userId}/votes/{contestId}/{entryId}")
+  .ref("/votes/{contestId}/{entryId}")
   .onCreate((snapshot, context) => {
     const { entryId, contestId } = context.params;
     const countRef = database.ref(
@@ -14,15 +14,23 @@ const addEntryVote = functions.database
     });
   });
 
+const getVoteCount = (contestId, entryId) => {
+  return database
+    .ref(`/entries/${contestId}/${entryId}/voteCount`)
+    .once("value");
+};
 const removeEntryVote = functions.database
-  .ref("/users/{userId}/votes/{contestId}/{entryId}")
+  .ref("/votes/{contestId}/{entryId}")
   .onDelete((snapshot, context) => {
     const { entryId, contestId } = context.params;
     const countRef = database.ref(
       `/entries/${contestId}/${entryId}/voteCount`
     );
     countRef.transaction((count) => {
-      return (count || 0) - 1;
+      if (count) {
+        return count - 1;
+      }
+      return null;
     });
   });
 

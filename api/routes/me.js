@@ -33,17 +33,12 @@ router.get("/contests", async (req, res) => {
     return res.send({ error: "no session" }, 401);
   }
 
-  const ref = database.ref(`users/${req.session.auth.id}/contests`);
-  ref.once("value").then(
-    (snapshot) => {
-      const contests = snapshot.val();
-      // returns a list of strings with contest ids or an empty list
-      return res.send(Object.keys(contests));
-    },
-    (errorObject) => {
-      console.log("The read failed: " + errorObject.code);
-    }
-  );
+  const contestsRef = await getUserInfo(`${req.session.auth.id}/contests`);
+  if (!contestsRef.exists()) {
+    return res.send([]);
+  }
+  const contestIds = contestsRef.val();
+  return res.send(Object.keys(contestIds));
 });
 
 // Get all entries associated to a user

@@ -1,4 +1,8 @@
-import { IconButton, makeStyles, Typography } from "@material-ui/core";
+import {
+  IconButton,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import {
   Table,
   TableBody,
@@ -14,14 +18,13 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
-import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
     fontWeight: "bold",
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
   },
 }));
 
@@ -49,12 +52,24 @@ export const Polls = (props: any) => {
     },
   ]);
 
+  const getMyContests = () => {
+    fetch("/api/me/contests", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!res.error) {
+          const contestIds = res;
+          getContestsData(contestIds);
+        }
+      });
+  };
   const getContestsData = (contests: any) => {
     fetch("/api/contest/list", {
       method: "POST",
       credentials: "include",
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(contests),
@@ -67,28 +82,18 @@ export const Polls = (props: any) => {
 
   // On page load fetch contests the authenticated user has created
   useEffect(() => {
-    fetch("/api/me/contests", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.error) {
-          const contestIds = res;
-          getContestsData(contestIds);
-        }
-      });
+    getMyContests();
   }, []);
 
-  const handleDelete = (contestId: string, entryId: string) => {
-    // fetch(`/api/contest/${contestId}/entry/${entryId}`, {
-    //   method: "DELETE",
-    //   credentials: "include",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    // .then(() => getMyEntries());
+  const handleDelete = (contestId: string) => {
+    fetch(`/api/contest/${contestId}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then(() => getMyContests());
   };
 
   const columns = [
@@ -151,9 +156,8 @@ export const Polls = (props: any) => {
             </IconButton>
           </Link>
           <IconButton
-            disabled
             onClick={() => {
-              handleDelete(row, row);
+              handleDelete(row.id);
             }}
           >
             <DeleteIcon />

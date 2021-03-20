@@ -6,21 +6,20 @@ const {
   checkSchema,
   validationResult,
 } = require("express-validator");
-
 const {
   getContestById,
   setContestDataById,
-  createUserEntryReference,
-  getUserContestEntries,
   createEntry,
   getContestEntryById,
-  getUserInfo,
-  addUserEntryVoteReference,
   getEntriesByContestId,
 } = require("../service/contests");
-
+const { deleteData } = require("../service/deletions");
+const {
+  getVoteReference,
+  setVoteReference,
+} = require("../service/votes");
+const { getUserInfo, setUserInfo } = require("../service/users");
 const { getTwitchUserInfo } = require("../service/twitch");
-
 const UPDATE_CONTEST_SCHEMA = require("../schemas/updateContestSchema");
 const CREATE_CONTEST_SCHEMA = require("../schemas/createContestSchema");
 
@@ -130,26 +129,21 @@ router.post("/enter", async (req, res) => {
 
   // if multipleUploads is turned on then don't allow more than 1 uploads
   if (!constest.val().multipleUploads) {
-    const entries = await getUserContestEntries(
-      req.session.auth.id,
-      contestId
+    const entries = await getUserInfo(
+      `${req.session.auth.id}/entries/${contestId}`
     );
-
-    if (entries.exists() && Object.keys(entries.val()).length >= 1) {
-      return res
-        .status(403)
-        .json({
-          error: "multipleUploads is not enabled for this contest",
-        });
+    if (entries.exists() && Object.keys(entries.val()).length > 0) {
+      return res.status(403).json({
+        error: "multipleUploads is not enabled for this contest",
+      });
     }
   }
 
   const entryId = await createEntry(contestId, entryBody);
   // get a user's current contest entries
-  await createUserEntryReference(
-    req.session.auth.id,
-    contestId,
-    entryId
+  await setUserInfo(
+    `${req.session.auth.id}/entries/${contestId}/${entryId}`,
+    true
   );
 
   res.send({
@@ -198,8 +192,8 @@ router.get("/:contestId/entry/:entryId", async (req, res) => {
   const ref = await getContestEntryById(contestId, entryId);
   const snapshot = ref.val();
 
-  // get twich data
-  const userInfo = await getUserInfo(snapshot.createdBy);
+  // get twitch data
+  const userInfo = await getUserInfo(`${snapshot.createdBy}/twitch`);
 
   res.send({
     ...snapshot,
@@ -236,21 +230,49 @@ router.delete("/:contestId", async (req, res) => {
   if (!req.session.auth) {
     return res.send({ error: "no session" }, 401);
   }
-  const { contestId, entryId } = req.params;
-  const updates = {
-    [`users/${req.session.auth.id}/entries/${contestId}/${entryId}`]: null,
-    [`entries/${contestId}/${entryId}`]: null,
-  };
-  const entryRef = database.ref();
-  entryRef.update(updates).then(
-    () => {
-      console.log("just deleted that old record");
-      res.send("DELETED");
-    },
-    (errorObject) => {
-      console.log("The write failed: " + errorObject.code);
-    }
+  const { contestId } = req.params;
+  const isOwnerRef = await getUserInfo(
+    `${req.session.auth.id}/contests/${contestId}`
   );
+  if (!isOwnerRef.exists()) {
+    console.log(`users/${req.session.auth.id}/contests/${contestId}`);
+    return res
+      .status(403)
+      .send("You are not the owner of this contest.");
+  }
+
+  const entries = await getEntriesByContestId(contestId);
+  const entriesCleanup = {};
+  if (entries.exists()) {
+    Object.values(entries.val()).map((entry) => {
+      entriesCleanup[
+        `users/${entry.createdBy}/entries/${contestId}`
+      ] = null;
+    });
+  }
+
+  const votes = await getVoteReference(contestId);
+  const votesCleanup = {};
+  if (votes.exists()) {
+    Object.values(votes.val()).map((entry) => {
+      const userId = Object.keys(entry)[0];
+      votesCleanup[
+        `users/${userId}/votes/${contestId}`
+      ] = null;
+    });
+  }
+
+  const deletions = {
+    [`entries/${contestId}`]: null,
+    [`votes/${contestId}`]: null,
+    [`users/${req.session.auth.id}/contests/${contestId}`]: null,
+    [`contests/${contestId}`]: null,
+    ...entriesCleanup,
+    ...votesCleanup,
+  };
+  await deleteData(deletions);
+
+  return res.send("DELETED");
 });
 
 // delete a specific entry id
@@ -351,30 +373,32 @@ router.post("/entry/list", async (req, res) => {
 });
 
 router.post("/:contestId/:entryId/vote", async (req, res) => {
-  const { contestId, entryId} = req.params;
+  const { contestId, entryId } = req.params;
 
-  await addUserEntryVoteReference({
-    userId: req.session.auth.id,
-    entryId,
-    contestId,
-  });
-
+  await setUserInfo(
+    `${req.session.auth.id}/votes/${contestId}/${entryId}`,
+    true
+  );
+  await setVoteReference(
+    `${contestId}/${entryId}/${req.session.auth.id}`
+  );
   res.json(1);
 });
 
-router.delete("/:id/vote", async (req, res) => {
+router.delete("/:contestId/:entryId/vote", async (req, res) => {
   // /votes/pijeoigjoij
 });
-
 
 router.get("/:contestId/entries", async (req, res) => {
   const ref = await getEntriesByContestId(req.params.contestId);
 
   const rawValue = ref.val();
-  const formattedResponse = Object.entries(rawValue).map(([k, v]) => ({
-    ...v,
-    entryId: k,
-  }));
+  const formattedResponse = Object.entries(rawValue).map(
+    ([k, v]) => ({
+      ...v,
+      entryId: k,
+    })
+  );
 
   res.json(formattedResponse);
 });

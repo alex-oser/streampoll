@@ -20,36 +20,9 @@ const createEntry = (id, data) => {
   return entryRef.key;
 };
 
-const createUserEntryReference = (userId, contestId, entryId) => {
-  const userEntryRef = database.ref(
-    `users/${userId}/entries/${contestId}/${entryId}`
-  );
-
-  userEntryRef.set(true);
-};
-
-const getUserContestEntries = (userId, contestId) => {
-  return database
-    .ref(`users/${userId}/entries/${contestId}`)
-    .once("value");
-};
-
 const addEntryVote = (contestId, entryId, data) => {
   const ref = database.ref(`votes/${contestId}/${entryId}`).set(data);
   return ref.key;
-};
-
-const addUserEntryVoteReference = (config) => {
-  const { userId, entryId, contestId } = config;
-  return database
-    .ref(`users/${userId}/votes/${contestId}/${entryId}`)
-    .set(true);
-};
-
-const getUserInfo = (userId) => {
-  return database
-    .ref(`users/${userId}`)
-    .once("value");
 };
 
 const getEntriesByContestId = (contestId) => {
@@ -62,11 +35,7 @@ module.exports = {
   getContestById,
   setContestDataById,
   createEntry,
-  createUserEntryReference,
-  getUserContestEntries,
   addEntryVote,
-  addUserEntryVoteReference,
   getContestEntryById,
-  getUserInfo,
   getEntriesByContestId,
 };

@@ -1,4 +1,4 @@
-import { IconButton, Typography } from "@material-ui/core";
+import { IconButton, makeStyles, Typography } from "@material-ui/core";
 import {
   Table,
   TableBody,
@@ -11,19 +11,26 @@ import {
 import Skeleton from "@material-ui/lab/Skeleton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
+const useStyles = makeStyles((theme) => ({
+  link: {
+    textDecoration: "none",
+    fontWeight: "bold",
+    color: theme.palette.primary.contrastText
+  },
+}));
+
 export const Polls = (props: any) => {
   const { value, index } = props;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const history = useHistory();
   const height = 69;
+  const classes = useStyles();
   const [rows, setRows] = useState<any>([
     {
       title: <Skeleton height={height} />,
@@ -72,10 +79,6 @@ export const Polls = (props: any) => {
       });
   }, []);
 
-  const handleView = (contestId: string) => {
-    history.push(`/contest/${contestId}`);
-  };
-
   const handleDelete = (contestId: string, entryId: string) => {
     // fetch(`/api/contest/${contestId}/entry/${entryId}`, {
     //   method: "DELETE",
@@ -101,14 +104,16 @@ export const Polls = (props: any) => {
             alt="contest host"
           />
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="h6">Hosted by {row.host}</Typography>
-            <Typography variant="subtitle1">{row.title}</Typography>
+            <Link className={classes.link} to={`/contest/${row.id}`}>
+              <Typography variant="h6">{row.title}</Typography>
+            </Link>
             <Typography
               variant="subtitle2"
               style={{ whiteSpace: "pre-line" }}
             >
               {row.description.substr(0, 255)}
             </Typography>
+            {/* <Typography variant="body2">Hosted by {row.host}</Typography> */}
           </div>
         </div>
       ),
@@ -140,14 +145,6 @@ export const Polls = (props: any) => {
             width: 48,
           }}
         >
-          <IconButton
-            onClick={() => {
-              handleView(row.id);
-            }}
-          >
-            <ExitToAppIcon />
-          </IconButton>
-
           <Link to={`/contest/${row.id}/edit`}>
             <IconButton>
               <EditIcon />

@@ -5,10 +5,10 @@ const initialState: any = {
   canProceed: false,
   isAuthed: false,
   contestEditMode: false,
-  createSettings: {}
+  createSettings: {},
 };
 
-const Reducer = (state: any, action: { type: any; payload: any; }) => {
+const Reducer = (state: any, action: { type: any; payload: any }) => {
   switch (action.type) {
     case "RESET_STEP":
       return {
@@ -28,22 +28,26 @@ const Reducer = (state: any, action: { type: any; payload: any; }) => {
     case "RESET_CREATE_SETTINGS":
       return {
         ...state,
-        createSettings: {}
+        createSettings: {},
       };
     case "SET_CREATE_SETTINGS":
+      console.log("SET_CREATE_SETTINGS", action.payload);
       return {
         ...state,
-        createSettings: { ...state.createSettings, ...action.payload }
+        createSettings: {
+          ...state.createSettings,
+          ...action.payload,
+        },
       };
     case "SET_CAN_PROCEED":
       return {
         ...state,
-        canProceed: action.payload
+        canProceed: action.payload,
       };
     case "SET_CONTEST_EDIT_MODE":
       return {
         ...state,
-        contestEditMode: action.payload
+        contestEditMode: action.payload,
       };
     default:
       return state;
@@ -53,7 +57,9 @@ const Reducer = (state: any, action: { type: any; payload: any; }) => {
 const Store = ({ children }: { children: React.ReactChild }) => {
   const [state, dispatch] = useReducer(Reducer, initialState);
   return (
-    <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
+    <Context.Provider value={[state, dispatch]}>
+      {children}
+    </Context.Provider>
   );
 };
 

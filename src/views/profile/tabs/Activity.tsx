@@ -1,4 +1,8 @@
-import { IconButton, Typography } from "@material-ui/core";
+import {
+  IconButton,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import {
   Table,
   TableBody,
@@ -10,13 +14,24 @@ import {
 } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
 import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from '@material-ui/icons/Delete';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import DeleteIcon from "@material-ui/icons/Delete";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useEffect } from "react";
 import { useState } from "react";
 import { TabPanel } from "./TabPanel";
 import { ContestStatus } from "../../../components/ContestStatus";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
+  link: {
+    textDecoration: "none",
+    fontWeight: "bold",
+    display: "flex",
+    alignItems: "center",
+    color: theme.palette.primary.contrastText,
+  },
+}));
 
 export const Activity = (props: any) => {
   const { value, index } = props;
@@ -24,6 +39,7 @@ export const Activity = (props: any) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const history = useHistory();
   const height = 69;
+  const classes = useStyles();
   const [rows, setRows] = useState<any>([
     {
       title: <Skeleton height={height} />,
@@ -67,9 +83,8 @@ export const Activity = (props: any) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    })
-    .then(() => getMyEntries());
-  }
+    }).then(() => getMyEntries());
+  };
 
   const columns = [
     {
@@ -77,23 +92,24 @@ export const Activity = (props: any) => {
       label: "Contest",
       style: { minWidth: 100, verticalAlign: "top" },
       format: (row: any) => (
-        <div style={{ display: "flex" }}>
-          <img
-            src={row.contest.hostProfileImageUrl}
-            style={{ height: 100, paddingRight: 16 }}
-            alt="contest host"
-          />
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="h6">
-              Hosted by {row.contest.host}
-            </Typography>
-            <Typography variant="subtitle1">
-              {row.entry.title}
-            </Typography>
-            <Typography variant="subtitle2">
-              {row.entry.description.substr(0, 255)}
-            </Typography>
-          </div>
+        <div style={{ display: "flex"}}>
+          <Link
+            className={classes.link}
+            to={`/contest/${row.contest.id}/entry/${row.entry.id}`}
+          >
+            <img
+              src={row.contest.hostProfileImageUrl}
+              style={{ height: 100, paddingRight: 16 }}
+              alt="contest host"
+            />
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <Typography variant="h6">{row.entry.title}</Typography>
+
+              <Typography variant="subtitle2">
+                {row.entry.description.substr(0, 255)}
+              </Typography>
+            </div>
+          </Link>
         </div>
       ),
     },
@@ -115,14 +131,13 @@ export const Activity = (props: any) => {
       label: "",
       align: "right",
       format: (row: any) => (
-        <div style={{ display: "flex", flexDirection: "column", width: 50 }}>
-          <IconButton
-            onClick={() => {
-              handleView(row.contest.id, row.entry.id);
-            }}
-          >
-            <ExitToAppIcon />
-          </IconButton>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: 50,
+          }}
+        >
           <IconButton
             onClick={() => {
               handleEdit(row.contest.id, row.entry.id);
@@ -139,7 +154,7 @@ export const Activity = (props: any) => {
           </IconButton>
         </div>
       ),
-    }
+    },
   ];
 
   const handleChangePage = (event: any, newPage: any) => {
@@ -151,18 +166,18 @@ export const Activity = (props: any) => {
     setPage(0);
   };
 
-  const getMyEntries = (() => {
+  const getMyEntries = () => {
     fetch("/api/me/entries", {
       credentials: "include",
     })
-    .then((res) => res.json())
-    .then((res) => {
-      if (!res.error) {
-        const entries = res;
-        getEntriesData(entries);
-      }
-    });
-  })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!res.error) {
+          const entries = res;
+          getEntriesData(entries);
+        }
+      });
+  };
 
   const getEntriesData = (entries: any) => {
     fetch("/api/contest/entry/list", {
@@ -183,7 +198,6 @@ export const Activity = (props: any) => {
   // On page load fetch contests the authenticated user has created
   useEffect(() => {
     getMyEntries();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

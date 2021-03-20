@@ -37,7 +37,7 @@ export const Footer = () => {
   }, []);
 
   return (
-    <div style={{ display: "flex" }} className="footer">
+    <div style={{ display: "flex", alignItems: "center" }} className="footer">
       <TinyLittleGuyWhoHasAReallyLongComponentNameDontYouWorryBud style={{ background: COLOR_STATES[buildState.status ]}} />
       <div>{build}</div>
     </div>

@@ -14,7 +14,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns"; // choose your lib
-import { useFormik } from "formik";
+import { FormikValues, useFormik } from "formik";
 import * as yup from "yup";
 import { UserData } from "../../../types/UserData";
 import { useAuth } from "../../../hooks/useAuth";
@@ -74,19 +74,17 @@ export const StepTwo = (props: any) => {
       voteSubscribers: false,
       voteFollowers: false,
       allowImageLinks: true,
-      multipleUploads: false,
+      multipleUploads: true,
       enterSubscribers: false,
       excludeDescription: false,
       voteType: "upvote",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values: FormikValues) => {
+      console.log('v', values)
       dispatch({
         type: "SET_CREATE_SETTINGS",
-        payload: {
-          ...values,
-          ...state.createSettings,
-        }
+        payload: values,
       });
       dispatch({ type: "NEXT_STEP" });
     },
@@ -215,7 +213,7 @@ export const StepTwo = (props: any) => {
             }
             label="Exclude description from submissions"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             style={{ width: "100%" }}
             control={
               <Checkbox
@@ -226,7 +224,7 @@ export const StepTwo = (props: any) => {
               />
             }
             label="Allow images as imgur links"
-          />
+          /> */}
           <FormControlLabel
             style={{ width: "100%" }}
             control={

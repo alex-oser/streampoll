@@ -42,7 +42,7 @@ export const ViewContestEntry = (props: any) => {
   return (
     <div className={baseClasses.layout}>
       <Typography variant="h5">{entryData.title}</Typography>
-      <Typography variant="body2">{entryData.description}</Typography>
+      <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>{entryData.description}</Typography>
       {entryData?.url && (
         <div
           style={{

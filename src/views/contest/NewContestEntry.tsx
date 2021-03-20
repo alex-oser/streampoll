@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
+import { getContestById } from "../../service/contests";
 import { ContestEntry } from "./ContestEntry";
 
 export const NewContestEntry = (props: any) => {
   const params: any = useParams();
   const history = useHistory();
+  const [contestData, setContestData] = useState<any>();
 
   const handleSubmit = (values: any) => {
     fetch("/api/contest/enter", {
@@ -30,10 +33,16 @@ export const NewContestEntry = (props: any) => {
     url: "",
   };
 
+  useEffect(() => {
+    getContestById(params.id)
+    .then(res => setContestData(res))
+  }, []);
+
   return (
     <ContestEntry
       title="Enter the contest!!!"
       initialValues={initialValues}
+      contestData={contestData}
       handleSubmit={handleSubmit}
     />
   );

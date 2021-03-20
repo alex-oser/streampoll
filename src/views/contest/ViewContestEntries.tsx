@@ -26,7 +26,7 @@ export const ViewContestEntries = (props: any) => {
       {allEntries.map((entry: any) => (
         <Paper key={entry.entryId}>
           <Typography variant="h5">{entry.title}</Typography>
-          <Typography variant="body2">{entry.description}</Typography>    
+          <Typography variant="body2" style={{ whiteSpace: "pre-line" }}>{entry.description}</Typography>    
         </Paper>
       ))}
     </div>

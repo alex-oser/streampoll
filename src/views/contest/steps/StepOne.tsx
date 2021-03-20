@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AppleStyleToggle } from "../../../components/AppleStyleToggle";
 import { Context } from "../../../store";
 import * as yup from "yup";
-import { useFormik } from "formik";
+import { FormikValues, useFormik } from "formik";
 import { ProgressBar } from "../../../components/StepProgress";
 import { Prompt } from "react-router";
 
@@ -31,7 +31,8 @@ export const StepOne = React.memo((props: any) => {
       allowImageLinks: true,
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values: FormikValues) => {
+      console.log(values);
       dispatch({
         type: "SET_CREATE_SETTINGS",
         payload: values,

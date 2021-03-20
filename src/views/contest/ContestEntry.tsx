@@ -75,6 +75,8 @@ export const ContestEntry = (props: any) => {
     },
   });
 
+  console.log(props.contestData);
+
   return (
     <form className={classes.layout} onSubmit={formik.handleSubmit}>
       <Typography
@@ -118,19 +120,21 @@ export const ContestEntry = (props: any) => {
           formik.touched.description && formik.errors.description
         }
       />
-      <TextField
-        color="secondary"
-        style={{ paddingBottom: 10 }}
-        id="url"
-        name="url"
-        label="Imgur Link"
-        value={formik.values.url}
-        fullWidth
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        error={formik.touched.url && Boolean(formik.errors.url)}
-        helperText={formik.touched.url && formik.errors.url}
-      />
+      {props.contestData?.allowImageLinks && (
+        <TextField
+          color="secondary"
+          style={{ paddingBottom: 10 }}
+          id="url"
+          name="url"
+          label="Imgur Link"
+          value={formik.values.url}
+          fullWidth
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          error={formik.touched.url && Boolean(formik.errors.url)}
+          helperText={formik.touched.url && formik.errors.url}
+        />
+      )}
       {!Boolean(formik.errors.url) && formik.values.url ? (
         <div
           style={{

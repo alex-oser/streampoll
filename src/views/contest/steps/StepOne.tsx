@@ -28,11 +28,10 @@ export const StepOne = React.memo((props: any) => {
     initialValues: {
       title: "",
       description: "",
-      allowImageLinks: true,
+      allowImageLinks: false,
     },
     validationSchema: validationSchema,
     onSubmit: (values: FormikValues) => {
-      console.log(values);
       dispatch({
         type: "SET_CREATE_SETTINGS",
         payload: values,

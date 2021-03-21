@@ -73,7 +73,6 @@ export const StepTwo = (props: any) => {
       voteAnybody: true,
       voteSubscribers: false,
       voteFollowers: false,
-      allowImageLinks: true,
       multipleUploads: true,
       enterSubscribers: false,
       excludeDescription: false,
@@ -81,7 +80,6 @@ export const StepTwo = (props: any) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values: FormikValues) => {
-      console.log('v', values)
       dispatch({
         type: "SET_CREATE_SETTINGS",
         payload: values,
@@ -96,7 +94,12 @@ export const StepTwo = (props: any) => {
       return;
     }
     
-    formik.setValues(props.initialValues);
+    // formik.setValues(props.initialValues);
+    for (const key of Object.keys(formik.values)) {
+      const val = props.initialValues[key];
+      formik.setFieldValue(key, val);
+    }
+
     formik.validateForm();
   }, [props.initialValues]);
 
@@ -213,18 +216,6 @@ export const StepTwo = (props: any) => {
             }
             label="Exclude description from submissions"
           />
-          {/* <FormControlLabel
-            style={{ width: "100%" }}
-            control={
-              <Checkbox
-                color="primary"
-                checked={formik.values.allowImageLinks}
-                onChange={formik.handleChange}
-                name="allowImageLinks"
-              />
-            }
-            label="Allow images as imgur links"
-          /> */}
           <FormControlLabel
             style={{ width: "100%" }}
             control={

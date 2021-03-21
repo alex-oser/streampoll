@@ -1,4 +1,4 @@
-import { createStyles, makeStyles } from "@material-ui/core";
+import { createStyles, darken, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -7,6 +7,18 @@ const useStyles = makeStyles((theme) =>
         boxSizing: "border-box",
         background: theme.palette.background.default,
       },
+      '*::-webkit-scrollbar': {
+        width: 10
+      },
+      '*::-webkit-scrollbar-track': {
+        // '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+        backgroundColor: darken(theme.palette.background.default, 0.1),
+        borderRadius: 4,
+      },
+      '*::-webkit-scrollbar-thumb': {
+        backgroundColor: theme.palette.primary.main,
+        borderRadius: 4,
+      }
     },
   })
 );

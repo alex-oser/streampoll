@@ -24,11 +24,16 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   link: {
-    textDecoration: "none",
-    fontWeight: "bold",
-    display: "flex",
-    alignItems: "center",
-    color: theme.palette.primary.contrastText,
+    "textDecoration": "none",
+    "fontWeight": "bold",
+    "display": "flex",
+    "color": theme.palette.primary.contrastText,
+  },
+  hover: {
+    "&:hover": {
+      textDecoration: "underline",
+      cursor: "pointer"
+    },
   },
 }));
 
@@ -75,7 +80,7 @@ export const Activity = (props: any) => {
       method: "DELETE",
       credentials: "include",
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
       },
     }).then(() => getMyEntries());
@@ -87,7 +92,7 @@ export const Activity = (props: any) => {
       label: "Contest",
       style: { minWidth: 100, verticalAlign: "top" },
       format: (row: any) => (
-        <div style={{ display: "flex"}}>
+        <div style={{ display: "flex" }}>
           <Link
             className={classes.link}
             to={`/contest/${row.contest.id}/entry/${row.entry.id}`}
@@ -179,7 +184,7 @@ export const Activity = (props: any) => {
       method: "POST",
       credentials: "include",
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(entries),
@@ -234,6 +239,7 @@ export const Activity = (props: any) => {
                             key={column.id + "-" + index}
                             align={column.align}
                             style={column.style}
+                            className={classes.hover}
                           >
                             {column.format &&
                             typeof value !== "object"

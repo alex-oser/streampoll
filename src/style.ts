@@ -41,7 +41,7 @@ export const useBaseStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "start",
     [theme.breakpoints.down("sm")]: {
-      width: "90%",
+      width: "95%",
     },
     [theme.breakpoints.up("md")]: {
       width: "60%",
@@ -55,5 +55,15 @@ export const useBaseStyles = makeStyles((theme) => ({
     background: "none",
     border: "none",
     boxShadow: "none",
+  },
+  link: {
+    "textDecoration": "none",
+    "fontWeight": "bold",
+    "display": "flex",
+    "color": theme.palette.primary.contrastText,
+    "&:hover": {
+      textDecoration: "underline",
+      cursor: "pointer"
+    },
   },
 }));

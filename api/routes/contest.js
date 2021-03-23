@@ -113,16 +113,12 @@ router.patch(
   }
 );
 
-router.post("/enter", async (req, res) => {
+// Create new contest entry
+router.post("/:contestId/enter", async (req, res) => {
   if (!req.session.auth) {
     return res.send({ error: "no session" }, 401);
   }
-  const contestId = req.body.contestId;
-  const entryBody = {
-    ...req.body,
-    createdBy: req.session.auth.id,
-    createdAt: admin.database.ServerValue.TIMESTAMP,
-  };
+  const contestId = req.params.contestId;
 
   // get the contest metadata
   const constest = await getContestById(contestId);
@@ -138,6 +134,16 @@ router.post("/enter", async (req, res) => {
       });
     }
   }
+
+  const usernameRef = await getUserInfo(
+    `${req.session.auth.id}/twitch/display_name`
+  );
+  const entryBody = {
+    ...req.body,
+    createdBy: req.session.auth.id,
+    createdByName: usernameRef.val(),
+    createdAt: admin.database.ServerValue.TIMESTAMP,
+  };
 
   const entryId = await createEntry(contestId, entryBody);
   // get a user's current contest entries
@@ -256,9 +262,7 @@ router.delete("/:contestId", async (req, res) => {
   if (votes.exists()) {
     Object.values(votes.val()).map((entry) => {
       const userId = Object.keys(entry)[0];
-      votesCleanup[
-        `users/${userId}/votes/${contestId}`
-      ] = null;
+      votesCleanup[`users/${userId}/votes/${contestId}`] = null;
     });
   }
 
@@ -374,19 +378,29 @@ router.post("/entry/list", async (req, res) => {
 
 router.post("/:contestId/:entryId/vote", async (req, res) => {
   const { contestId, entryId } = req.params;
-
+  const userInfo = await getUserInfo(`${req.session.auth.id}/votes/${contestId}/${entryId}`);
+  // If user has already voted, delete the vote (since only upvote is currently supported)
+  const value = userInfo.exists() ? null : true;
+  console.log("SETTING VOTES TO", value);
   await setUserInfo(
     `${req.session.auth.id}/votes/${contestId}/${entryId}`,
-    true
+    value
   );
   await setVoteReference(
-    `${contestId}/${entryId}/${req.session.auth.id}`
+    `${contestId}/${entryId}/${req.session.auth.id}`,
+    value
   );
   res.json(1);
 });
 
-router.delete("/:contestId/:entryId/vote", async (req, res) => {
-  // /votes/pijeoigjoij
+router.get("/:contestId/votes/me", async (req, res) => {
+  if (!req.session.auth) {
+    return res.json({});
+  }
+  const contestId = req.params.contestId;
+  const votes = await getUserInfo(`/${req.session.auth.id}/votes/${contestId}`);
+  console.log(votes.val());
+  return res.json(votes.val());
 });
 
 router.get("/:contestId/entries", async (req, res) => {

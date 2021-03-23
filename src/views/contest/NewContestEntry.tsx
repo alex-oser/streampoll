@@ -9,7 +9,7 @@ export const NewContestEntry = (props: any) => {
   const [contestData, setContestData] = useState<any>();
 
   const handleSubmit = (values: any) => {
-    fetch("/api/contest/enter", {
+    fetch(`/api/contest/${params.id}/enter`, {
       method: "POST",
       credentials: "include",
       headers: {

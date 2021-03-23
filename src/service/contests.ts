@@ -20,7 +20,7 @@ export const createContest = (data: any) => {
       method: "POST",
       credentials: "include",
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
@@ -35,7 +35,6 @@ export const createContest = (data: any) => {
 
 export const updateContest = (id: string, data: any) => {
   return new Promise((resolve, reject) => {
-
     fetch(`/api/contest/${id}`, {
       method: "PATCH",
       credentials: "include",
@@ -44,24 +43,24 @@ export const updateContest = (id: string, data: any) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "allowImageLinks": data.allowImageLinks,
-        "description": data.description,
-        "enterAnybody": data.enterAnybody,
-        "enterFollowers": data.enterFollowers,
-        "enterSubcribers": data.enterSubcribers,
-        "enterSubscribers": data.enterSubscribers,
-        "entryEnd": data.entryEnd,
-        "entryStart": data.entryStart,
-        "excludeDescription": data.excludeDescription,
-        "host": data.host,
-        "multipleUploads": data.multipleUploads,
-        "title": data.title,
-        "voteAnybody": data.voteAnybody,
-        "voteEnd": data.voteEnd,
-        "voteFollowers": data.voteFollowers,
-        "voteStart": data.voteStart,
-        "voteSubscribers": data.voteSubscribers,
-        "voteType": data.voteType
+        allowImageLinks: data.allowImageLinks,
+        description: data.description,
+        enterAnybody: data.enterAnybody,
+        enterFollowers: data.enterFollowers,
+        enterSubcribers: data.enterSubcribers,
+        enterSubscribers: data.enterSubscribers,
+        entryEnd: data.entryEnd,
+        entryStart: data.entryStart,
+        excludeDescription: data.excludeDescription,
+        host: data.host,
+        multipleUploads: data.multipleUploads,
+        title: data.title,
+        voteAnybody: data.voteAnybody,
+        voteEnd: data.voteEnd,
+        voteFollowers: data.voteFollowers,
+        voteStart: data.voteStart,
+        voteSubscribers: data.voteSubscribers,
+        voteType: data.voteType,
       }),
     })
       .then((res) => res.json())
@@ -72,23 +71,52 @@ export const updateContest = (id: string, data: any) => {
   });
 };
 
-export const getEntriesById = (contestId: string): any => {
+export const getEntriesByContest = (contestId: string): any => {
   return new Promise((resolve, reject) => {
-    fetch(
-      `/api/contest/${contestId}/entries`,
-      {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(`/api/contest/${contestId}/entries`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         resolve(res);
       })
-      .catch(err => reject(err));
+      .catch((err) => reject(err));
   });
-}
+};
+
+export const getEntryById = (
+  contestId: string,
+  entryId: string
+): any => {
+  return new Promise((resolve, reject) => {
+    fetch(`/api/contest/${contestId}/entry/${entryId}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => reject(err));
+  });
+};
+
+export const handleVote = (contestId: string, entryId: string) => {
+  return new Promise((resolve, reject) => {
+    fetch(`/api/contest/${contestId}/${entryId}/vote`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+  });
+};

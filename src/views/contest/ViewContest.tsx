@@ -211,28 +211,30 @@ export const ViewContest = (props: any) => {
               You have already entered this contest.
             </Typography>
           )}
-          <Button
-            onClick={() => viewEntries()}
-            variant="contained"
-            color="primary"
-            style={{ display: "flex", margin: "auto" }}
-          >
-            <Typography color="textPrimary" variant="h5">
-              View Entries
-            </Typography>
-          </Button>
+          <div style={{ display: "flex" }}>
+            <Button
+              onClick={() => viewEntries()}
+              variant="contained"
+              color="primary"
+              style={{ display: "flex", margin: "auto" }}
+            >
+              <Typography color="textPrimary" variant="h5">
+                View Entries
+              </Typography>
+            </Button>
 
-          <Button
-            onClick={() => enterContest()}
-            variant="contained"
-            color="primary"
-            // disabled={hasEntered}
-            style={{ display: "flex", margin: "auto" }}
-          >
-            <Typography color="textPrimary" variant="h5">
-              Enter Contest
-            </Typography>
-          </Button>
+            <Button
+              onClick={() => enterContest()}
+              variant="contained"
+              color="primary"
+              // disabled={hasEntered}
+              style={{ display: "flex", margin: "auto" }}
+            >
+              <Typography color="textPrimary" variant="h5">
+                Enter Contest
+              </Typography>
+            </Button>
+          </div>
         </Paper>
       </div>
     </MuiPickersUtilsProvider>

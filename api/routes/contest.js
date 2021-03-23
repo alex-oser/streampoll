@@ -399,8 +399,8 @@ router.get("/:contestId/votes/me", async (req, res) => {
   }
   const contestId = req.params.contestId;
   const votes = await getUserInfo(`/${req.session.auth.id}/votes/${contestId}`);
-  console.log(votes.val());
-  return res.json(votes.val());
+  const results = votes.exists() ? votes.val() : {};
+  return res.json(results);
 });
 
 router.get("/:contestId/entries", async (req, res) => {

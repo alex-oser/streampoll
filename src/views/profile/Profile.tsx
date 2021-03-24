@@ -59,7 +59,10 @@ export const Profile = () => {
 
   useEffect(() => {
     const tabId = tabMap.findIndex(tab => params.tab === tab.title.toLowerCase());
-    setValue(tabId);
+
+    if (tabId > -1) {
+      setValue(tabId);
+    }
 
   }, [params.tab]);
 

@@ -11,7 +11,7 @@ import {
 import { getMyVotes } from "../../service/users";
 import { useBaseStyles } from "../../style";
 import ShareIcon from "@material-ui/icons/Share";
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import { ContestSettings } from "../../types/ContestSettings";
 import { makeStyles } from "@material-ui/core";
 
@@ -21,13 +21,13 @@ const useStyles = makeStyles(() => ({
   },
   notLiked: {
     color: "#8e8e8e",
-  }
+  },
 }));
 
 export const ViewContestEntries = (props: any) => {
   const [entries, setEntries] = useState<any>();
   const [votes, setVotes] = useState<any>({});
-  const [voted, setVoted] = useState(false);
+
   const baseClasses = useBaseStyles();
   const classes = useStyles();
   const [
@@ -41,16 +41,14 @@ export const ViewContestEntries = (props: any) => {
     getEntriesByContest(contestId).then((res: any) =>
       setEntries(res)
     );
-    getContestById(contestId).then((res: any) => 
-      setContestData(res)
-    );
+    getContestById(contestId).then((res: any) => setContestData(res));
   }, []);
 
   useEffect(() => {
     getMyVotes(contestId).then((res: any) => {
-      setVotes(res)
+      setVotes(res);
     });
-  }, [voted])
+  }, []);
 
   if (!entries) {
     return <DankSkelli />;
@@ -96,36 +94,51 @@ export const ViewContestEntries = (props: any) => {
                 >
                   {entry.description}
                 </Typography>
-                <img
-                  src={entry.url}
-                  alt="imgur"
-                  style={{
-                    maxHeight: 400,
-                    maxWidth: 400,
-                    objectFit: "contain",
-                  }}
-                />
+
+                {entry.url && (
+                  <img
+                    src={entry.url}
+                    alt="imgur"
+                    style={{
+                      maxHeight: 400,
+                      maxWidth: 400,
+                      objectFit: "contain",
+                    }}
+                  />
+                )}
                 <Typography variant="body2">
                   Created by {entry.createdByName}
                 </Typography>
-                </Link>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <IconButton
-                    onClick={() => {
-                      handleVote(contestId, entry.entryId);
-                      setVoted(!voted);
-                    }}
-                  >
-                    <ThumbUpIcon 
-                      className={ entry.entryId in votes ? classes.liked : classes.notLiked }
-                    />
-                  </IconButton>
-                  <IconButton
-                    disabled
-                  >
-                    <ShareIcon />
-                  </IconButton>
-                </div>
+              </Link>
+              <div
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <IconButton
+                  onClick={() => {
+                    const copyOfVotes = { ...votes };
+
+                    if (entry.entryId in copyOfVotes) {
+                      delete copyOfVotes[entry.entryId];
+                    } else {
+                      copyOfVotes[entry.entryId] = true;
+                    }
+
+                    setVotes(copyOfVotes);
+                    handleVote(contestId, entry.entryId);
+                  }}
+                >
+                  <ThumbUpIcon
+                    className={
+                      entry.entryId in votes
+                        ? classes.liked
+                        : classes.notLiked
+                    }
+                  />
+                </IconButton>
+                <IconButton disabled>
+                  <ShareIcon />
+                </IconButton>
+              </div>
             </Paper>
           ))}
         </div>

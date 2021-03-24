@@ -46,7 +46,6 @@ router.post(
 
     // get twitch data
     const twitchData = await getTwitchUserInfo(req.body.host);
-    console.log(twitchData);
 
     const body = {
       ...req.body,
@@ -102,9 +101,13 @@ router.patch(
     const contest = await getContestById(id);
     const payload = req.body;
 
+    // get twitch data
+    const twitchData = await getTwitchUserInfo(req.body.host);
+
     const updatedContest = {
       ...contest.val(),
       ...payload,
+      hostProfileImageUrl: twitchData.profile_image_url,
     };
 
     await setContestDataById(id, updatedContest);

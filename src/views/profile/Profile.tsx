@@ -1,11 +1,12 @@
 import { AppBar, Tab, Tabs, Typography } from "@material-ui/core";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { Settings } from "./tabs/Settings";
 import { Polls } from "./tabs/Polls";
 import { Activity } from "./tabs/Activity";
 import { useBaseStyles } from "../../style";
 import { makeStyles } from "@material-ui/core";
 import clsx from "clsx";
+import { useHistory, useParams } from "react-router";
 
 const a11yProps = (index: number) => {
   return {
@@ -31,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
 export const Profile = () => {
   const classes = useStyles();
   const baseClasses = useBaseStyles();
+  const history = useHistory();
+  const params = useParams<any>();
   const [value, setValue] = useState<number>(0);
   const handleChange = (event: ChangeEvent<any>, index: number) => {
     setValue(index);
@@ -54,6 +57,12 @@ export const Profile = () => {
     }
   ];
 
+  useEffect(() => {
+    const tabId = tabMap.findIndex(tab => params.tab === tab.title.toLowerCase());
+    setValue(tabId);
+
+  }, [params.tab]);
+
   return (
     <div className={clsx(baseClasses.layout, classes.overrides)}>
       <Typography
@@ -73,6 +82,7 @@ export const Profile = () => {
         >
           {tabMap.map((tab, index) => (
             <Tab
+              onClick={() => history.push(`/profile/${tab.title.toLowerCase()}`)}
               key={tab.title}
               label={tab.title}
               style={{ fontWeight: "bold" }}

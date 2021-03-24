@@ -71,7 +71,7 @@ const App = () => {
           <ViewContestEntries />
         </Route>
 
-        <Route path="/profile">
+        <Route path="/profile/:tab">
           <Profile />
         </Route>
 

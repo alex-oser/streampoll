@@ -109,8 +109,8 @@ export const StepThree = (props: any) => {
 
   const handleSubmitForm = async (values: any) => {
     const contestSettings = {
-      ...values,
       ...state.createSettings,
+      ...values,
     }
 
     props.onSubmit(contestSettings);

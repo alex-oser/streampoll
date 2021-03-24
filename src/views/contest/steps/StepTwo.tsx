@@ -94,7 +94,6 @@ export const StepTwo = (props: any) => {
       return;
     }
     
-    // formik.setValues(props.initialValues);
     for (const key of Object.keys(formik.values)) {
       const val = props.initialValues[key];
       formik.setFieldValue(key, val);

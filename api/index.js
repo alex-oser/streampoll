@@ -20,6 +20,7 @@ const {
 } = require("./functions/entryVoting");
 
 const { tokenRefresh } = require("./functions/tokenRefresh");
+require("dotenv").config();
 
 const app = express();
 

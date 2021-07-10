@@ -1,8 +1,6 @@
 const tmi = require("tmi.js");
 
 // getting a token: https://twitchapps.com/tmi/
-// user: xd_chatbot
-// pass: minecraftspeedrun1
 
 const getMods = async (channel) => {
   return new Promise((resolve, reject) => {
@@ -13,8 +11,8 @@ const getMods = async (channel) => {
         secure: true,
       },
       identity: {
-        username: "xd_chatbot", // TODO: move to env
-        password: "oauth:tvossioi5mdkgmzecczbgfc138lmlu", // TODO: move to env
+        username: process.env.CHATBOT_USERNAME,
+        password: process.env.CHATBOT_PASSWORD,
       },
       channels: [channel],
     });
